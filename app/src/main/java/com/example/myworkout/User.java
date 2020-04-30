@@ -6,10 +6,10 @@ public class User {
     private String phone;
     private String email;
     private String name;
-    private long birthYear;
+    private int birthYear;
 
 
-    public User(String firebaseId, String phone, String email, String name, long birthYear) {
+    public User(String firebaseId, String phone, String email, String name, int birthYear) {
         this.firebaseId = firebaseId;
         this.phone = phone;
         this.email = email;
@@ -53,7 +53,7 @@ public class User {
         return birthYear;
     }
 
-    public void setBirth_year(long birthYear) {
+    public void setBirth_year(int birthYear) {
         this.birthYear = birthYear;
     }
 }
