@@ -29,31 +29,30 @@ public class DataRepository {
     final String USER_PROGRAM_SESSION_PREFIX = "https://tusk.systems/trainingapp/v2/api.php/user_program_sessions/";
     final String USER_STATS_PREFIX = "https://tusk.systems/trainingapp/v2/api.php/user_stats/";
 
-    private MutableLiveData<GetUserResponse> getUserResponse = new MutableLiveData<>();
-    private MutableLiveData<PostUserResponse> postUserResponse = new MutableLiveData<>();
-    private MutableLiveData<PutUserResponse> putUserResponse = new MutableLiveData<>();
-    private MutableLiveData<DeleteUserResponse> deleteUserResponse = new MutableLiveData<>();
+
 
     private MutableLiveData<ApiError> errorMessage = new MutableLiveData<>();
+    private MutableLiveData<ApiResponse> apiResponse = new MutableLiveData<>();
 
+    // MyJsonObjectRequest arver fra JsonObjectRequest slik at vi kan overstyre parseNetworkResponse() for å kunne hente ut HTTP responsekode:
+    private MyJsonObjectRequest myJsonGetRequest;
+    private MyJsonObjectRequest myJsonPostRequest;
+    private MyJsonObjectRequest myJsonPutRequest;
+    private MyJsonObjectRequest myJsonDeleteRequest;
+
+
+
+    private User currentUser=null;      // Holder på sist nedlastede User-objekt.
+    private boolean downloading=false;
 
     private RequestQueue queue = null;
 
-    public MutableLiveData<GetUserResponse> getGetUserResponse() {
-        return getUserResponse;
-    }
-    public MutableLiveData<PostUserResponse> getPostUserResponse() {
-        return postUserResponse;
-    }
-    public MutableLiveData<PutUserResponse> getPutUserResponse() {
-        return putUserResponse;
-    }
-    public MutableLiveData<DeleteUserResponse> getDeleteUserResponse() {
-        return deleteUserResponse;
-    }
-
     public MutableLiveData<ApiError> getErrorMessage() {
         return errorMessage;
+    }
+
+    public MutableLiveData<ApiResponse> getApiResponse() {
+        return apiResponse;
     }
 
 
@@ -63,17 +62,17 @@ public class DataRepository {
 
     // endre navn til get, post, put...
 
-        public void downloadProgramTypes(){
+        public void getProgramTypes(){
 
         
 
         }
 
-        public void addProgramType(){
+        public void postProgramType(){
 
         }
 
-        public void editProgramType(){
+        public void putProgramType(){
 
         }
 
@@ -81,46 +80,56 @@ public class DataRepository {
 
         }
 
-        public void downloadExercises(){}
+        public void getExercises(String rid){}
 
-        public void downloadExercises(String rid){}
+        public void postExercise(){}
 
-        public void addExercise(){}
-
-        public void editExercise(){}
+        public void putExercise(){}
 
         public void deleteExercise(){}
 
-        public void getUser(Context context, final String firebaseId) {
-                String url = USERS_PREFIX + firebaseId + "?_api_key=" + API_KEY;
+        public void getUser(Context context, final String firebaseId, boolean forceDownload) {
 
-                queue = MySingletonQueue.getInstance(context).getRequestQueue();
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                        Request.Method.GET,
-                        url,
-                        null,
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject jsonObject) {
-                                Gson gson = new Gson();
-                                User userObject = gson.fromJson(jsonObject.toString(), User.class);
-                                GetUserResponse resp = new GetUserResponse(true, "OK", userObject);
-                                getUserResponse.postValue(resp);
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                ApiError apiError = VolleyErrorParser.parse(error);
-                                errorMessage.postValue(apiError);
-                            }
-                        }) { };
-                queue.add(jsonObjectRequest);
+            if (forceDownload || this.currentUser == null) {
+                // Dersom nedlasting pågår og skjermen roteres vil downloading være true, ingen grunn til å starte nedlasting på nytt:
+                if (!this.downloading) {
+                    String url = USERS_PREFIX + firebaseId + "?_api_key=" + API_KEY;
 
+                    queue = MySingletonQueue.getInstance(context).getRequestQueue();
+
+                    downloading = true;
+                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                            Request.Method.GET,
+                            url,
+                            null,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject jsonObject) {
+                                    Gson gson = new Gson();
+                                    User userObject = gson.fromJson(jsonObject.toString(), User.class);
+                                    ApiResponse resp = new ApiResponse(true, "OK", userObject, myJsonGetRequest.getHttpStatusCode());
+                                    apiResponse.postValue(resp);
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    ApiError apiError = VolleyErrorParser.parse(error);
+                                    errorMessage.postValue(apiError);
+                                }
+                            }) {
+                    };
+                    queue.add(jsonObjectRequest);
+
+                } else {
+                    ApiResponse resp = new ApiResponse(true, "OK, bruker cached User", this.currentUser, myJsonGetRequest.getHttpStatusCode());
+                    apiResponse.postValue(resp);
+                }
+            }
 
         }
 
-
+        //METODENE UNDER MÅ ENDRES, SE OPPDATERT EKSEMPELKODE
 
         public void postUser(Context context,
                              String firebase_id,
@@ -153,8 +162,8 @@ public class DataRepository {
                                 String message = response.getString("message");
                                 JSONObject userAsJsonObject = response.getJSONObject("record");
                                 User user = gson.fromJson(userAsJsonObject.toString(), User.class);
-                                PostUserResponse resp = new PostUserResponse(true, message, user);
-                                postUserResponse.postValue(resp);
+         //                       PostUserResponse resp = new PostUserResponse(true, message, user);
+           //                     postUserResponse.postValue(resp);
                             } catch (JSONException e) {
                                 ApiError apiError = new ApiError(-1, e.getMessage());
                                 errorMessage.postValue(apiError);
@@ -218,8 +227,8 @@ public class DataRepository {
                                     String message = response.getString("message");
                                     JSONObject userAsJsonObject = response.getJSONObject("record");
                                     User user = gson.fromJson(userAsJsonObject.toString(), User.class);
-                                    PutUserResponse resp = new PutUserResponse(true, message, user);
-                                    putUserResponse.postValue(resp);
+             //                       PutUserResponse resp = new PutUserResponse(true, message, user);
+               //                     putUserResponse.postValue(resp);
                                 } catch (JSONException e) {
                                     ApiError apiError = new ApiError(-1, e.getMessage());
                                     errorMessage.postValue(apiError);
@@ -266,8 +275,8 @@ public class DataRepository {
                         {
                             @Override
                             public void onResponse(JSONObject response) {
-                                DeleteUserResponse resp = new DeleteUserResponse(true, "OK");
-                                deleteUserResponse.postValue(resp);
+                 //               DeleteUserResponse resp = new DeleteUserResponse(true, "OK");
+                   //             deleteUserResponse.postValue(resp);
                             }
                         },
                         new Response.ErrorListener()
@@ -287,31 +296,31 @@ public class DataRepository {
                 queue.add(deleteRequest);
             }
 
-        public void downloadUserPrograms(){}
+        public void getUserPrograms(){}
 
-        public void addUserProgram(){}
+        public void postUserProgram(){}
 
-        public void editUserProgram(){}
+        public void putUserProgram(){}
 
         public void deleteUserProgram(){}
 
-        public void downloadUserProgramExercises(){}
+        public void getUserProgramExercises(){}
 
-        public void addUserProgramExercise(){}
+        public void postUserProgramExercise(){}
 
-        public void editUserProgramExercise(){}
+        public void putUserProgramExercise(){}
 
         public void deleteUserProgramExercise(){}
 
-        public void downloadUserProgramSessions(){}
+        public void getUserProgramSessions(){}
 
-        public void addUserProgramSession(){}
+        public void postUserProgramSession(){}
 
-        public void editUserProgramSession(){}
+        public void putUserProgramSession(){}
 
         public void deleteUserProgramSession(){}
 
-        public void downloadUserStats(){}
+        public void getUserStats(){}
 
 
 

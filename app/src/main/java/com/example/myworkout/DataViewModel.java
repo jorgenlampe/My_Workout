@@ -10,45 +10,37 @@ public class DataViewModel extends AndroidViewModel {
 
     private DataRepository mRepository;
     private MutableLiveData<ApiError> mErrorMessage;
-    private MutableLiveData<GetUserResponse> mGetUserResponse;
-    private MutableLiveData<PostUserResponse> mPostUserResponse;
-    private MutableLiveData<PutUserResponse> mPutUserResponse;
-    private MutableLiveData<DeleteUserResponse> mDeleteUserResponse;
+
+    private MutableLiveData<ApiError> mApiError;
+    private MutableLiveData<ApiResponse> mApiResponse;
 
     public DataViewModel(Application application) {
         super(application);
         mRepository = new DataRepository(application);
         mErrorMessage = mRepository.getErrorMessage();
-        mGetUserResponse = mRepository.getGetUserResponse();
-        mPostUserResponse = mRepository.getPostUserResponse();
-        mPutUserResponse = mRepository.getPutUserResponse();
-        mDeleteUserResponse = mRepository.getDeleteUserResponse();
+
+
+
     }
 
     public MutableLiveData<ApiError> getErrorMessage() {
         return mErrorMessage;
     }
 
-    public MutableLiveData<GetUserResponse> getGetUserResponse() {
-        return mGetUserResponse;
+
+    public MutableLiveData<ApiError> getApiError() {
+        return mApiError;
     }
 
-    public MutableLiveData<PostUserResponse> getPostUserResponse() {
-        return mPostUserResponse;
-    }
-
-    public MutableLiveData<PutUserResponse> getPutUserResponse() {
-        return mPutUserResponse;
-    }
-
-    public MutableLiveData<DeleteUserResponse> getDeleteUserResponse() {
-        return mDeleteUserResponse;
+    public MutableLiveData<ApiResponse> getApiResponse() {
+        return mApiResponse;
     }
 
     // GET user
     public void getUser(Context context,
-                        String firebase_id) {
-        mRepository.getUser(context, firebase_id);
+                        String firebase_id, boolean forceDownload) {
+        mRepository.getUser(context, firebase_id, true);         //true eller false her????
+
     }
 
     // POST user

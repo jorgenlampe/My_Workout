@@ -3,11 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_navigation"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/programTypeFragment">
 
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.myworkout.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_programTypeFragment"
+            app:destination="@id/programTypeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/programTypeFragment"
+        android:name="com.example.myworkout.ProgramTypeFragment"
+        android:label="fragment_program_type"
+        tools:layout="@layout/fragment_program_type" />
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.example.myworkout.UserFragment"
+        android:label="fragment_user"
+        tools:layout="@layout/fragment_user" />
 </navigation>
