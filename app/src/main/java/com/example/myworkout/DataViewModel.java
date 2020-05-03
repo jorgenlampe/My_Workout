@@ -9,23 +9,16 @@ import androidx.lifecycle.MutableLiveData;
 public class DataViewModel extends AndroidViewModel {
 
     private DataRepository mRepository;
-    private MutableLiveData<ApiError> mErrorMessage;
-
     private MutableLiveData<ApiError> mApiError;
     private MutableLiveData<ApiResponse> mApiResponse;
 
+
     public DataViewModel(Application application) {
-        super(application);
-        mRepository = new DataRepository(application);
-        mErrorMessage = mRepository.getErrorMessage();
-
-
-
-    }
-
-    public MutableLiveData<ApiError> getErrorMessage() {
-        return mErrorMessage;
-    }
+            super(application); // <====
+            mRepository = new DataRepository(application);
+            mApiError = mRepository.getErrorMessage();
+            mApiResponse = mRepository.getApiResponse();
+        }
 
 
     public MutableLiveData<ApiError> getApiError() {
@@ -39,7 +32,7 @@ public class DataViewModel extends AndroidViewModel {
     // GET user
     public void getUser(Context context,
                         String firebase_id, boolean forceDownload) {
-        mRepository.getUser(context, firebase_id, true);         //true eller false her????
+        mRepository.getUser(context, firebase_id, forceDownload);
 
     }
 

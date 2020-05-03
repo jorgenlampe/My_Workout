@@ -3,6 +3,7 @@ package com.example.myworkout;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +34,8 @@ public class LoginFragment extends Fragment {
     private Button btnLogout;
     private TextView tvStatus;
     private DataViewModel dataViewModel;
-    private int count=0;
-    // 30.04.2020: Har gjort disse om til medlemsvariabler:
+    //private int count=0;
+
     private Observer<ApiResponse> apiResponseObserver = null;
     private Observer<ApiError> apiErrorObserver = null;
 
@@ -55,6 +56,7 @@ public class LoginFragment extends Fragment {
             updateUI(currentUser.getEmail());
     }
 
+
     private void subscribeToErrors() {
         if (apiErrorObserver == null) {
             // Observerer endringer i errorMessage:
@@ -67,6 +69,8 @@ public class LoginFragment extends Fragment {
                     }
                 }
             };
+
+
             dataViewModel.getApiError().observe(getViewLifecycleOwner(), apiErrorObserver);  //feil her....?
         }
     }
@@ -79,7 +83,7 @@ public class LoginFragment extends Fragment {
 
     // GET: Last ned brukerinfo fra server:
     private void getUserFromServer(boolean forceDownload) {
-        count = 0;
+    //    count = 0;
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser != null) {
             String firebaseId = firebaseUser.getUid();
@@ -97,7 +101,7 @@ public class LoginFragment extends Fragment {
                 @Override
                 public void onChanged(ApiResponse apiResponse) {
                     if(getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
-                        Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + String.valueOf(count++) + ")", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
                         User user = apiResponse.getUser();
                         if (user != null) {
                             // Dersom response på GET, PUT, POST:

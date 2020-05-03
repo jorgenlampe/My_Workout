@@ -98,7 +98,7 @@ public class DataRepository {
                     queue = MySingletonQueue.getInstance(context).getRequestQueue();
 
                     downloading = true;
-                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                     myJsonGetRequest = new MyJsonObjectRequest(
                             Request.Method.GET,
                             url,
                             null,
@@ -119,7 +119,7 @@ public class DataRepository {
                                 }
                             }) {
                     };
-                    queue.add(jsonObjectRequest);
+                    queue.add(myJsonGetRequest);
 
                 } else {
                     ApiResponse resp = new ApiResponse(true, "OK, bruker cached User", this.currentUser, myJsonGetRequest.getHttpStatusCode());
@@ -149,7 +149,7 @@ public class DataRepository {
 
             queue = MySingletonQueue.getInstance(context).getRequestQueue();
 
-            JsonObjectRequest postRequest = new JsonObjectRequest(
+            myJsonPostRequest = new MyJsonObjectRequest(
                     Request.Method.POST,
                     USERS_PREFIX,
                     null,
@@ -189,7 +189,7 @@ public class DataRepository {
                     return "application/json";
                 }
             };
-            queue.add(postRequest);
+            queue.add(myJsonPostRequest);
         }
 
 
@@ -214,7 +214,7 @@ public class DataRepository {
             // Generell PUT:
 //            private void put(final Context context, String mUrlString, final HashMap params) {
                 queue = MySingletonQueue.getInstance(context).getRequestQueue();
-                JsonObjectRequest putRequest = new JsonObjectRequest(
+                myJsonPutRequest = new MyJsonObjectRequest(
                         Request.Method.PUT,
                         USERS_PREFIX,
                         null,
@@ -254,7 +254,7 @@ public class DataRepository {
                         return "application/json";
                     }
                 };
-                queue.add(putRequest);
+                queue.add(myJsonPutRequest);
             }
 
 
@@ -267,7 +267,7 @@ public class DataRepository {
             //private void delete(final Context context, String mUrlString) {
                 queue = MySingletonQueue.getInstance(context).getRequestQueue();
 
-                JsonObjectRequest deleteRequest = new JsonObjectRequest(
+                myJsonDeleteRequest = new MyJsonObjectRequest(
                         Request.Method.DELETE,
                         USERS_PREFIX,
                         null,
@@ -293,7 +293,7 @@ public class DataRepository {
                         return "application/json";
                     }
                 };
-                queue.add(deleteRequest);
+                queue.add(myJsonDeleteRequest);
             }
 
         public void getUserPrograms(){}
