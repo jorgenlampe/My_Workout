@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:rowCount="5"
+    android:columnCount="2"
+    tools:context=".RegisterFragment">
+
+    <TextView
+
+        android:layout_column="0"
+        android:layout_row="0"
+        android:text="Brukernavn:"></TextView>
+
+    <EditText
+
+        android:id="@+id/etUsername"
+        android:layout_column="1"
+        android:layout_row="0"></EditText>
+
+    <TextView
+
+        android:layout_column="0"
+        android:layout_row="1"
+        android:text="E-post:"></TextView>
+
+    <EditText
+
+        android:id="@+id/etEmail"
+        android:layout_column="1"
+        android:layout_row="1"
+        android:inputType="textEmailAddress"></EditText>
+    <TextView
+
+        android:layout_column="0"
+        android:layout_row="2"
+        android:text="Telefonnr:"
+        ></TextView>
+
+    <EditText
+
+        android:id="@+id/etPhoneNumber"
+        android:layout_column="1"
+        android:layout_row="2"
+        android:inputType="phone"></EditText>
+    <TextView
+
+        android:layout_column="0"
+        android:layout_row="3"
+        android:text="Fødselsår:"
+        ></TextView>
+
+    <EditText
+
+        android:id="@+id/etBirthYear"
+        android:layout_column="1"
+        android:layout_row="3"
+        android:inputType="number"></EditText>
+
+
+<Button
+
+    android:layout_row="4"
+    android:layout_column="0"
+    android:text="REGISTRER"></Button>
+
+</GridLayout>

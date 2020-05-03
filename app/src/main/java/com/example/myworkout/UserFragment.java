@@ -1,8 +1,10 @@
 package com.example.myworkout;
 
+import android.media.tv.TvContentRating;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,6 +35,9 @@ public class UserFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private Observer<ApiResponse> apiResponseObserver = null;
+    private Observer<ApiError> apiErrorObserver = null;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -83,6 +89,73 @@ public class UserFragment extends Fragment {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         String firebaseId = firebaseUser.getUid();
+
+        dataViewModel.getUser(getActivity(), firebaseId, false);
+
+        subscribeToApiResponse();
+        subscribeToErrors();
+
+        TextView tvAccountName = view.findViewById(R.id.tvAccountName);
+        tvAccountName.setText(firebaseUser.getDisplayName());
+
+
+    }
+
+    private void subscribeToErrors() {
+
+        if (apiErrorObserver == null) {
+                // Observerer endringer i errorMessage:
+                apiErrorObserver = new Observer<ApiError>() {
+                    @Override
+                    public void onChanged(ApiError apiError) {
+                        if(getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
+                            if (apiError != null)
+                                Toast.makeText(getActivity(), apiError.getMessage() + ": " + String.valueOf(apiError.getCode()), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                };
+                dataViewModel.getApiError().observe(getViewLifecycleOwner(), apiErrorObserver);
+            }
+    }
+
+    private void subscribeToApiResponse() {
+
+        final TextView tvUserName = getView().findViewById(R.id.tvUserNameText);
+
+            if (apiResponseObserver == null) {
+                // Observerer endringer:
+                apiResponseObserver = new Observer<ApiResponse>() {
+                    @Override
+                    public void onChanged(ApiResponse apiResponse) {
+                        if(getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
+                            Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " ("  + ")", Toast.LENGTH_SHORT).show();
+                            User user = apiResponse.getUser();
+                            if (user != null) {
+                                // Dersom response på GET, PUT, POST:
+
+
+                                tvUserName.setText(user.getName());
+
+                            } else {
+
+                                tvUserName.setText("...");
+
+
+                                // Dersom response på DELETE
+       //                         signOut();
+         //                       tvUserInfo.setText("");
+           //                     etName.setText("");
+             //                   etEmail.setText("");
+               //                 etPhone.setText("");
+                 //               etName.setEnabled(false);
+                   //             etEmail.setEnabled(false);
+                     //           etPhone.setEnabled(false);
+                            }
+                        }
+                    }
+                };
+                dataViewModel.getApiResponse().observe(getViewLifecycleOwner(), apiResponseObserver);
+            }
 
 
 
