@@ -3,6 +3,7 @@ package com.example.myworkout;
 import android.media.tv.TvContentRating;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
@@ -13,9 +14,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -98,7 +103,30 @@ public class UserFragment extends Fragment {
         TextView tvAccountName = view.findViewById(R.id.tvAccountName);
         tvAccountName.setText(firebaseUser.getDisplayName());
 
+        Button btnLogout = view.findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOut();
 
+
+            }
+        });
+
+
+
+
+
+    }
+
+    public void signOut() {
+        AuthUI.getInstance()
+                .signOut(getActivity())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Navigation.findNavController(getView()).navigate(R.id.action_userFragment_to_navigation);
+                    }
+                });
     }
 
     private void subscribeToErrors() {

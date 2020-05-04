@@ -60,7 +60,7 @@
 
 
 <Button
-
+android:id="@+id/btnRegister"
     android:layout_row="4"
     android:layout_column="0"
     android:text="REGISTRER"></Button>

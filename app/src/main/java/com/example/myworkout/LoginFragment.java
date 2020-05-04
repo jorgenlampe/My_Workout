@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -79,6 +80,19 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         // Bruk cachet verdi på user, hvis den eksisterer. Hvis ikke last ned.
         getUserFromServer(false);   //<==
+
+
+
+        Button btnRegisterUser = view.findViewById(R.id.btnRegisterUser);
+        btnRegisterUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_registerFragment);
+            }
+        });
+
+
     }
 
     // GET: Last ned brukerinfo fra server:

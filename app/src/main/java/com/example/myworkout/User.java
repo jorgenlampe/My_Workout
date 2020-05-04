@@ -49,7 +49,7 @@ public class User {
         this.name = name;
     }
 
-    public long getBirth_year() {
+    public int getBirth_year() {
         return birthYear;
     }
 
