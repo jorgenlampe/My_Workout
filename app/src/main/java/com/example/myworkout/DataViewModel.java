@@ -6,6 +6,8 @@ import android.content.Context;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.firebase.auth.FirebaseUser;
+
 public class DataViewModel extends AndroidViewModel {
 
     private DataRepository mRepository;
@@ -58,9 +60,9 @@ public class DataViewModel extends AndroidViewModel {
     }
 
     // DELETE user
-    public void deleteUser(Context context, String firebase_id)
+    public void deleteUser(Context context, String firebase_id, FirebaseUser firebaseUser)
     {
-        mRepository.deleteUser(context, firebase_id);
+        mRepository.deleteUser(context, firebase_id, firebaseUser);
     }
 
 }

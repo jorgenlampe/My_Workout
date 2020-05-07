@@ -10,6 +10,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -259,24 +261,33 @@ public class DataRepository {
 
 
         public void deleteUser(Context context,
-                    String firebase_id) {
-                //String mUrlString = BASE_URL_ENDPOINTS + "users/" + firebase_id + "?_api_key=" + API_KEY;
-              //  delete(context, mUrlString);
+                    String firebase_id, FirebaseUser firebaseUser) {
 
-            // Generell DELETE:
-            //private void delete(final Context context, String mUrlString) {
+        //TODO slette fra Firebase, ta en firebaseuser som parameter og kalle .delete();?
+
+            firebaseUser.delete();
+
+            StringBuilder builder = new StringBuilder();
+
+            builder.append(USERS_PREFIX);
+            builder.append(firebase_id);
+            builder.append("?_api_key=");
+            builder.append(API_KEY);
+
+            String url = builder.toString();
+
                 queue = MySingletonQueue.getInstance(context).getRequestQueue();
 
                 myJsonDeleteRequest = new MyJsonObjectRequest(
                         Request.Method.DELETE,
-                        USERS_PREFIX,
+                        url,
                         null,
                         new Response.Listener<JSONObject>()
                         {
                             @Override
-                            public void onResponse(JSONObject response) {
-                 //               DeleteUserResponse resp = new DeleteUserResponse(true, "OK");
-                   //             deleteUserResponse.postValue(resp);
+                            public void onResponse(JSONObject jsonObject) {
+                                ApiResponse resp = new ApiResponse(true, "OK", null, myJsonDeleteRequest.getHttpStatusCode());
+                                apiResponse.postValue(resp);
                             }
                         },
                         new Response.ErrorListener()

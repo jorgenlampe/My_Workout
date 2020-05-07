@@ -91,9 +91,12 @@ public class UserFragment extends Fragment {
 
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        String firebaseId = firebaseUser.getUid();
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String firebaseId = null;
+
+        if (firebaseUser!=null)
+         firebaseId = firebaseUser.getUid();
 
         dataViewModel.getUser(getActivity(), firebaseId, false);
 
@@ -101,18 +104,26 @@ public class UserFragment extends Fragment {
         subscribeToErrors();
 
         TextView tvAccountName = view.findViewById(R.id.tvAccountName);
+
+        if (firebaseUser!= null)
         tvAccountName.setText(firebaseUser.getDisplayName());
+
 
         Button btnLogout = view.findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signOut();
-
-
             }
         });
 
+        Button btnDeleteAccount = view.findViewById(R.id.btnDeleteAccount);
+        btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteUserFromServer();
+            }
+        });
 
 
 
@@ -146,9 +157,23 @@ public class UserFragment extends Fragment {
             }
     }
 
+    public void deleteUserFromServer() {
+
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser != null) {
+            String firebaseId = firebaseUser.getUid();
+            dataViewModel.deleteUser(getActivity(), firebaseId, firebaseUser);
+
+        }
+
+    }
+
     private void subscribeToApiResponse() {
 
         final TextView tvUserName = getView().findViewById(R.id.tvUserNameText);
+        final TextView tvPhoneNumber = getView().findViewById(R.id.tvPhoneNumberText);
+        final TextView tvEmail = getView().findViewById(R.id.tvEmailText);
+        final TextView tvBirthYear = getView().findViewById(R.id.tvBirthYearText);
 
             if (apiResponseObserver == null) {
                 // Observerer endringer:
@@ -163,7 +188,9 @@ public class UserFragment extends Fragment {
 
 
                                 tvUserName.setText(user.getName());
-
+                                tvPhoneNumber.setText(user.getPhone());
+                                tvEmail.setText(user.getEmail());
+//                                tvBirthYear.setText(user.getBirth_year());    //noe feil her....
                             } else {
 
                                 tvUserName.setText("...");
@@ -189,4 +216,8 @@ public class UserFragment extends Fragment {
 
 
     }
+
+
+
+
 }

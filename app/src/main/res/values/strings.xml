@@ -5,7 +5,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="userAccount">Kontonavn:</string>
     <string name="deleteAccount">Slett konto</string>
-    <string name="userName">Brukernavn</string>
+    <string name="userName">Brukernavn:</string>
     <string name="editUserName">Endre brukernavn</string>
     <string name="logout">Logg ut</string>
+    <string name="changePhoneNumber">Endre telefonnummer</string>
+    <string name="editPhoneNumber">Endre telefonnummer</string>
+    <string name="editEmail">Endre e-postadresse</string>
+    <string name="editBirthYear">Endre fødselsår</string>
 </resources>

@@ -106,7 +106,7 @@ public class  RegisterFragment extends Fragment {
                  String email = etEmail.getText().toString();
                  String phoneNumber = etPhoneNumber.getText().toString();
                  int birthYear = Integer.parseInt(etBirthYear.getText().toString());
-                dataViewModel.postUser(getContext(), firebaseId, username, email, phoneNumber, birthYear);
+                dataViewModel.postUser(getContext(), firebaseId, username, phoneNumber, email, birthYear);
             }
         });
 
