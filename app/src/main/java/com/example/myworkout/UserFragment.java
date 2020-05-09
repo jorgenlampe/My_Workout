@@ -37,6 +37,16 @@ public class UserFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
+    private TextView tvUserName;
+    private TextView tvPhoneNumber;
+    private TextView tvEmail;
+    private TextView tvBirthYear;
+    private TextView tvAccountName;
+
+    private Button btnEditUser;
+    private Button btnDeleteAccount;
+    private Button btnLogout;
+
 
     private DataViewModel dataViewModel;
 
@@ -85,36 +95,18 @@ public class UserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-
-
-
-        return inflater.inflate(R.layout.fragment_user, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
+        View view = inflater.inflate(R.layout.fragment_user, container, false);
 
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        String firebaseId = null;
-
-        if (firebaseUser!=null)
-         firebaseId = firebaseUser.getUid();
-
-        dataViewModel.getUser(getActivity(), firebaseId, false);
-
-        subscribeToApiResponse();
-        subscribeToErrors();
-
-        TextView tvAccountName = view.findViewById(R.id.tvAccountName);
-
-        if (firebaseUser!= null)
-        tvAccountName.setText(firebaseUser.getDisplayName());
+        tvUserName = view.findViewById(R.id.tvUserNameText);
+        tvPhoneNumber = view.findViewById(R.id.tvPhoneNumberText);
+        tvEmail = view.findViewById(R.id.tvEmailText);
+        tvBirthYear = view.findViewById(R.id.tvBirthYearText);
+        tvAccountName = view.findViewById(R.id.tvAccountName);
 
 
-        Button btnLogout = view.findViewById(R.id.btnLogout);
+        btnLogout = view.findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,7 +114,7 @@ public class UserFragment extends Fragment {
             }
         });
 
-        Button btnDeleteAccount = view.findViewById(R.id.btnDeleteAccount);
+        btnDeleteAccount = view.findViewById(R.id.btnDeleteAccount);
         btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,13 +122,33 @@ public class UserFragment extends Fragment {
             }
         });
 
-        Button btnEditUser = view.findViewById(R.id.btnEditUser);
+        btnEditUser = view.findViewById(R.id.btnEditUser);
         btnEditUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(getView()).navigate(R.id.action_userFragment_to_editUserFragment);
             }
         });
+
+        subscribeToApiResponse();
+        subscribeToErrors();
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
+
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        String firebaseId = null;
+
+        if (firebaseUser!=null) {
+            firebaseId = firebaseUser.getUid();
+            tvAccountName.setText(firebaseUser.getDisplayName());
+        }
+
+        dataViewModel.getUser(getActivity(), firebaseId, false);
 
 
     }

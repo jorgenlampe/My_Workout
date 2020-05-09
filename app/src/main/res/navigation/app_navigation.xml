@@ -51,5 +51,9 @@
         android:id="@+id/editUserFragment"
         android:name="com.example.myworkout.EditUserFragment"
         android:label="fragment_edit_user"
-        tools:layout="@layout/fragment_edit_user" />
+        tools:layout="@layout/fragment_edit_user" >
+        <action
+            android:id="@+id/action_editUserFragment_to_userFragment"
+            app:destination="@id/userFragment" />
+    </fragment>
 </navigation>

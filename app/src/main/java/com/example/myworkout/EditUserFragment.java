@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,17 @@ public class EditUserFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private String username;
+    private String phoneNumber;
+    private String email;
+
+    private EditText etUsername;
+    private EditText etPhoneNumber;
+    private EditText etEmail;
+    private EditText etBirthYear;
+
+    private Button btnUpdateUser;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -43,28 +55,11 @@ public class EditUserFragment extends Fragment {
         // Required empty public constructor
     }
 
+    //onCreateVieww.... View view = inflater.inflate(R.layout.fragment_user, container, false); return view..
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
 
-        dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
-
-
-
-        EditText etUsername = view.findViewById(R.id.etEditUsername);
-        EditText etPhoneNumber = view.findViewById(R.id.etEditPhoneNumber);
-        EditText etEmail = view.findViewById(R.id.etEditEmail);
-        EditText etBirthYear = view.findViewById(R.id.etEditBirthYear);
-
-        final String username = etUsername.getText().toString();
-        final String phoneNumber = etPhoneNumber.getText().toString();
-        final String email = etEmail.getText().toString();
-      //  final int birthYear = Integer.parseInt(etBirthYear.getText().toString());
-
-        subscribeToApiResponse();
-        subscribeToErrors();
-
-        Button btnUpdateUser = view.findViewById(R.id.btnUpdateUser);
         btnUpdateUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,10 +71,16 @@ public class EditUserFragment extends Fragment {
                     firebaseId = firebaseUser.getUid();
 
                 dataViewModel.putUser(getContext(), firebaseId, username, phoneNumber, email, 0);  //todo birthyear
+                toUserFragment();
             }
         });
 
 
+
+    }
+
+    public void toUserFragment(){
+        Navigation.findNavController(getView()).navigate(R.id.action_editUserFragment_to_userFragment);
     }
 
     private void subscribeToApiResponse() {
@@ -155,6 +156,27 @@ public class EditUserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_user, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_edit_user, container, false);
+
+        dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
+
+        etUsername = view.findViewById(R.id.etEditUsername);
+        etPhoneNumber = view.findViewById(R.id.etEditPhoneNumber);
+        etEmail = view.findViewById(R.id.etEditEmail);
+        etBirthYear = view.findViewById(R.id.etEditBirthYear);
+
+        username = etUsername.getText().toString();
+        phoneNumber = etPhoneNumber.getText().toString();
+        email = etEmail.getText().toString();
+        //  final int birthYear = Integer.parseInt(etBirthYear.getText().toString());
+
+        btnUpdateUser = view.findViewById(R.id.btnUpdateUser);
+
+
+        subscribeToApiResponse();
+        subscribeToErrors();
+
+        return view;
     }
 }
