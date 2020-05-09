@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.internal.$Gson$Preconditions;
 
 import java.util.List;
 
@@ -35,6 +36,7 @@ import java.util.List;
 public class UserFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
 
     private DataViewModel dataViewModel;
 
@@ -83,6 +85,10 @@ public class UserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+
+
+
         return inflater.inflate(R.layout.fragment_user, container, false);
     }
 
@@ -90,7 +96,6 @@ public class UserFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState){
 
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
-
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String firebaseId = null;
@@ -125,7 +130,13 @@ public class UserFragment extends Fragment {
             }
         });
 
-
+        Button btnEditUser = view.findViewById(R.id.btnEditUser);
+        btnEditUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(getView()).navigate(R.id.action_userFragment_to_editUserFragment);
+            }
+        });
 
 
     }
@@ -170,10 +181,7 @@ public class UserFragment extends Fragment {
 
     private void subscribeToApiResponse() {
 
-        final TextView tvUserName = getView().findViewById(R.id.tvUserNameText);
-        final TextView tvPhoneNumber = getView().findViewById(R.id.tvPhoneNumberText);
-        final TextView tvEmail = getView().findViewById(R.id.tvEmailText);
-        final TextView tvBirthYear = getView().findViewById(R.id.tvBirthYearText);
+
 
             if (apiResponseObserver == null) {
                 // Observerer endringer:
@@ -186,6 +194,10 @@ public class UserFragment extends Fragment {
                             if (user != null) {
                                 // Dersom response på GET, PUT, POST:
 
+                                TextView tvUserName = getView().findViewById(R.id.tvUserNameText);
+                                TextView tvPhoneNumber = getView().findViewById(R.id.tvPhoneNumberText);
+                                TextView tvEmail = getView().findViewById(R.id.tvEmailText);
+                                TextView tvBirthYear = getView().findViewById(R.id.tvBirthYearText);
 
                                 tvUserName.setText(user.getName());
                                 tvPhoneNumber.setText(user.getPhone());
@@ -193,7 +205,7 @@ public class UserFragment extends Fragment {
 //                                tvBirthYear.setText(user.getBirth_year());    //noe feil her....
                             } else {
 
-                                tvUserName.setText("...");
+                               // tvUserName.setText("...");
 
 
                                 // Dersom response på DELETE

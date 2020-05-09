@@ -108,8 +108,8 @@ public class DataRepository {
                                 @Override
                                 public void onResponse(JSONObject jsonObject) {
                                     Gson gson = new Gson();
-                                    User userObject = gson.fromJson(jsonObject.toString(), User.class);
-                                    ApiResponse resp = new ApiResponse(true, "OK", userObject, myJsonGetRequest.getHttpStatusCode());
+                                    currentUser = gson.fromJson(jsonObject.toString(), User.class);
+                                    ApiResponse resp = new ApiResponse(true, "OK", currentUser, myJsonGetRequest.getHttpStatusCode());
                                     apiResponse.postValue(resp);
                                 }
                             },
@@ -210,11 +210,7 @@ public class DataRepository {
                 params.put("phone", phone);
                 params.put("email", email);
                 params.put("birth_year", String.valueOf(birth_year));
-            //    put(context, mUrlString, params);
 
-
-            // Generell PUT:
-//            private void put(final Context context, String mUrlString, final HashMap params) {
                 queue = MySingletonQueue.getInstance(context).getRequestQueue();
                 myJsonPutRequest = new MyJsonObjectRequest(
                         Request.Method.PUT,
@@ -228,9 +224,9 @@ public class DataRepository {
                                 try {
                                     String message = response.getString("message");
                                     JSONObject userAsJsonObject = response.getJSONObject("record");
-                                    User user = gson.fromJson(userAsJsonObject.toString(), User.class);
-             //                       PutUserResponse resp = new PutUserResponse(true, message, user);
-               //                     putUserResponse.postValue(resp);
+                                    currentUser = gson.fromJson(userAsJsonObject.toString(), User.class);
+                                       ApiResponse resp = new ApiResponse(true, message, currentUser, myJsonPutRequest.getHttpStatusCode());
+                                       apiResponse.postValue(resp);
                                 } catch (JSONException e) {
                                     ApiError apiError = new ApiError(-1, e.getMessage());
                                     errorMessage.postValue(apiError);
@@ -262,8 +258,6 @@ public class DataRepository {
 
         public void deleteUser(Context context,
                     String firebase_id, FirebaseUser firebaseUser) {
-
-        //TODO slette fra Firebase, ta en firebaseuser som parameter og kalle .delete();?
 
             firebaseUser.delete();
 
