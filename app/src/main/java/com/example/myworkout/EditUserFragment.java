@@ -70,6 +70,10 @@ public class EditUserFragment extends Fragment {
                 if (firebaseUser!=null)
                     firebaseId = firebaseUser.getUid();
 
+                username = etUsername.getText().toString();
+                phoneNumber = etPhoneNumber.getText().toString();
+                email = etEmail.getText().toString();
+
                 dataViewModel.putUser(getContext(), firebaseId, username, phoneNumber, email, 0);  //todo birthyear
                 toUserFragment();
             }
@@ -166,9 +170,7 @@ public class EditUserFragment extends Fragment {
         etEmail = view.findViewById(R.id.etEditEmail);
         etBirthYear = view.findViewById(R.id.etEditBirthYear);
 
-        username = etUsername.getText().toString();
-        phoneNumber = etPhoneNumber.getText().toString();
-        email = etEmail.getText().toString();
+
         //  final int birthYear = Integer.parseInt(etBirthYear.getText().toString());
 
         btnUpdateUser = view.findViewById(R.id.btnUpdateUser);

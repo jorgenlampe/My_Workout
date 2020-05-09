@@ -9,6 +9,8 @@ public class User {
     private int birthYear;
 
 
+    //TODO User-objektet inneholder igjen objekter av andre typer (UserProgram, UserProgramExercises osv.)
+
     public User(String firebaseId, String phone, String email, String name, int birthYear) {
         this.firebaseId = firebaseId;
         this.phone = phone;
