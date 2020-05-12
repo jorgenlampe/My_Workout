@@ -1,4 +1,4 @@
-package com.example.myworkout;
+package com.example.myworkout.helpers;
 
 public class ApiError {
     private int code;

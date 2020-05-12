@@ -1,4 +1,4 @@
-package com.example.myworkout;
+package com.example.myworkout.fragments;
 
 import android.media.tv.TvContentRating;
 import android.os.Bundle;
@@ -18,6 +18,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myworkout.R;
+import com.example.myworkout.entities.User;
+import com.example.myworkout.helpers.ApiError;
+import com.example.myworkout.helpers.ApiResponse;
+import com.example.myworkout.data.DataViewModel;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -228,8 +233,4 @@ public class UserFragment extends Fragment {
 
 
     }
-
-
-
-
 }

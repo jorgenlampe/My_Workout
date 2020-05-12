@@ -1,4 +1,4 @@
-package com.example.myworkout;
+package com.example.myworkout.fragments;
 
 import android.os.Bundle;
 
@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import com.example.myworkout.R;
 
 
 /**

@@ -1,4 +1,4 @@
-package com.example.myworkout;
+package com.example.myworkout.data;
 
 import android.app.Application;
 import android.content.Context;
@@ -9,6 +9,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.myworkout.helpers.MyJsonObjectRequest;
+import com.example.myworkout.entities.User;
+import com.example.myworkout.helpers.ApiError;
+import com.example.myworkout.helpers.ApiResponse;
+import com.example.myworkout.helpers.VolleyErrorParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

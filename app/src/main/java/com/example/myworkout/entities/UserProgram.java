@@ -1,4 +1,4 @@
-package com.example.myworkout;
+package com.example.myworkout.entities;
 
 import java.util.ArrayList;
 import java.util.List;
