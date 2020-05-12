@@ -37,6 +37,7 @@ public class DataRepository {
     final String USER_STATS_PREFIX = "https://tusk.systems/trainingapp/v2/api.php/user_stats/";
 
 
+
     private MutableLiveData<ApiError> errorMessage = new MutableLiveData<>();
     private MutableLiveData<ApiResponse> apiResponse = new MutableLiveData<>();
 
@@ -47,8 +48,9 @@ public class DataRepository {
     private MyJsonObjectRequest myJsonDeleteRequest;
 
 
-    private User currentUser = null;      // Holder på sist nedlastede User-objekt.
-    private boolean downloading = false;
+
+    private User currentUser=null;      // Holder på sist nedlastede User-objekt.
+    private boolean downloading=false;
 
     private RequestQueue queue = null;
 
@@ -67,34 +69,31 @@ public class DataRepository {
 
     // endre navn til get, post, put...
 
-    public void getProgramTypes() {
+    public void getProgramTypes(){
 
 
-    }
-
-    public void postProgramType() {
 
     }
 
-    public void putProgramType() {
+    public void postProgramType(){
 
     }
 
-    public void deleteProgramType() {
+    public void putProgramType(){
 
     }
 
-    public void getExercises(String rid) {
+    public void deleteProgramType(){
+
     }
 
-    public void postExercise() {
-    }
+    public void getExercises(String rid){}
 
-    public void putExercise() {
-    }
+    public void postExercise(){}
 
-    public void deleteExercise() {
-    }
+    public void putExercise(){}
+
+    public void deleteExercise(){}
 
     public void getUser(Context context, final String firebaseId, boolean forceDownload) {
 
@@ -114,8 +113,8 @@ public class DataRepository {
                             @Override
                             public void onResponse(JSONObject jsonObject) {
                                 Gson gson = new Gson();
-                                User userObject = gson.fromJson(jsonObject.toString(), User.class);
-                                ApiResponse resp = new ApiResponse(true, "OK", userObject, myJsonGetRequest.getHttpStatusCode());
+                                currentUser = gson.fromJson(jsonObject.toString(), User.class);
+                                ApiResponse resp = new ApiResponse(true, "OK", currentUser, myJsonGetRequest.getHttpStatusCode());
                                 apiResponse.postValue(resp);
                             }
                         },
@@ -161,7 +160,8 @@ public class DataRepository {
                 Request.Method.POST,
                 USERS_PREFIX,
                 null,
-                new Response.Listener<JSONObject>() {
+                new Response.Listener<JSONObject>()
+                {
                     @Override
                     public void onResponse(JSONObject response) {
                         Gson gson = new Gson();
@@ -177,7 +177,8 @@ public class DataRepository {
                         }
                     }
                 },
-                new Response.ErrorListener() {
+                new Response.ErrorListener()
+                {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         ApiError apiError = VolleyErrorParser.parse(error);
@@ -214,33 +215,31 @@ public class DataRepository {
         params.put("phone", phone);
         params.put("email", email);
         params.put("birth_year", String.valueOf(birth_year));
-        //    put(context, mUrlString, params);
 
-
-        // Generell PUT:
-//            private void put(final Context context, String mUrlString, final HashMap params) {
         queue = MySingletonQueue.getInstance(context).getRequestQueue();
         myJsonPutRequest = new MyJsonObjectRequest(
                 Request.Method.PUT,
                 USERS_PREFIX,
                 null,
-                new Response.Listener<JSONObject>() {
+                new Response.Listener<JSONObject>()
+                {
                     @Override
                     public void onResponse(JSONObject response) {
                         Gson gson = new Gson();
                         try {
                             String message = response.getString("message");
                             JSONObject userAsJsonObject = response.getJSONObject("record");
-                            User user = gson.fromJson(userAsJsonObject.toString(), User.class);
-                            //                       PutUserResponse resp = new PutUserResponse(true, message, user);
-                            //                     putUserResponse.postValue(resp);
+                            currentUser = gson.fromJson(userAsJsonObject.toString(), User.class);
+                            ApiResponse resp = new ApiResponse(true, message, currentUser, myJsonPutRequest.getHttpStatusCode());
+                            apiResponse.postValue(resp);
                         } catch (JSONException e) {
                             ApiError apiError = new ApiError(-1, e.getMessage());
                             errorMessage.postValue(apiError);
                         }
                     }
                 },
-                new Response.ErrorListener() {
+                new Response.ErrorListener()
+                {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         ApiError apiError = VolleyErrorParser.parse(error);
@@ -265,8 +264,6 @@ public class DataRepository {
     public void deleteUser(Context context,
                            String firebase_id, FirebaseUser firebaseUser) {
 
-        //TODO slette fra Firebase, ta en firebaseuser som parameter og kalle .delete();?
-
         firebaseUser.delete();
 
         StringBuilder builder = new StringBuilder();
@@ -284,14 +281,16 @@ public class DataRepository {
                 Request.Method.DELETE,
                 url,
                 null,
-                new Response.Listener<JSONObject>() {
+                new Response.Listener<JSONObject>()
+                {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
                         ApiResponse resp = new ApiResponse(true, "OK", null, myJsonDeleteRequest.getHttpStatusCode());
                         apiResponse.postValue(resp);
                     }
                 },
-                new Response.ErrorListener() {
+                new Response.ErrorListener()
+                {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         ApiError apiError = VolleyErrorParser.parse(error);
@@ -307,44 +306,36 @@ public class DataRepository {
         queue.add(myJsonDeleteRequest);
     }
 
-    public void getUserPrograms() {
-    }
+    public void getUserPrograms(){}
 
-    public void postUserProgram() {
-    }
+    public void postUserProgram(){}
 
-    public void putUserProgram() {
-    }
+    public void putUserProgram(){}
 
-    public void deleteUserProgram() {
-    }
+    public void deleteUserProgram(){}
 
-    public void getUserProgramExercises() {
-    }
+    public void getUserProgramExercises(){}
 
-    public void postUserProgramExercise() {
-    }
+    public void postUserProgramExercise(){}
 
-    public void putUserProgramExercise() {
-    }
+    public void putUserProgramExercise(){}
 
-    public void deleteUserProgramExercise() {
-    }
+    public void deleteUserProgramExercise(){}
 
-    public void getUserProgramSessions() {
-    }
+    public void getUserProgramSessions(){}
 
-    public void postUserProgramSession() {
-    }
+    public void postUserProgramSession(){}
 
-    public void putUserProgramSession() {
-    }
+    public void putUserProgramSession(){}
 
-    public void deleteUserProgramSession() {
-    }
+    public void deleteUserProgramSession(){}
 
-    public void getUserStats() {
-    }
+    public void getUserStats(){}
+
+
+
+
+
 
 
 }
