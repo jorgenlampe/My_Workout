@@ -18,11 +18,11 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.example.myworkout.data.DataViewModel;
 import com.example.myworkout.R;
 import com.example.myworkout.entities.User;
 import com.example.myworkout.helpers.ApiError;
 import com.example.myworkout.helpers.ApiResponse;
-import com.example.myworkout.data.DataViewModel;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -47,6 +47,7 @@ public class LoginFragment extends Fragment {
     public LoginFragment() {
         // Required empty public constructor
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +69,7 @@ public class LoginFragment extends Fragment {
             apiErrorObserver = new Observer<ApiError>() {
                 @Override
                 public void onChanged(ApiError apiError) {
-                    if(getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
+                    if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         if (apiError != null)
                             Toast.makeText(getActivity(), apiError.getMessage() + ": " + String.valueOf(apiError.getCode()), Toast.LENGTH_SHORT).show();
                     }
@@ -86,7 +87,6 @@ public class LoginFragment extends Fragment {
         getUserFromServer(false);   //<==
 
 
-
         Button btnRegisterUser = view.findViewById(R.id.btnRegisterUser);
         btnRegisterUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +101,7 @@ public class LoginFragment extends Fragment {
 
     // GET: Last ned brukerinfo fra server:
     private void getUserFromServer(boolean forceDownload) {
-    //    count = 0;
+        //    count = 0;
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser != null) {
             String firebaseId = firebaseUser.getUid();
@@ -118,28 +118,28 @@ public class LoginFragment extends Fragment {
             apiResponseObserver = new Observer<ApiResponse>() {
                 @Override
                 public void onChanged(ApiResponse apiResponse) {
-                    if(getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
+                    if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
                         User user = apiResponse.getUser();
                         if (user != null) {
                             // Dersom response på GET, PUT, POST:
-                //            tvUserInfo.setText(user.toString());
-                  //          etName.setText(user.getName());
-                    //        etEmail.setText(user.getEmail());
-                      //      etPhone.setText(user.getPhone());
-                        //    etName.setEnabled(true);
-                          //  etEmail.setEnabled(true);
+                            //            tvUserInfo.setText(user.toString());
+                            //          etName.setText(user.getName());
+                            //        etEmail.setText(user.getEmail());
+                            //      etPhone.setText(user.getPhone());
+                            //    etName.setEnabled(true);
+                            //  etEmail.setEnabled(true);
                             //etPhone.setEnabled(true);
                         } else {
                             // Dersom response på DELETE
                             signOut();
-                         //   tvUserInfo.setText("");
-                           // etName.setText("");
-                           // etEmail.setText("");
-                           // etPhone.setText("");
+                            //   tvUserInfo.setText("");
+                            // etName.setText("");
+                            // etEmail.setText("");
+                            // etPhone.setText("");
                             //etName.setEnabled(false);
                             //etEmail.setEnabled(false);
-                           //  etPhone.setEnabled(false);
+                            //  etPhone.setEnabled(false);
                         }
                     }
                 }
