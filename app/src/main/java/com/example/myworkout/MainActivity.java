@@ -5,9 +5,10 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.myworkout.data.DataViewModel;
+
 import android.os.Bundle;
 
-import com.example.myworkout.data.DataViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,19 +27,19 @@ public class MainActivity extends AppCompatActivity {
 
         //setup bottomNav
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        if(bottomNav != null) {
+        if (bottomNav != null) {
             NavigationUI.setupWithNavController(bottomNav, navController);
         }
 
         //dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 
-      //  FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        //  FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-    //        String firebaseId = firebaseUser.getUid();
+        //        String firebaseId = firebaseUser.getUid();
 
-  //          dataViewModel.getUser(this, firebaseId);
+        //          dataViewModel.getUser(this, firebaseId);
 
-          //  Log.d("yyy", dataViewModel.getGetUserResponse().toString());
+        //  Log.d("yyy", dataViewModel.getGetUserResponse().toString());
 
 //            Log.d("yyy", firebaseId);
     }
