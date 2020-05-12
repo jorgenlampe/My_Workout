@@ -1,6 +1,7 @@
-package com.example.myworkout;
+package com.example.myworkout.helpers;
 
 import com.android.volley.VolleyError;
+import com.example.myworkout.helpers.ApiError;
 
 import org.json.JSONException;
 import org.json.JSONObject;

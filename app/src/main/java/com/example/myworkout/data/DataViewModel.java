@@ -1,10 +1,13 @@
-package com.example.myworkout;
+package com.example.myworkout.data;
 
 import android.app.Application;
 import android.content.Context;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+
+import com.example.myworkout.helpers.ApiError;
+import com.example.myworkout.helpers.ApiResponse;
 
 public class DataViewModel extends AndroidViewModel {
 

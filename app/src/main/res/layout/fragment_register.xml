@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:rowCount="5"
     android:columnCount="2"
-    tools:context=".RegisterFragment">
+    tools:context=".fragments.RegisterFragment">
 
     <TextView
 

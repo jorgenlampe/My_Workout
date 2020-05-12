@@ -1,25 +1,25 @@
-package com.example.myworkout;
+package com.example.myworkout.fragments;
 
-import android.media.tv.TvContentRating;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myworkout.R;
+import com.example.myworkout.entities.User;
+import com.example.myworkout.helpers.ApiError;
+import com.example.myworkout.helpers.ApiResponse;
+import com.example.myworkout.data.DataViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.List;
 
 
 /**

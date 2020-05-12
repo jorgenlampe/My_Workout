@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/programTypeFragment"
-        android:name="com.example.myworkout.ProgramTypeFragment"
+        android:name="com.example.myworkout.fragments.ProgramTypeFragment"
         android:label="fragment_program_type"
         tools:layout="@layout/fragment_program_type" />
     <fragment
         android:id="@+id/userFragment"
-        android:name="com.example.myworkout.UserFragment"
+        android:name="com.example.myworkout.fragments.UserFragment"
         android:label="fragment_user"
         tools:layout="@layout/fragment_user" />
     <navigation
@@ -20,7 +20,7 @@
         app:startDestination="@id/loginFragment" >
         <fragment
             android:id="@+id/registerFragment"
-            android:name="com.example.myworkout.RegisterFragment"
+            android:name="com.example.myworkout.fragments.RegisterFragment"
             android:label="fragment_register"
             tools:layout="@layout/fragment_register">
             <action
@@ -29,7 +29,7 @@
         </fragment>
         <fragment
             android:id="@+id/loginFragment"
-            android:name="com.example.myworkout.LoginFragment"
+            android:name="com.example.myworkout.fragments.LoginFragment"
             android:label="fragment_login"
             tools:layout="@layout/fragment_login">
             <action

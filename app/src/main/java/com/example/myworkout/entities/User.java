@@ -1,4 +1,4 @@
-package com.example.myworkout;
+package com.example.myworkout.entities;
 
 public class User {
 

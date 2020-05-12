@@ -1,4 +1,6 @@
-package com.example.myworkout;
+package com.example.myworkout.helpers;
+
+import com.example.myworkout.entities.User;
 
 public class ApiResponse {
     private boolean result;

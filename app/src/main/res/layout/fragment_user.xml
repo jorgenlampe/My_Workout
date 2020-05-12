@@ -6,7 +6,7 @@
     android:columnCount="3"
     android:rowCount="3"
     android:orientation="horizontal"
-    tools:context=".UserFragment">
+    tools:context=".fragments.UserFragment">
 
 
     <TextView
