@@ -14,7 +14,11 @@
         android:id="@+id/userFragment"
         android:name="com.example.myworkout.fragments.UserFragment"
         android:label="fragment_user"
-        tools:layout="@layout/fragment_user" />
+        tools:layout="@layout/fragment_user" >
+        <action
+            android:id="@+id/action_userFragment_to_navigation"
+            app:destination="@id/navigation" />
+    </fragment>
     <navigation
         android:id="@+id/navigation"
         app:startDestination="@id/loginFragment" >

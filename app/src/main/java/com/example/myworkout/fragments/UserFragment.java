@@ -1,15 +1,20 @@
 package com.example.myworkout.fragments;
 
+import android.media.tv.TvContentRating;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,8 +23,13 @@ import com.example.myworkout.entities.User;
 import com.example.myworkout.helpers.ApiError;
 import com.example.myworkout.helpers.ApiResponse;
 import com.example.myworkout.data.DataViewModel;
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.List;
 
 
 /**
@@ -86,9 +96,12 @@ public class UserFragment extends Fragment {
 
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        String firebaseId = firebaseUser.getUid();
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String firebaseId = null;
+
+        if (firebaseUser!=null)
+         firebaseId = firebaseUser.getUid();
 
         dataViewModel.getUser(getActivity(), firebaseId, false);
 
@@ -96,9 +109,40 @@ public class UserFragment extends Fragment {
         subscribeToErrors();
 
         TextView tvAccountName = view.findViewById(R.id.tvAccountName);
+
+        if (firebaseUser!= null)
         tvAccountName.setText(firebaseUser.getDisplayName());
 
 
+        Button btnLogout = view.findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOut();
+            }
+        });
+
+        Button btnDeleteAccount = view.findViewById(R.id.btnDeleteAccount);
+        btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteUserFromServer();
+            }
+        });
+
+
+
+
+    }
+
+    public void signOut() {
+        AuthUI.getInstance()
+                .signOut(getActivity())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Navigation.findNavController(getView()).navigate(R.id.action_userFragment_to_navigation);
+                    }
+                });
     }
 
     private void subscribeToErrors() {
@@ -118,9 +162,23 @@ public class UserFragment extends Fragment {
             }
     }
 
+    public void deleteUserFromServer() {
+
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser != null) {
+            String firebaseId = firebaseUser.getUid();
+            dataViewModel.deleteUser(getActivity(), firebaseId, firebaseUser);
+
+        }
+
+    }
+
     private void subscribeToApiResponse() {
 
         final TextView tvUserName = getView().findViewById(R.id.tvUserNameText);
+        final TextView tvPhoneNumber = getView().findViewById(R.id.tvPhoneNumberText);
+        final TextView tvEmail = getView().findViewById(R.id.tvEmailText);
+        final TextView tvBirthYear = getView().findViewById(R.id.tvBirthYearText);
 
             if (apiResponseObserver == null) {
                 // Observerer endringer:
@@ -135,7 +193,9 @@ public class UserFragment extends Fragment {
 
 
                                 tvUserName.setText(user.getName());
-
+                                tvPhoneNumber.setText(user.getPhone());
+                                tvEmail.setText(user.getEmail());
+//                                tvBirthYear.setText(user.getBirth_year());    //noe feil her....
                             } else {
 
                                 tvUserName.setText("...");
