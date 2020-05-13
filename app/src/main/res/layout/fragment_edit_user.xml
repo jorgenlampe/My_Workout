@@ -56,7 +56,7 @@
         android:id="@+id/etEditBirthYear"
         android:layout_column="1"
         android:layout_row="3"
-        android:inputType="number"></EditText>
+        android:inputType="text"></EditText>
 
 
     <Button

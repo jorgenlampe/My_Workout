@@ -43,6 +43,7 @@ public class EditUserFragment extends Fragment {
     private String username;
     private String phoneNumber;
     private String email;
+    private String birthYear;
 
     private EditText etUsername;
     private EditText etPhoneNumber;
@@ -77,8 +78,9 @@ public class EditUserFragment extends Fragment {
                 username = etUsername.getText().toString();
                 phoneNumber = etPhoneNumber.getText().toString();
                 email = etEmail.getText().toString();
+                birthYear = etBirthYear.getText().toString();
 
-                dataViewModel.putUser(getContext(), firebaseId, username, phoneNumber, email, 0);  //todo birthyear
+                dataViewModel.putUser(getContext(), firebaseId, username, phoneNumber, email, Integer.parseInt(birthYear));
                 toUserFragment();
             }
         });
@@ -103,7 +105,6 @@ public class EditUserFragment extends Fragment {
                         User user = (User) apiResponse.getResponseObject();
                         if (user != null) {
                             // Dersom response på GET, PUT, POST:
-
 
                         }
                     }

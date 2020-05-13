@@ -61,7 +61,7 @@ public class DataViewModel extends AndroidViewModel {
                         String email,
                         int birth_year)
     {
-        mRepository.putUser(context, firebase_id, name, phone, email,birth_year);
+        mRepository.putUser(context, firebase_id, name, phone, email, birth_year);
     }
 
     // DELETE user

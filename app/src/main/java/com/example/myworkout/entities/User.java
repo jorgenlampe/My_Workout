@@ -8,12 +8,12 @@ public class User implements Serializable {
     private String phone;
     private String email;
     private String name;
-    private int birthYear;
+    private String birthYear;
 
 
     //TODO User-objektet inneholder igjen objekter av andre typer (UserProgram, UserProgramExercises osv.)
 
-    public User(String firebaseId, String phone, String email, String name, int birthYear) {
+    public User(String firebaseId, String phone, String email, String name, String birthYear) {
         this.firebaseId = firebaseId;
         this.phone = phone;
         this.email = email;
@@ -53,11 +53,11 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public int getBirth_year() {
+    public String getBirth_year() {
         return birthYear;
     }
 
-    public void setBirth_year(int birthYear) {
+    public void setBirth_year(String birthYear) {
         this.birthYear = birthYear;
     }
 }
