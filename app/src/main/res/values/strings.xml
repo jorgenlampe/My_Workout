@@ -12,4 +12,5 @@
     <string name="editPhoneNumber">Endre telefonnummer</string>
     <string name="editEmail">Endre e-postadresse</string>
     <string name="editBirthYear">Endre fødselsår</string>
+    <string name="editUser">Endre brukerinfo</string>
 </resources>

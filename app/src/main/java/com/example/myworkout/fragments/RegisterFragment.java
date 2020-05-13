@@ -14,6 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.myworkout.data.DataViewModel;
+import com.example.myworkout.entities.User;
+import com.example.myworkout.helpers.ApiError;
+import com.example.myworkout.helpers.ApiResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -30,7 +34,7 @@ import com.example.myworkout.R;
  * Use the {@link RegisterFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegisterFragment extends Fragment {
+public class  RegisterFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -40,9 +44,13 @@ public class RegisterFragment extends Fragment {
     private Observer<ApiError> apiErrorObserver = null;
 
     private EditText etUsername;
-    EditText etEmail;
-    EditText etPhoneNumber;
-    EditText etBirthYear;
+    private EditText etEmail;
+    private EditText etPhoneNumber;
+    private EditText etBirthYear;
+
+    private String firebaseId;
+
+    private Button btnRegister;
 
     private DataViewModel dataViewModel;
 
@@ -81,29 +89,17 @@ public class RegisterFragment extends Fragment {
         }
     }
 
+
+
+    //onCreateVieww.... View view = inflater.inflate(R.layout.fragment_user, container, false); return view..
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-        dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        final String firebaseId = firebaseUser.getUid();
-
-        subscribeToApiResponse();
-        subscribeToErrors();
-
-        etUsername = view.findViewById(R.id.etUsername);
-        etEmail = view.findViewById(R.id.etEmail);
-        etPhoneNumber = view.findViewById(R.id.etPhoneNumber);
-        etBirthYear = view.findViewById(R.id.etBirthYear);
-
-
-        Button btnRegister = view.findViewById(R.id.btnRegister);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
                 String username = etUsername.getText().toString();
                 String email = etEmail.getText().toString();
@@ -113,10 +109,6 @@ public class RegisterFragment extends Fragment {
             }
         });
 
-        //subscribe to response/error.....
-
-
-        //dataview....post user , firebaseid, +++
 
 
     }
@@ -179,10 +171,29 @@ public class RegisterFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView (LayoutInflater inflater, ViewGroup container,
+                              Bundle savedInstanceState){
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_register, container, false);
+
+        dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        firebaseId = firebaseUser.getUid();
+
+        etUsername = view.findViewById(R.id.etUsername);
+        etEmail = view.findViewById(R.id.etEmail);
+        etPhoneNumber = view.findViewById(R.id.etPhoneNumber);
+        etBirthYear = view.findViewById(R.id.etBirthYear);
+
+
+        btnRegister = view.findViewById(R.id.btnRegister);
+
+        subscribeToApiResponse();
+        subscribeToErrors();
+
+        return view;
     }
 }
 

@@ -30,7 +30,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class  DataRepository {
+public class DataRepository {
 
     final String API_KEY = "82906135-8856-11ea-b";
     final String PROGRAMTYPE_PREFIX = "https://tusk.systems/trainingapp/v2/api.php/app_program_types/";
@@ -74,6 +74,7 @@ public class  DataRepository {
 
     // endre navn til get, post, put...
 
+    public void getProgramTypes() {
 
     /*
     * Henter ALLE ProgramTypes
@@ -116,13 +117,6 @@ public class  DataRepository {
                             }
                         });
 
-                queue.add(myJsonArrayGetRequest);
-
-            } else {
-                ApiResponse resp = new ApiResponse(true, "OK, bruker cached User", this.currentUser, myJsonGetRequest.getHttpStatusCode());
-                apiResponse.postValue(resp);
-            }
-        }
     }
 
     public void postProgramType() {
@@ -137,17 +131,13 @@ public class  DataRepository {
 
     }
 
-    public void getExercises(String rid) {
-    }
+    public void getExercises(String rid){}
 
-    public void postExercise() {
-    }
+    public void postExercise(){}
 
-    public void putExercise() {
-    }
+    public void putExercise(){}
 
-    public void deleteExercise() {
-    }
+    public void deleteExercise(){}
 
     public void getUser(Context context, final String firebaseId, boolean forceDownload) {
 
@@ -167,8 +157,8 @@ public class  DataRepository {
                             @Override
                             public void onResponse(JSONObject jsonObject) {
                                 Gson gson = new Gson();
-                                User userObject = gson.fromJson(jsonObject.toString(), User.class);
-                                ApiResponse resp = new ApiResponse(true, "OK", userObject, myJsonGetRequest.getHttpStatusCode());
+                                currentUser = gson.fromJson(jsonObject.toString(), User.class);
+                                ApiResponse resp = new ApiResponse(true, "OK", currentUser, myJsonGetRequest.getHttpStatusCode());
                                 apiResponse.postValue(resp);
                             }
                         },
@@ -283,9 +273,9 @@ public class  DataRepository {
                         try {
                             String message = response.getString("message");
                             JSONObject userAsJsonObject = response.getJSONObject("record");
-                            User user = gson.fromJson(userAsJsonObject.toString(), User.class);
-                            //                       PutUserResponse resp = new PutUserResponse(true, message, user);
-                            //                     putUserResponse.postValue(resp);
+                            currentUser = gson.fromJson(userAsJsonObject.toString(), User.class);
+                            ApiResponse resp = new ApiResponse(true, message, currentUser, myJsonPutRequest.getHttpStatusCode());
+                            apiResponse.postValue(resp);
                         } catch (JSONException e) {
                             ApiError apiError = new ApiError(-1, e.getMessage());
                             errorMessage.postValue(apiError);
@@ -316,8 +306,6 @@ public class  DataRepository {
 
     public void deleteUser(Context context,
                            String firebase_id, FirebaseUser firebaseUser) {
-
-        //TODO slette fra Firebase, ta en firebaseuser som parameter og kalle .delete();?
 
         firebaseUser.delete();
 
@@ -359,44 +347,30 @@ public class  DataRepository {
         queue.add(myJsonDeleteRequest);
     }
 
-    public void getUserPrograms() {
-    }
+    public void getUserPrograms(){}
 
-    public void postUserProgram() {
-    }
+    public void postUserProgram(){}
 
-    public void putUserProgram() {
-    }
+    public void putUserProgram(){}
 
-    public void deleteUserProgram() {
-    }
+    public void deleteUserProgram(){}
 
-    public void getUserProgramExercises() {
-    }
+    public void getUserProgramExercises(){}
 
-    public void postUserProgramExercise() {
-    }
+    public void postUserProgramExercise(){}
 
-    public void putUserProgramExercise() {
-    }
+    public void putUserProgramExercise(){}
 
-    public void deleteUserProgramExercise() {
-    }
+    public void deleteUserProgramExercise(){}
 
-    public void getUserProgramSessions() {
-    }
+    public void getUserProgramSessions(){}
 
-    public void postUserProgramSession() {
-    }
+    public void postUserProgramSession(){}
 
-    public void putUserProgramSession() {
-    }
+    public void putUserProgramSession(){}
 
-    public void deleteUserProgramSession() {
-    }
+    public void deleteUserProgramSession(){}
 
-    public void getUserStats() {
-    }
+    public void getUserStats(){}
 
-
-}
+ }
