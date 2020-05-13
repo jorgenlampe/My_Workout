@@ -1,6 +1,8 @@
 package com.example.myworkout.entities;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     private String firebaseId;
     private String phone;

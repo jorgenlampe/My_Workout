@@ -120,7 +120,7 @@ public class LoginFragment extends Fragment {
                 public void onChanged(ApiResponse apiResponse) {
                     if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
-                        User user = apiResponse.getUser();
+                        User user = (User) apiResponse.getResponseObject();
                         if (user != null) {
                             // Dersom response på GET, PUT, POST:
                             //            tvUserInfo.setText(user.toString());

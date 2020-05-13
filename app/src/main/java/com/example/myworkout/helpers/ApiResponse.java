@@ -1,24 +1,22 @@
 package com.example.myworkout.helpers;
 
-import com.example.myworkout.entities.User;
-
-public class ApiResponse {
+public class ApiResponse<T> {
     private boolean result;
     private String message;
     private int httpStatusCode;
-    private User user;
+    private T responseObject;
 
     public ApiResponse() {
         result=true;
         message="";
-        user = null;
+        responseObject = null;
         httpStatusCode = -1;
     }
 
-    public ApiResponse(boolean result, String message, User user, int httpStatusCode) {
+    public ApiResponse  (boolean result, String message, T type, int httpStatusCode) {
         this.result = result;
         this.message = message;
-        this.user = user;
+        this.responseObject = type;
         this.httpStatusCode = httpStatusCode;
     }
 
@@ -38,12 +36,12 @@ public class ApiResponse {
         this.message = message;
     }
 
-    public User getUser() {
-        return user;
+    public T getResponseObject() {
+        return responseObject;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setResponseObject(T responseObject) {
+        this.responseObject = responseObject;
     }
 
     public int getHttpStatusCode() {

@@ -70,4 +70,8 @@ public class DataViewModel extends AndroidViewModel {
         mRepository.deleteUser(context, firebase_id, firebaseUser);
     }
 
+    //GET ProgramTypes
+    public void getProgramTypes(Context context, boolean forceDownload) {
+        mRepository.getProgramTypes(context, forceDownload);
+    }
 }

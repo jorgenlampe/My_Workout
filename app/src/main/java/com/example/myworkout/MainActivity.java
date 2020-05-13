@@ -1,6 +1,7 @@
 package com.example.myworkout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -32,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
-
         //  FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         //        String firebaseId = firebaseUser.getUid();

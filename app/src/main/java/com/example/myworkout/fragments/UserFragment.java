@@ -1,6 +1,5 @@
 package com.example.myworkout.fragments;
 
-import android.media.tv.TvContentRating;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,7 +12,6 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -183,7 +181,7 @@ public class UserFragment extends Fragment {
                 public void onChanged(ApiResponse apiResponse) {
                     if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
-                        User user = apiResponse.getUser();
+                        User user = (User) apiResponse.getResponseObject();
                         if (user != null) {
                             // Dersom response på GET, PUT, POST:
 
