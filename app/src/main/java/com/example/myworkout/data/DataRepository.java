@@ -74,11 +74,9 @@ public class DataRepository {
 
     // endre navn til get, post, put...
 
-    public void getProgramTypes() {
-
     /*
-    * Henter ALLE ProgramTypes
-    * */
+     * Henter ALLE ProgramTypes
+     * */
     public void getProgramTypes(Context context, boolean forceDownload) {
         if (forceDownload || this.currentUser == null) {
             // Dersom nedlasting pågår og skjermen roteres vil downloading være true, ingen grunn til å starte nedlasting på nytt:
@@ -93,20 +91,20 @@ public class DataRepository {
                         new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray jsonArray) {
-                               try {
-                                   Gson gson = new Gson();
-                                   ArrayList<ProgramType> tmpList = new ArrayList<>();
-                                   for (int i = 0; i < jsonArray.length(); i++) {
-                                       JSONObject programTypeAsJson = jsonArray.getJSONObject(i);
-                                       ProgramType programType = gson.fromJson(programTypeAsJson.toString(), ProgramType.class);
-                                       System.out.println(programType.getDescription());
-                                       tmpList.add(programType);
-                                   }
-                                   ApiResponse resp = new ApiResponse(true, "OK", tmpList, myJsonArrayGetRequest.getHttpStatusCode());
-                                   apiResponse.postValue(resp);
-                               } catch (JSONException e) {
-                                   e.printStackTrace();
-                               }
+                                try {
+                                    Gson gson = new Gson();
+                                    ArrayList<ProgramType> tmpList = new ArrayList<>();
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject programTypeAsJson = jsonArray.getJSONObject(i);
+                                        ProgramType programType = gson.fromJson(programTypeAsJson.toString(), ProgramType.class);
+                                        System.out.println(programType.getDescription());
+                                        tmpList.add(programType);
+                                    }
+                                    ApiResponse resp = new ApiResponse(true, "OK", tmpList, myJsonArrayGetRequest.getHttpStatusCode());
+                                    apiResponse.postValue(resp);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         },
                         new Response.ErrorListener() {
@@ -116,8 +114,10 @@ public class DataRepository {
                                 errorMessage.postValue(apiError);
                             }
                         });
-
+            }
+        }
     }
+
 
     public void postProgramType() {
 
@@ -131,13 +131,17 @@ public class DataRepository {
 
     }
 
-    public void getExercises(String rid){}
+    public void getExercises(String rid) {
+    }
 
-    public void postExercise(){}
+    public void postExercise() {
+    }
 
-    public void putExercise(){}
+    public void putExercise() {
+    }
 
-    public void deleteExercise(){}
+    public void deleteExercise() {
+    }
 
     public void getUser(Context context, final String firebaseId, boolean forceDownload) {
 
@@ -347,30 +351,44 @@ public class DataRepository {
         queue.add(myJsonDeleteRequest);
     }
 
-    public void getUserPrograms(){}
+    public void getUserPrograms() {
+    }
 
-    public void postUserProgram(){}
+    public void postUserProgram() {
+    }
 
-    public void putUserProgram(){}
+    public void putUserProgram() {
+    }
 
-    public void deleteUserProgram(){}
+    public void deleteUserProgram() {
+    }
 
-    public void getUserProgramExercises(){}
+    public void getUserProgramExercises() {
+    }
 
-    public void postUserProgramExercise(){}
+    public void postUserProgramExercise() {
+    }
 
-    public void putUserProgramExercise(){}
+    public void putUserProgramExercise() {
+    }
 
-    public void deleteUserProgramExercise(){}
+    public void deleteUserProgramExercise() {
+    }
 
-    public void getUserProgramSessions(){}
+    public void getUserProgramSessions() {
+    }
 
-    public void postUserProgramSession(){}
+    public void postUserProgramSession() {
+    }
 
-    public void putUserProgramSession(){}
+    public void putUserProgramSession() {
+    }
 
-    public void deleteUserProgramSession(){}
+    public void deleteUserProgramSession() {
+    }
 
-    public void getUserStats(){}
+    public void getUserStats() {
+    }
+}
 
- }
+
