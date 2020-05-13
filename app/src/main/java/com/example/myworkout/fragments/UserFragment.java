@@ -108,6 +108,12 @@ public class UserFragment extends Fragment {
         tvBirthYear = view.findViewById(R.id.tvBirthYearText);
         tvAccountName = view.findViewById(R.id.tvAccountName);
 
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+
+        if (firebaseUser!=null) {
+            tvAccountName.setText(firebaseUser.getEmail());
+        }
 
         btnLogout = view.findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +154,6 @@ public class UserFragment extends Fragment {
 
         if (firebaseUser!=null) {
             firebaseId = firebaseUser.getUid();
-            tvAccountName.setText(firebaseUser.getDisplayName());
         }
 
         dataViewModel.getUser(getActivity(), firebaseId, false);
