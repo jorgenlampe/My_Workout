@@ -57,7 +57,7 @@ public class User implements Serializable {
     * Konverterer fra minutt til fodselsaar
      */
     public int getBirth_year() {
-        return 2020 -(birth_year/365/24/60);
+        return 2020 - (birth_year/365/24/60);
     }
 
 

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -85,18 +86,6 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         // Bruk cachet verdi på user, hvis den eksisterer. Hvis ikke last ned.
         getUserFromServer(false);   //<==
-
-
-        Button btnRegisterUser = view.findViewById(R.id.btnRegisterUser);
-        btnRegisterUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_registerFragment);
-            }
-        });
-
-
     }
 
     // GET: Last ned brukerinfo fra server:
@@ -164,6 +153,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 createSignInIntent();
+
             }
         });
         btnLogout = view.findViewById(R.id.btnLogout);
@@ -173,6 +163,16 @@ public class LoginFragment extends Fragment {
                 signOut();
             }
         });
+
+        /*
+        * Skrur av/på login og logg ut knappene, og markerer de grå dersom de ikke er aktivert, og oppdaterer UI
+         */
+        if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+            updateUIOnSignIn();
+        } else {
+            updateUIOnSignOut();
+        }
+
         tvStatus = view.findViewById(R.id.tvStatus);
 
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
@@ -205,8 +205,14 @@ public class LoginFragment extends Fragment {
             IdpResponse response = IdpResponse.fromResultIntent(data);
             if (resultCode == Activity.RESULT_OK) {
                 // Successfully signed in
+                updateUIOnSignIn();
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 updateUI(user.getEmail());
+                String firebaseId = user.getUid();
+                String username = user.getDisplayName();
+                String email = user.getEmail();
+                String phone = user.getPhoneNumber();
+                dataViewModel.postUser(getContext(), firebaseId, username, phone, email, 0);
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
@@ -224,5 +230,20 @@ public class LoginFragment extends Fragment {
                         updateUI("Logget ut");
                     }
                 });
+        updateUIOnSignOut();
+    }
+
+    public void updateUIOnSignOut() {
+        btnLogout.setClickable(false);
+        btnLogout.setAlpha(0.5f);
+        btnLogin.setClickable(true);
+        btnLogin.setAlpha(1f);
+    }
+
+    public void updateUIOnSignIn() {
+        btnLogout.setClickable(true);
+        btnLogout.setAlpha(1f);
+        btnLogin.setClickable(false);
+        btnLogin.setAlpha(0.5f);
     }
 }

@@ -95,9 +95,17 @@ public class EditUserFragment extends Fragment {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
                         User user = (User) apiResponse.getResponseObject();
                         if (user != null) {
-                            etBirthYear.setText(String.valueOf(user.getBirth_year()));
+                            if(user.getBirth_year() == 2020) {
+                                etPhoneNumber.setText("");
+                            } else {
+                                etBirthYear.setText(String.valueOf(user.getBirth_year()));
+                            }
                             etEmail.setText(user.getEmail());
-                            etPhoneNumber.setText(user.getPhone());
+                            if(user.getPhone().equals("00000000")) {
+                                etPhoneNumber.setText("");
+                            } else {
+                                etPhoneNumber.setText(user.getPhone());
+                            }
                             etUsername.setText(user.getName());
                         }
                     }

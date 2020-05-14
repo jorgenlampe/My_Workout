@@ -30,13 +30,6 @@
         android:layout_height="wrap_content">
     </Button>
 
-    <Button
-        android:id="@+id/btnRegisterUser"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="REGISTRER BRUKER"></Button>
-
     <TextView
         android:id="@+id/tvStatus"
         android:layout_width="match_parent"

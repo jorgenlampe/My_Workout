@@ -199,9 +199,17 @@ public class UserFragment extends Fragment {
                             TextView tvBirthYear = getView().findViewById(R.id.tvBirthYearText);
 
                             tvUserName.setText(user.getName());
-                            tvPhoneNumber.setText(user.getPhone());
                             tvEmail.setText(user.getEmail());
-                            tvBirthYear.setText(String.valueOf(user.getBirth_year()));
+                            if(user.getBirth_year() == 2020) {
+                                tvBirthYear.setText("");
+                            } else {
+                                tvBirthYear.setText(String.valueOf(user.getBirth_year()));
+                            }
+                            if(user.getPhone().equals("00000000")) {
+                                tvPhoneNumber.setText("");
+                            } else {
+                                tvPhoneNumber.setText(user.getPhone());
+                            }
                         }
                     }
                 }
