@@ -35,8 +35,8 @@ public class EditUserFragment extends Fragment {
     private Observer<ApiResponse> apiResponseObserver = null;
     private Observer<ApiError> apiErrorObserver = null;
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    FirebaseUser firebaseUser;
+    String firebaseId = null;
 
     private String username;
     private String phoneNumber;
@@ -63,16 +63,12 @@ public class EditUserFragment extends Fragment {
         btnUpdateUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                String firebaseId = null;
-
-                if (firebaseUser!=null)
-                    firebaseId = firebaseUser.getUid();
 
                 username = etUsername.getText().toString();
                 phoneNumber = etPhoneNumber.getText().toString();
                 email = etEmail.getText().toString();
                 birthYear = Integer.parseInt(etBirthYear.getText().toString());
+                System.out.println(birthYear);
                 int ageInMinutes = (Calendar.getInstance().get(Calendar.YEAR) - birthYear) * 365 * 24 * 60;
 
                 dataViewModel.putUser(getContext(), firebaseId, username, phoneNumber, email, ageInMinutes);
@@ -99,8 +95,10 @@ public class EditUserFragment extends Fragment {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
                         User user = (User) apiResponse.getResponseObject();
                         if (user != null) {
-                            // Dersom response på GET, PUT, POST:
-
+                            etBirthYear.setText(String.valueOf(user.getBirth_year()));
+                            etEmail.setText(user.getEmail());
+                            etPhoneNumber.setText(user.getPhone());
+                            etUsername.setText(user.getName());
                         }
                     }
                 }
@@ -140,6 +138,10 @@ public class EditUserFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_edit_user, container, false);
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        firebaseId = null;
+        if (firebaseUser!=null)
+            firebaseId = firebaseUser.getUid();
 
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 
@@ -153,6 +155,7 @@ public class EditUserFragment extends Fragment {
 
         subscribeToApiResponse();
         subscribeToErrors();
+        dataViewModel.getUser(getActivity(), firebaseId, false);
 
         return view;
     }

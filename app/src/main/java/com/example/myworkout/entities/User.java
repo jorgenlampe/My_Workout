@@ -53,9 +53,13 @@ public class User implements Serializable {
         this.name = name;
     }
 
+    /*
+    * Konverterer fra minutt til fodselsaar
+     */
     public int getBirth_year() {
-        return birth_year;
+        return 2020 -(birth_year/365/24/60);
     }
+
 
     public void setBirth_year(int birthYear) {
         this.birth_year = birthYear;
