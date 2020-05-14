@@ -23,6 +23,8 @@ import com.example.myworkout.helpers.ApiResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Calendar;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,7 +45,7 @@ public class EditUserFragment extends Fragment {
     private String username;
     private String phoneNumber;
     private String email;
-    private String birthYear;
+    private int birthYear;
 
     private EditText etUsername;
     private EditText etPhoneNumber;
@@ -78,9 +80,10 @@ public class EditUserFragment extends Fragment {
                 username = etUsername.getText().toString();
                 phoneNumber = etPhoneNumber.getText().toString();
                 email = etEmail.getText().toString();
-                birthYear = etBirthYear.getText().toString();
+                birthYear = Integer.parseInt(etBirthYear.getText().toString());
+                int ageInMinutes = (Calendar.getInstance().get(Calendar.YEAR) - birthYear) * 365 * 24 * 60;
 
-                dataViewModel.putUser(getContext(), firebaseId, username, phoneNumber, email, Integer.parseInt(birthYear));
+                dataViewModel.putUser(getContext(), firebaseId, username, phoneNumber, email, ageInMinutes);
                 toUserFragment();
             }
         });
@@ -134,31 +137,9 @@ public class EditUserFragment extends Fragment {
 
 
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment editUserFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static EditUserFragment newInstance(String param1, String param2) {
-        EditUserFragment fragment = new EditUserFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -175,8 +156,6 @@ public class EditUserFragment extends Fragment {
         etEmail = view.findViewById(R.id.etEditEmail);
         etBirthYear = view.findViewById(R.id.etEditBirthYear);
 
-
-        //  final int birthYear = Integer.parseInt(etBirthYear.getText().toString());
 
         btnUpdateUser = view.findViewById(R.id.btnUpdateUser);
 

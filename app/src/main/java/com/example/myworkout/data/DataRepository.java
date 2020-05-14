@@ -150,9 +150,7 @@ public class DataRepository {
             // Dersom nedlasting pågår og skjermen roteres vil downloading være true, ingen grunn til å starte nedlasting på nytt:
             if (!this.downloading) {
                 String url = USERS_PREFIX + firebaseId + "?_api_key=" + API_KEY;
-                System.out.println(url);
                 queue = MySingletonQueue.getInstance(context).getRequestQueue();
-
                 downloading = true;
                 myJsonGetRequest = new MyJsonObjectRequest(
                         Request.Method.GET,

@@ -200,9 +200,6 @@ public class UserFragment extends Fragment {
     }
 
     private void subscribeToApiResponse() {
-
-
-
         if (apiResponseObserver == null) {
             // Observerer endringer:
             apiResponseObserver = new Observer<ApiResponse>() {
@@ -223,6 +220,8 @@ public class UserFragment extends Fragment {
                             tvPhoneNumber.setText(user.getPhone());
                             tvEmail.setText(user.getEmail());
                             tvBirthYear.setText(String.valueOf(user.getBirth_year()));  //hvorfor vises ikke dette????
+
+                            System.out.println(user.getBirth_year());
 
 //                                tvBirthYear.setText(user.getBirth_year());    //noe feil her....
                         } else {
