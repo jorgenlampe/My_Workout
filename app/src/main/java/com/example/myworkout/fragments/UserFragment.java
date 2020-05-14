@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,6 +108,12 @@ public class UserFragment extends Fragment {
         tvBirthYear = view.findViewById(R.id.tvBirthYearText);
         tvAccountName = view.findViewById(R.id.tvAccountName);
 
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+
+        if (firebaseUser!=null) {
+            tvAccountName.setText(firebaseUser.getEmail());
+        }
 
         btnLogout = view.findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +154,6 @@ public class UserFragment extends Fragment {
 
         if (firebaseUser!=null) {
             firebaseId = firebaseUser.getUid();
-            tvAccountName.setText(firebaseUser.getDisplayName());
         }
 
         dataViewModel.getUser(getActivity(), firebaseId, false);
@@ -216,6 +222,8 @@ public class UserFragment extends Fragment {
                             tvUserName.setText(user.getName());
                             tvPhoneNumber.setText(user.getPhone());
                             tvEmail.setText(user.getEmail());
+                            tvBirthYear.setText(String.valueOf(user.getBirth_year()));  //hvorfor vises ikke dette????
+
 //                                tvBirthYear.setText(user.getBirth_year());    //noe feil her....
                         } else {
 
