@@ -13,4 +13,9 @@
     <string name="editEmail">Endre e-postadresse</string>
     <string name="editBirthYear">Endre fødselsår</string>
     <string name="editUser">Endre brukerinfo</string>
+    <string name="hintProgramType">Program type...</string>
+    <string name="hintUserId">Bruker id...</string>
+    <string name="hintName">Navn på program...</string>
+    <string name="hintDescription">Beskrivelse...</string>
+    <string name="hintTiming">Tidtaker ja(1) / nei(0)...</string>
 </resources>
