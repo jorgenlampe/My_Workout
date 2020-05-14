@@ -13,6 +13,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.myworkout.entities.ProgramType;
 import com.example.myworkout.entities.User;
+import com.example.myworkout.entities.UserProgram;
 import com.example.myworkout.helpers.ApiError;
 import com.example.myworkout.helpers.ApiResponse;
 import com.example.myworkout.helpers.MyJsonArrayRequest;
@@ -149,7 +150,7 @@ public class DataRepository {
             // Dersom nedlasting pågår og skjermen roteres vil downloading være true, ingen grunn til å starte nedlasting på nytt:
             if (!this.downloading) {
                 String url = USERS_PREFIX + firebaseId + "?_api_key=" + API_KEY;
-
+                System.out.println(url);
                 queue = MySingletonQueue.getInstance(context).getRequestQueue();
 
                 downloading = true;
@@ -215,8 +216,8 @@ public class DataRepository {
                             String message = response.getString("message");
                             JSONObject userAsJsonObject = response.getJSONObject("record");
                             User user = gson.fromJson(userAsJsonObject.toString(), User.class);
-                            //                       PostUserResponse resp = new PostUserResponse(true, message, user);
-                            //                     postUserResponse.postValue(resp);
+                            ApiResponse resp = new ApiResponse(true, message, user, myJsonPostRequest.getHttpStatusCode());
+                            apiResponse.postValue(resp);
                         } catch (JSONException e) {
                             ApiError apiError = new ApiError(-1, e.getMessage());
                             errorMessage.postValue(apiError);
@@ -351,10 +352,110 @@ public class DataRepository {
         queue.add(myJsonDeleteRequest);
     }
 
-    public void getUserPrograms() {
+    public void getUserPrograms(Context context, String firebaseId) {
+        if (!this.downloading) {
+            String url = USERS_PREFIX + firebaseId + "?_api_key=" + API_KEY + "&_expand_children=true";
+            queue = MySingletonQueue.getInstance(context).getRequestQueue();
+            downloading = true;
+            myJsonGetRequest = new MyJsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject jsonObject) {
+                            try {
+                                Gson gson = new Gson();
+                                ArrayList<UserProgram> tmpList = new ArrayList<>();
+                                JSONArray jsonUserPrograms = jsonObject.getJSONArray("user_programs");
+                                for (int i = 0; i < jsonUserPrograms.length(); i++) {
+                                    JSONObject userProgramAsJson = jsonUserPrograms.getJSONObject(i);
+                                    System.out.println(userProgramAsJson.toString());
+                                    UserProgram userProgram = gson.fromJson(userProgramAsJson.toString(), UserProgram.class);
+                                    tmpList.add(userProgram);
+                                }
+                                ApiResponse resp = new ApiResponse(true, "OK", tmpList, myJsonGetRequest.getHttpStatusCode());
+                                apiResponse.postValue(resp);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            ApiError apiError = VolleyErrorParser.parse(error);
+                            errorMessage.postValue(apiError);
+                        }
+                    });
+            queue.add(myJsonGetRequest);
+        }
     }
 
-    public void postUserProgram() {
+
+
+    public void postUserProgram(Context context,
+                                String app_program_type_id,
+                                String name,
+                                String description,
+                                boolean use_timing,
+                                String user_id) {
+        System.out.println("called poset");
+        final HashMap<String, String> params = new HashMap<String, String>();
+        params.put("_api_key", API_KEY);
+        params.put("app_program_type_id", app_program_type_id);
+        params.put("user_id", user_id);
+        params.put("name", name);
+        params.put("description", description);
+        if(use_timing) {
+            params.put("use_timing", "0");
+        } else {
+            params.put("use_timing", "1");
+        }
+
+        queue = MySingletonQueue.getInstance(context).getRequestQueue();
+
+        myJsonPostRequest = new MyJsonObjectRequest(
+                Request.Method.POST,
+                USER_PROGRAM_PREFIX,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Gson gson = new Gson();
+                        try {
+                            String message = response.getString("message");
+                            JSONObject userAsJsonObject = response.getJSONObject("record");
+                            UserProgram userProgram = gson.fromJson(userAsJsonObject.toString(), UserProgram.class);
+                            ApiResponse resp = new ApiResponse(true, message, userProgram, myJsonPostRequest.getHttpStatusCode());
+                            apiResponse.postValue(resp);
+                        } catch (JSONException e) {
+                            System.out.println("response");
+
+                            ApiError apiError = new ApiError(-1, e.getMessage());
+                            errorMessage.postValue(apiError);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        ApiError apiError = VolleyErrorParser.parse(error);
+                        errorMessage.postValue(apiError);
+                    }
+                }
+        ) {
+            @Override
+            public byte[] getBody() {
+                return new JSONObject(params).toString().getBytes();
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+        queue.add(myJsonPostRequest);
     }
 
     public void putUserProgram() {

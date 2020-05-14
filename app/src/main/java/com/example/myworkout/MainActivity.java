@@ -11,6 +11,8 @@ import com.example.myworkout.data.DataViewModel;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,7 +34,14 @@ public class MainActivity extends AppCompatActivity {
             NavigationUI.setupWithNavController(bottomNav, navController);
         }
 
-        //dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
+  //     dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
+        //FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+       // String firebaseId = firebaseUser.getUid();
+
+
+        //dataViewModel.postUserProgram(this, "1", firebaseId, "tesdst", "testdsdfes", false, "384");
+
         //  FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         //        String firebaseId = firebaseUser.getUid();

@@ -28,6 +28,8 @@ import com.example.myworkout.helpers.ApiResponse;
 
 import com.example.myworkout.R;
 
+import java.util.Calendar;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,31 +64,9 @@ public class  RegisterFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RegisterFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RegisterFragment newInstance(String param1, String param2) {
-        RegisterFragment fragment = new RegisterFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
 
@@ -95,27 +75,22 @@ public class  RegisterFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-
-
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String username = etUsername.getText().toString();
                 String email = etEmail.getText().toString();
                 String phoneNumber = etPhoneNumber.getText().toString();
                 int birthYear = Integer.parseInt(etBirthYear.getText().toString());
-                dataViewModel.postUser(getContext(), firebaseId, username, phoneNumber, email, birthYear);
+                int ageInMinutes = (Calendar.getInstance().get(Calendar.YEAR) - birthYear) * 365 * 24 * 60;
+
+                dataViewModel.postUser(getContext(), firebaseId, username, phoneNumber, email, ageInMinutes);
             }
         });
-
-
-
     }
 
 
     private void subscribeToErrors() {
-
         if (apiErrorObserver == null) {
             // Observerer endringer i errorMessage:
             apiErrorObserver = new Observer<ApiError>() {
@@ -133,7 +108,6 @@ public class  RegisterFragment extends Fragment {
 
     //TODO MÅ OPPDATERES
     private void subscribeToApiResponse() {
-
         if (apiResponseObserver == null) {
             // Observerer endringer:
             apiResponseObserver = new Observer<ApiResponse>() {
@@ -178,10 +152,13 @@ public class  RegisterFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
 
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+            view.findViewById(R.id.btnRegister).setClickable(false);
+        }
 
-        firebaseId = firebaseUser.getUid();
+        //TODO FÅR IKKE REGISTRERE NY BRUKER OM DU ER LOGGET INN. MÅ GENERERE EN NY FIREBASEID
 
+        System.out.println("sdeiofdsjofsdj" + firebaseId);
         etUsername = view.findViewById(R.id.etUsername);
         etEmail = view.findViewById(R.id.etEmail);
         etPhoneNumber = view.findViewById(R.id.etPhoneNumber);

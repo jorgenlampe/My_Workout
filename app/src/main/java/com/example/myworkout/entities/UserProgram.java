@@ -7,14 +7,18 @@ public class UserProgram {
 
     private String name;
     private String description;
-    private ProgramType programType;
-    private List<Exercise> exercises;
+    private int app_program_type_id;
+    private int use_timing;
+    private int user_id;
+    private int id;
 
-    public UserProgram(String name, String description, ProgramType programType) {
+    public UserProgram(int id, String name, String description, int app_program_type_id, int use_timing, int user_id) {
         this.name = name;
+        this.user_id = user_id;
         this.description = description;
-        this.programType = programType;
-        exercises = new ArrayList<>();
+        this.app_program_type_id = app_program_type_id;
+        this.use_timing = use_timing;
+        this.id = id;
     }
 
     public String getName() {
@@ -32,24 +36,6 @@ public class UserProgram {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public ProgramType getProgramType() {
-        return programType;
-    }
-
-    public void setProgramType(ProgramType programType) {
-        this.programType = programType;
-    }
-
-    public List<Exercise> getExercises() {
-        return exercises;
-    }
-
-    public void setExercises(List<Exercise> exercises) {
-        this.exercises = exercises;
-    }
-
-    public void addExercise(Exercise exercise){
-        exercises.add(exercise);
-    }
 }
+
+
