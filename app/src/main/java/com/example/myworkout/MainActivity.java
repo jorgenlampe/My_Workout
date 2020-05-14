@@ -9,6 +9,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.myworkout.data.DataViewModel;
 
 import android.os.Bundle;
+import android.view.Menu;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,4 +53,5 @@ public class MainActivity extends AppCompatActivity {
 
 //            Log.d("yyy", firebaseId);
     }
+
 }

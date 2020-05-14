@@ -31,11 +31,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link UserFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class UserFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,39 +55,14 @@ public class UserFragment extends Fragment {
     private Observer<ApiResponse> apiResponseObserver = null;
     private Observer<ApiError> apiErrorObserver = null;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public UserFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment UserFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static UserFragment newInstance(String param1, String param2) {
-        UserFragment fragment = new UserFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -110,10 +81,6 @@ public class UserFragment extends Fragment {
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-
-        if (firebaseUser!=null) {
-            tvAccountName.setText(firebaseUser.getEmail());
-        }
 
         btnLogout = view.findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -138,6 +105,21 @@ public class UserFragment extends Fragment {
                 Navigation.findNavController(getView()).navigate(R.id.action_userFragment_to_editUserFragment);
             }
         });
+
+        if (firebaseUser!=null) {
+            tvAccountName.setText(firebaseUser.getEmail());
+            btnLogout.setAlpha(1f);
+            btnDeleteAccount.setAlpha(1f);
+            btnEditUser.setAlpha(1f);
+        } else {
+            btnEditUser.setClickable(false);
+            btnEditUser.setAlpha(0.5f);
+            btnDeleteAccount.setClickable(false);
+            btnDeleteAccount.setAlpha(0.5f);
+            btnLogout.setClickable(false);
+            btnLogout.setAlpha(0.5f);
+        }
+
 
         subscribeToApiResponse();
         subscribeToErrors();
@@ -219,25 +201,7 @@ public class UserFragment extends Fragment {
                             tvUserName.setText(user.getName());
                             tvPhoneNumber.setText(user.getPhone());
                             tvEmail.setText(user.getEmail());
-                            tvBirthYear.setText(String.valueOf(user.getBirth_year()));  //hvorfor vises ikke dette????
-
-                            System.out.println(user.getBirth_year());
-
-//                                tvBirthYear.setText(user.getBirth_year());    //noe feil her....
-                        } else {
-
-                            // tvUserName.setText("...");
-
-
-                            // Dersom response på DELETE
-                            //                         signOut();
-                            //                       tvUserInfo.setText("");
-                            //                     etName.setText("");
-                            //                   etEmail.setText("");
-                            //                 etPhone.setText("");
-                            //               etName.setEnabled(false);
-                            //             etEmail.setEnabled(false);
-                            //           etPhone.setEnabled(false);
+                            tvBirthYear.setText(String.valueOf(user.getBirth_year()));
                         }
                     }
                 }

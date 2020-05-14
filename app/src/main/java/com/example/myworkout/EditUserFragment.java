@@ -26,11 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Calendar;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link EditUserFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class EditUserFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -54,9 +50,6 @@ public class EditUserFragment extends Fragment {
 
     private Button btnUpdateUser;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public EditUserFragment() {
         // Required empty public constructor
@@ -70,7 +63,6 @@ public class EditUserFragment extends Fragment {
         btnUpdateUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                 String firebaseId = null;
 
@@ -155,7 +147,6 @@ public class EditUserFragment extends Fragment {
         etPhoneNumber = view.findViewById(R.id.etEditPhoneNumber);
         etEmail = view.findViewById(R.id.etEditEmail);
         etBirthYear = view.findViewById(R.id.etEditBirthYear);
-
 
         btnUpdateUser = view.findViewById(R.id.btnUpdateUser);
 
