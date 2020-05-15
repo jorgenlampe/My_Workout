@@ -18,4 +18,5 @@
     <string name="hintName">Navn på program...</string>
     <string name="hintDescription">Beskrivelse...</string>
     <string name="hintTiming">Tidtaker ja(1) / nei(0)...</string>
+    <string name="btnAddUserProgram">Add user program</string>
 </resources>

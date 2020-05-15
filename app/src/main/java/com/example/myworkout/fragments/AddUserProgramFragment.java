@@ -3,15 +3,22 @@ package com.example.myworkout.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.myworkout.R;
 import com.example.myworkout.data.DataViewModel;
+import com.example.myworkout.entities.User;
+import com.example.myworkout.helpers.ApiError;
+import com.example.myworkout.helpers.ApiResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -32,12 +39,25 @@ public class AddUserProgramFragment extends Fragment {
     private EditText etAddName;
     private EditText etAddDescription;
     private EditText etAddTiming;
+    private Button btnAddNewUserProgram;
 
     private String programType;
     private String userId;
     private String name;
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
     private String description;
     private boolean timing;
+
+    private Observer<ApiResponse> apiResponseObserver = null;
+    private Observer<ApiError> apiErrorObserver = null;
 
     private DataViewModel dataViewModel;
 
@@ -82,14 +102,18 @@ public class AddUserProgramFragment extends Fragment {
         // Inflate the layout for this fragment'
         View view = inflater.inflate(R.layout.fragment_add_user_program, container, false);
 
+        dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
+
         etAddProgramType = view.findViewById(R.id.etAddProgramType);
         etAddUserId = view.findViewById(R.id.etAddUserId);
         etAddName = view.findViewById(R.id.etAddName);
         etAddDescription = view.findViewById(R.id.etAddDescription);
         etAddTiming = view.findViewById(R.id.etAddTiming);
 
+        btnAddNewUserProgram = view.findViewById(R.id.btnAddUserProgram);
 
-
+        subscribeToApiResponse();
+        subscribeToErrors();
 
         return view;
 
@@ -98,28 +122,78 @@ public class AddUserProgramFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState){
 
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        String firebaseId = null;
-
-        if (firebaseUser!=null) {
-            firebaseId = firebaseUser.getUid();
-        }
 
         programType = etAddProgramType.getText().toString();
-        userId = etAddUserId.getText().toString();
+        // todo finne userID.....
+        // userId = etAddUserId.getText().toString();
         name = etAddName.getText().toString();
         description = etAddDescription.getText().toString();
 
+
         timing = true;  //todo må fikses
 
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
+        dataViewModel.getUser(getContext(), firebaseUser.getUid(), false);
 
-        dataViewModel.postUserProgram(getContext(), programType, firebaseId, name, description, timing, userId);
+        btnAddNewUserProgram.setOnClickListener(new View.OnClickListener() {
+            @Override
 
-        //todo APIresponse etc....
+            public void onClick(View v) {
+                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+                String firebaseId = null;
+
+                if (firebaseUser!=null) {
+                    firebaseId = firebaseUser.getUid();
+                }
+
+                dataViewModel.postUserProgram(getContext(), programType, firebaseId, name, description, timing, getUserId());
+
+            }
+        });
+
+
+
+
 
     }
 
+    private void subscribeToApiResponse() {
+        if (apiResponseObserver == null) {
+            // Observerer endringer:
+            apiResponseObserver = new Observer<ApiResponse>() {
+                @Override
+                public void onChanged(ApiResponse apiResponse) {
+                    if(getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
+                        Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " ("  + ")", Toast.LENGTH_SHORT).show();
+                        User user = (User) apiResponse.getResponseObject();
+                        if (user != null) {
+                            // Dersom response på GET, PUT, POST:
+
+
+                        }
+                    }
+                }
+            };
+            dataViewModel.getApiResponse().observe(getViewLifecycleOwner(), apiResponseObserver);
+        }
+    }
+    private void subscribeToErrors() {
+
+        if (apiErrorObserver == null) {
+            // Observerer endringer i errorMessage:
+            apiErrorObserver = new Observer<ApiError>() {
+                @Override
+                public void onChanged(ApiError apiError) {
+                    if(getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
+                        if (apiError != null)
+                            Toast.makeText(getActivity(), apiError.getMessage() + ": " + String.valueOf(apiError.getCode()), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            };
+            dataViewModel.getApiError().observe(getViewLifecycleOwner(), apiErrorObserver);
+        }
+    }
 }

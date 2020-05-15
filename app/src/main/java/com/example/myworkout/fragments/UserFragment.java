@@ -193,6 +193,8 @@ public class UserFragment extends Fragment {
                         if (user != null) {
                             // Dersom response på GET, PUT, POST:
 
+
+
                             TextView tvUserName = getView().findViewById(R.id.tvUserNameText);
                             TextView tvPhoneNumber = getView().findViewById(R.id.tvPhoneNumberText);
                             TextView tvEmail = getView().findViewById(R.id.tvEmailText);

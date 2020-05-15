@@ -34,8 +34,8 @@ public class UserProgramAdapter extends RecyclerView.Adapter<UserProgramAdapter.
 
             userProgramsFragment = fragment;
 
-            tv1 = itemView.findViewById(R.id.tv1);
-            tv2 = itemView.findViewById(R.id.tv2);
+            tv1 = itemView.findViewById(R.id.tvUserProgramName);
+            tv2 = itemView.findViewById(R.id.tvUserProgramDescription);
             itemView.setOnClickListener((View.OnClickListener) this);   //????
         }
 
@@ -56,6 +56,7 @@ public class UserProgramAdapter extends RecyclerView.Adapter<UserProgramAdapter.
         public void onBindViewHolder(MyViewHolder holder, int position) {
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
+            holder.tv1.setText("heisann");
             holder.userProgramsFragment.setUserProgram(userPrograms.get(position));
             //.setQuestion(questions.get(position), answersChosen[position]);
         }

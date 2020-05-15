@@ -1,18 +1,31 @@
 package com.example.myworkout.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class UserProgram {
 
     private String name;
     private String description;
     private int app_program_type_id;
     private int use_timing;
-    private int user_id;
+    private String user_id;
     private int id;
 
-    public UserProgram(int id, String name, String description, int app_program_type_id, int use_timing, int user_id) {
+    public int getApp_program_type_id() {
+        return app_program_type_id;
+    }
+
+    public int getUse_timing() {
+        return use_timing;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public UserProgram(int id, String name, String description, int app_program_type_id, int use_timing, String user_id) {
         this.name = name;
         this.user_id = user_id;
         this.description = description;

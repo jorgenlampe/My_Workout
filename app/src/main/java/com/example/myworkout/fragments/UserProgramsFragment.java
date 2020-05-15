@@ -28,6 +28,7 @@ import com.example.myworkout.helpers.ApiResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,8 +46,8 @@ public class UserProgramsFragment extends Fragment {
     private Observer<ApiResponse> apiResponseObserver = null;
     private Observer<ApiError> apiErrorObserver = null;
 
-    private TextView tv1;
-    private TextView tv2;
+    private TextView tvUserProgramName;
+    private TextView tvUserProgramDescription;
 
     private Button btnAddUserProgram;
 
@@ -94,16 +95,24 @@ public class UserProgramsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
+        View view = inflater.inflate(R.layout.fragment_user_programs, container, false);
 
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
+
+        tvUserProgramName = view.findViewById(R.id.tvUserProgramName);
+        tvUserProgramDescription = view.findViewById(R.id.tvUserProgramDescription);
+
+        recyclerView = view.findViewById(R.id.my_recycler_view);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getActivity());//bedre ytelse med fast størrelse på layout
+        recyclerView.setLayoutManager(layoutManager);
 
 
 
         subscribeToApiResponse();
         subscribeToErrors();
 
-        return inflater.inflate(R.layout.fragment_user_programs, container, false);
+        return view;
     }
 
     @Override
@@ -118,7 +127,6 @@ public class UserProgramsFragment extends Fragment {
         }
 
         btnAddUserProgram = getView().findViewById(R.id.btnAddUserProgram);
-        btnAddUserProgram.setText("Add user");
 
         btnAddUserProgram.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,22 +135,25 @@ public class UserProgramsFragment extends Fragment {
             }
         });
 
-        recyclerView = view.findViewById(R.id.my_recycler_view);
-        recyclerView.setHasFixedSize(true); //bedre ytelse med fast størrelse på layout
+        //todo test
 
+//todo test
 
         layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
+
 
         dataViewModel.getUserPrograms(getContext(), firebaseId);
+
 
 
     }
 
     public void setUserProgram(UserProgram program) {
 
-        tv1.setText(program.getDescription());
-        tv2.setText(program.getName());
+        // todo fikses....
+
+        tvUserProgramName.setText("test test");
+        tvUserProgramDescription.setText(program.getName());
 
     }
 
@@ -156,8 +167,10 @@ public class UserProgramsFragment extends Fragment {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
                         List<UserProgram> programs = (List<UserProgram>) apiResponse.getResponseObject();
 
+                        Log.d("zzzyy", "rezponze");
                         if (programs != null) {
                             // Dersom response på GET, PUT, POST:
+
                             mAdapter = new UserProgramAdapter(programs);
                             recyclerView.setAdapter(mAdapter);
                     //koble adapter og sette textView.....

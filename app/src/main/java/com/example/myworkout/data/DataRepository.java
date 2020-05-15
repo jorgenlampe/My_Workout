@@ -2,6 +2,7 @@ package com.example.myworkout.data;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -151,6 +152,7 @@ public class DataRepository {
             if (!this.downloading) {
                 String url = USERS_PREFIX + firebaseId + "?_api_key=" + API_KEY;
                 queue = MySingletonQueue.getInstance(context).getRequestQueue();
+                Log.d("ullu", url);
                 downloading = true;
                 myJsonGetRequest = new MyJsonObjectRequest(
                         Request.Method.GET,
