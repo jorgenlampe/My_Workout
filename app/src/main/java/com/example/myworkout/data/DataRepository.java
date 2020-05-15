@@ -399,12 +399,12 @@ public class DataRepository {
                                 String name,
                                 String description,
                                 boolean use_timing,
-                                String user_id) {
+                                int id) {
         System.out.println("called poset");
         final HashMap<String, String> params = new HashMap<String, String>();
         params.put("_api_key", API_KEY);
         params.put("app_program_type_id", app_program_type_id);
-        params.put("user_id", user_id);
+        params.put("user_id", String.valueOf(id));
         params.put("name", name);
         params.put("description", description);
         if(use_timing) {

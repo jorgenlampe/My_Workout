@@ -86,7 +86,7 @@ public class DataViewModel extends AndroidViewModel {
                                 String firebase_id,
                                 String name,
                                 String description,
-                                boolean use_timing, String user_id) {
-            mRepository.postUserProgram(context, app_program_type_id, name, description, use_timing, user_id);
+                                boolean use_timing, int id) {
+            mRepository.postUserProgram(context, app_program_type_id, name, description, use_timing, id);
     }
 }
