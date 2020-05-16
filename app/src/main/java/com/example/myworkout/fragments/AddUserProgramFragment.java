@@ -1,5 +1,6 @@
 package com.example.myworkout.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +32,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
@@ -120,15 +123,15 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
 
         programTypes = new ArrayList<>(); //todo hente liste med program types
 
-        programTypes.add(new ProgramType("1", "3", "test1", "jjsldfjk", "io"));
-        programTypes.add(new ProgramType("1", "3", "test1", "jjsldfjk", "iodddd"));
-        programTypes.add(new ProgramType("1", "3", "test1", "sadasadjjsldfjk", "io"));
+
+        //programTypes.add(new ProgramType("1", "3", "test1", "jjsldfjk", "iodddd"));
+        //programTypes.add(new ProgramType("1", "3", "test1", "sadasadjjsldfjk", "io"));
 
         //String id, String rid, String name, String description, String backColor
 
         ArrayAdapter<ProgramType> adapter =
                 new ArrayAdapter<>(getContext(),  android.R.layout.simple_spinner_dropdown_item, programTypes);
-        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
 
@@ -166,12 +169,13 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
         name = etAddName.getText().toString();
         description = etAddDescription.getText().toString();
 
-
         timing = true;  //todo må fikses
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        dataViewModel.getUser(getContext(), firebaseUser.getUid(), false);
+        //dataViewModel.getUser(getContext(), firebaseUser.getUid(), false);
+        dataViewModel.getProgramTypes(getContext(), true);   //todo sjekke metode
+
 
         btnAddNewUserProgram.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,18 +208,39 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
                 public void onChanged(ApiResponse apiResponse) {
                     if(getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " ("  + ")", Toast.LENGTH_SHORT).show();
-                        User user = (User) apiResponse.getResponseObject();
-                        if (user != null) {
-                            // Dersom response på GET, PUT, POST:
-                        userId = user.getUser_id();
 
+                        if (apiResponse.getResponseObject() instanceof User) {
+                            Log.d("lolo", "user");
+                          //  User user = (User) apiResponse.getResponseObject();
+                          //  if (user != null) {
+                                // Dersom response på GET, PUT, POST:
+                            //    userId = user.getUser_id();
+
+
+                  //          }
+
+                        }else if (apiResponse.getResponseObject() instanceof ArrayList) {
+                            ArrayList<ProgramType> types = (ArrayList<ProgramType>) apiResponse.getResponseObject();
+                            Log.d("lolo", types.toString());
+
+                            if (types != null) {
+                                // Dersom response på GET, PUT, POST:
+                                //programTypes.add(new ProgramType("1", "3", "test1", "jjsldfjk", "io"));
+
+                                for (ProgramType p : types)
+                                    programTypes.add(p);
+
+                                ;
                         }
                     }
+                }
                 }
             };
             dataViewModel.getApiResponse().observe(getViewLifecycleOwner(), apiResponseObserver);
         }
     }
+
+
     private void subscribeToErrors() {
 
         if (apiErrorObserver == null) {
@@ -237,7 +262,7 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
         ProgramType type = (ProgramType) parent.getItemAtPosition(position);
-        Log.d("zozo", type.toString());
+
     }
 
     @Override

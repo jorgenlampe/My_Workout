@@ -84,6 +84,7 @@ public class DataRepository {
             // Dersom nedlasting pågår og skjermen roteres vil downloading være true, ingen grunn til å starte nedlasting på nytt:
             if (!this.downloading) {
                 String url = PROGRAMTYPE_PREFIX + "?_api_key=" + API_KEY;
+                Log.d("urlzz", url);
                 queue = MySingletonQueue.getInstance(context).getRequestQueue();
                 downloading = true;
                 myJsonArrayGetRequest = new MyJsonArrayRequest(
@@ -104,6 +105,7 @@ public class DataRepository {
                                     }
                                     ApiResponse resp = new ApiResponse(true, "OK", tmpList, myJsonArrayGetRequest.getHttpStatusCode());
                                     apiResponse.postValue(resp);
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -114,8 +116,9 @@ public class DataRepository {
                             public void onErrorResponse(VolleyError error) {
                                 ApiError apiError = VolleyErrorParser.parse(error);
                                 errorMessage.postValue(apiError);
+
                             }
-                        });
+                        });  queue.add(myJsonArrayGetRequest);
             }
         }
     }

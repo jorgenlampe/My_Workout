@@ -213,6 +213,7 @@ public class LoginFragment extends Fragment {
                 String email = user.getEmail();
                 String phone = user.getPhoneNumber();
                 dataViewModel.postUser(getContext(), firebaseId, username, phone, email, 0);
+
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check

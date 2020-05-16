@@ -24,6 +24,11 @@ public class ProgramType {
         this.backColor = backColor;
     }
 
+    @Override
+    public String toString(){
+        return getDescription();
+    }
+
     public String getRid() {
         return rid;
     }

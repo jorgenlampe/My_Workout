@@ -1,5 +1,6 @@
 package com.example.myworkout.fragments;
 
+import android.content.SharedPreferences;
 import android.media.tv.TvContentRating;
 import android.os.Bundle;
 
@@ -10,6 +11,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,6 +72,9 @@ public class UserFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user, container, false);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+
 
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 
