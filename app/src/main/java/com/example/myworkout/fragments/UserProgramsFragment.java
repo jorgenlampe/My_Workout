@@ -7,6 +7,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,13 +32,10 @@ import com.google.firebase.auth.FirebaseUser;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+
 import androidx.recyclerview.widget.RecyclerView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link UserProgramsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class UserProgramsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,43 +51,19 @@ public class UserProgramsFragment extends Fragment {
     private Button btnAddUserProgram;
 
     private DataViewModel dataViewModel;
+
     private RecyclerView recyclerView;
     private UserProgramAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public UserProgramsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment UserProgramsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static UserProgramsFragment newInstance(String param1, String param2) {
-        UserProgramsFragment fragment = new UserProgramsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -109,7 +83,6 @@ public class UserProgramsFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
 
-
         subscribeToApiResponse();
         subscribeToErrors();
 
@@ -117,13 +90,13 @@ public class UserProgramsFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(final View view, Bundle savedInstanceState){
+    public void onViewCreated(final View view, Bundle savedInstanceState) {
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         String firebaseId = null;
 
-        if (firebaseUser!=null) {
+        if (firebaseUser != null) {
             firebaseId = firebaseUser.getUid();
         }
 
@@ -146,20 +119,15 @@ public class UserProgramsFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getContext());
 
 
-
-
-
     }
 
     public void setUserProgram(UserProgram program) {
 
         // todo fikses....
-
         tvUserProgramName.setText("test test");
         tvUserProgramDescription.setText(program.getName());
 
     }
-
 
 
     public void subscribeToApiResponse() {
@@ -170,30 +138,32 @@ public class UserProgramsFragment extends Fragment {
 
                 @Override
                 public void onChanged(ApiResponse apiResponse) {
-
                     if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
-                        ArrayList programs = (ArrayList) apiResponse.getResponseObject();
-
+                        final ArrayList<UserProgram> programs = (ArrayList) apiResponse.getResponseObject();
                         if (programs.size() > 0) {
                             // Dersom response på GET, PUT, POST:
-
                             mAdapter = new UserProgramAdapter(programs);
                             recyclerView.setAdapter(mAdapter);
-                            //koble adapter og sette textView.....
-
+                            //bruker onitemclicklistener interface laget i adapter..
+                            mAdapter.setOnItemClickListener(new UserProgramAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(int position) {
+                                    UserProgramsFragmentDirections.ActionToUserProgramFragment actionToUserProgramFragment = UserProgramsFragmentDirections.actionToUserProgramFragment(programs.get(position).getRid());
+                                    NavHostFragment.findNavController(UserProgramsFragment.this).navigate(actionToUserProgramFragment);
+                                }
+                            });
                         }
                     }
 
                 }
-                };
+            };
 
-                    dataViewModel.getApiResponse().observe(getViewLifecycleOwner(), apiResponseObserver);
-
-            }
+            dataViewModel.getApiResponse().observe(getViewLifecycleOwner(), apiResponseObserver);
 
         }
 
+    }
 
 
     private void subscribeToErrors() {
@@ -203,7 +173,7 @@ public class UserProgramsFragment extends Fragment {
             apiErrorObserver = new Observer<ApiError>() {
                 @Override
                 public void onChanged(ApiError apiError) {
-                    if(getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
+                    if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         if (apiError != null)
                             Toast.makeText(getActivity(), apiError.getMessage() + ": " + String.valueOf(apiError.getCode()), Toast.LENGTH_SHORT).show();
                     }
