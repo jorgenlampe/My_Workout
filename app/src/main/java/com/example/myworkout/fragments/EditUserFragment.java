@@ -107,7 +107,7 @@ public class EditUserFragment extends Fragment {
                                 etPhoneNumber.setText(user.getPhone());
                             }
                             etUsername.setText(user.getName());
-                        }
+                        } 
                     }
                 }
             };

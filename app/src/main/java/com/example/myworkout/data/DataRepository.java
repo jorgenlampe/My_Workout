@@ -80,47 +80,46 @@ public class DataRepository {
      * Henter ALLE ProgramTypes
      * */
     public void getProgramTypes(Context context, boolean forceDownload) {
-        if (forceDownload || this.currentUser == null) {
-            // Dersom nedlasting pågår og skjermen roteres vil downloading være true, ingen grunn til å starte nedlasting på nytt:
-            if (!this.downloading) {
-                String url = PROGRAMTYPE_PREFIX + "?_api_key=" + API_KEY;
-                Log.d("urlzz", url);
-                queue = MySingletonQueue.getInstance(context).getRequestQueue();
-                downloading = true;
-                myJsonArrayGetRequest = new MyJsonArrayRequest(
-                        Request.Method.GET,
-                        url,
-                        null,
-                        new Response.Listener<JSONArray>() {
-                            @Override
-                            public void onResponse(JSONArray jsonArray) {
-                                try {
-                                    Gson gson = new Gson();
-                                    ArrayList<ProgramType> tmpList = new ArrayList<>();
-                                    for (int i = 0; i < jsonArray.length(); i++) {
-                                        JSONObject programTypeAsJson = jsonArray.getJSONObject(i);
-                                        ProgramType programType = gson.fromJson(programTypeAsJson.toString(), ProgramType.class);
-                                        System.out.println(programType.getDescription());
-                                        tmpList.add(programType);
-                                    }
-                                    ApiResponse resp = new ApiResponse(true, "OK", tmpList, myJsonArrayGetRequest.getHttpStatusCode());
-                                    apiResponse.postValue(resp);
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+        // Dersom nedlasting pågår og skjermen roteres vil downloading være true, ingen grunn til å starte nedlasting på nytt:
+        if (!this.downloading) {
+            String url = PROGRAMTYPE_PREFIX + "?_api_key=" + API_KEY;
+            queue = MySingletonQueue.getInstance(context).getRequestQueue();
+            downloading = true;
+            myJsonArrayGetRequest = new MyJsonArrayRequest(
+                    Request.Method.GET,
+                    url,
+                    null,
+                    new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray jsonArray) {
+                            try {
+                                Gson gson = new Gson();
+                                ArrayList<ProgramType> tmpList = new ArrayList<>();
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject programTypeAsJson = jsonArray.getJSONObject(i);
+                                    ProgramType programType = gson.fromJson(programTypeAsJson.toString(), ProgramType.class);
+                                    System.out.println(programType.getDescription());
+                                    tmpList.add(programType);
                                 }
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                ApiError apiError = VolleyErrorParser.parse(error);
-                                errorMessage.postValue(apiError);
+                                ApiResponse resp = new ApiResponse(true, "OK", tmpList, myJsonArrayGetRequest.getHttpStatusCode());
+                                apiResponse.setValue(resp);
 
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        });  queue.add(myJsonArrayGetRequest);
-            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            ApiError apiError = VolleyErrorParser.parse(error);
+                            errorMessage.postValue(apiError);
+
+                        }
+                    });
+            queue.add(myJsonArrayGetRequest);
         }
+        downloading = false;
     }
 
 
@@ -155,7 +154,6 @@ public class DataRepository {
             if (!this.downloading) {
                 String url = USERS_PREFIX + firebaseId + "?_api_key=" + API_KEY;
                 queue = MySingletonQueue.getInstance(context).getRequestQueue();
-                Log.d("ullu", url);
                 downloading = true;
                 myJsonGetRequest = new MyJsonObjectRequest(
                         Request.Method.GET,
@@ -174,17 +172,17 @@ public class DataRepository {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 ApiError apiError = VolleyErrorParser.parse(error);
-                                errorMessage.postValue(apiError);
+                                errorMessage.setValue(apiError);
                             }
                         });
                 queue.add(myJsonGetRequest);
 
             } else {
                 ApiResponse resp = new ApiResponse(true, "OK, bruker cached User", this.currentUser, myJsonGetRequest.getHttpStatusCode());
-                apiResponse.postValue(resp);
+                apiResponse.setValue(resp);
             }
         }
-
+        downloading = false;
     }
 
     //METODENE UNDER MÅ ENDRES, SE OPPDATERT EKSEMPELKODE
@@ -396,21 +394,19 @@ public class DataRepository {
     }
 
 
-
     public void postUserProgram(Context context,
                                 String app_program_type_id,
                                 String name,
                                 String description,
                                 boolean use_timing,
                                 int id) {
-        System.out.println("called poset");
         final HashMap<String, String> params = new HashMap<String, String>();
         params.put("_api_key", API_KEY);
         params.put("app_program_type_id", app_program_type_id);
         params.put("user_id", String.valueOf(id));
         params.put("name", name);
         params.put("description", description);
-        if(use_timing) {
+        if (use_timing) {
             params.put("use_timing", "0");
         } else {
             params.put("use_timing", "1");
@@ -433,8 +429,6 @@ public class DataRepository {
                             ApiResponse resp = new ApiResponse(true, message, userProgram, myJsonPostRequest.getHttpStatusCode());
                             apiResponse.postValue(resp);
                         } catch (JSONException e) {
-                            System.out.println("response");
-
                             ApiError apiError = new ApiError(-1, e.getMessage());
                             errorMessage.postValue(apiError);
                         }

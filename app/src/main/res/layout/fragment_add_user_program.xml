@@ -13,18 +13,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/etAddUserId"
-        android:hint="@string/hintUserId"></EditText>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etAddName"
         android:hint="@string/hintName">
-
     </EditText>
 
     <EditText
@@ -33,17 +27,17 @@
         android:id="@+id/etAddDescription"
         android:hint="@string/hintDescription"></EditText>
 
-<EditText
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/etAddTiming"
-    android:hint="@string/hintTiming"></EditText>
+    <CheckBox
+        android:id="@+id/brukTiming"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hintTiming" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnAddUserProgram"
-        android:text="ADD USER PROGRAM"></Button>
+        android:text="@string/btnAddUserProgram"></Button>
 
 
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.content.Context;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.myworkout.entities.User;
 import com.google.firebase.auth.FirebaseUser;
 
 import com.example.myworkout.data.DataRepository;
@@ -40,8 +41,9 @@ public class DataViewModel extends AndroidViewModel {
     public void getUser(Context context,
                         String firebase_id, boolean forceDownload) {
         mRepository.getUser(context, firebase_id, forceDownload);
-
     }
+
+
 
     // POST user
     public void postUser(Context context,

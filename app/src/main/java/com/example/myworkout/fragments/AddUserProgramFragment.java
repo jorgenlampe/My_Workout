@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -37,11 +38,6 @@ import java.util.List;
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AddUserProgramFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AddUserProgramFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -51,21 +47,14 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
     private ArrayList<ProgramType> programTypes;
 
     private Spinner spinner;
-    private EditText etAddUserId;
     private EditText etAddName;
     private EditText etAddDescription;
-    private EditText etAddTiming;
+    private CheckBox etAddTiming;
     private Button btnAddNewUserProgram;
 
     private String programType;
     private int userId;
     private String name;
-
-
-
-    public int getUserId() {
-        return userId;
-    }
 
     private String description;
     private boolean timing;
@@ -75,39 +64,14 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
 
     private DataViewModel dataViewModel;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public AddUserProgramFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AddUserFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AddUserProgramFragment newInstance(String param1, String param2) {
-        AddUserProgramFragment fragment = new AddUserProgramFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -121,33 +85,19 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
         spinner = view.findViewById(R.id.spinner_program_type);
         spinner.setOnItemSelectedListener(this);
 
-        programTypes = new ArrayList<>(); //todo hente liste med program types
-
-
-        //programTypes.add(new ProgramType("1", "3", "test1", "jjsldfjk", "iodddd"));
-        //programTypes.add(new ProgramType("1", "3", "test1", "sadasadjjsldfjk", "io"));
-
-        //String id, String rid, String name, String description, String backColor
-
+        programTypes = new ArrayList<>();
         ArrayAdapter<ProgramType> adapter =
                 new ArrayAdapter<>(getContext(),  android.R.layout.simple_spinner_dropdown_item, programTypes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner.setAdapter(adapter);
-
-
-
 
 // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
-
-        etAddUserId = view.findViewById(R.id.etAddUserId);
         etAddName = view.findViewById(R.id.etAddName);
         etAddDescription = view.findViewById(R.id.etAddDescription);
-        etAddTiming = view.findViewById(R.id.etAddTiming);
+        etAddTiming = view.findViewById(R.id.brukTiming);
 
         btnAddNewUserProgram = view.findViewById(R.id.btnAddUserProgram);
 
@@ -155,49 +105,37 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
         subscribeToErrors();
 
         return view;
-
     }
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState){
-
-
-
        //todo programType skal velges fra liste...
-        // todo finne userID.....
-        // userId = etAddUserId.getText().toString();
-        name = etAddName.getText().toString();
-        description = etAddDescription.getText().toString();
-
-        timing = true;  //todo må fikses
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        //dataViewModel.getUser(getContext(), firebaseUser.getUid(), false);
-        dataViewModel.getProgramTypes(getContext(), true);   //todo sjekke metode
-
+        dataViewModel.getUser(getContext(), firebaseUser.getUid(), true);
+        dataViewModel.getProgramTypes(getContext(), true);
 
         btnAddNewUserProgram.setOnClickListener(new View.OnClickListener() {
             @Override
-
             public void onClick(View v) {
+                name = etAddName.getText().toString();
+                description = etAddDescription.getText().toString();
+                timing = etAddTiming.isChecked();
+                //Sjekker at bruker har fyllt ut feltene
+                if(name.isEmpty() || description.isEmpty()) {
+                    Toast.makeText(getContext(), "Fill out form before sending!", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
                 String firebaseId = null;
-
                 if (firebaseUser!=null) {
                     firebaseId = firebaseUser.getUid();
                 }
-
+                System.out.println(programType + " + " + firebaseId + " " + name + " " + description + " " + timing + " " + userId);
                 dataViewModel.postUserProgram(getContext(), programType, firebaseId, name, description, timing, userId);
-
             }
         });
-
-
-
-
-
     }
 
     private void subscribeToApiResponse() {
@@ -206,34 +144,27 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
             apiResponseObserver = new Observer<ApiResponse>() {
                 @Override
                 public void onChanged(ApiResponse apiResponse) {
+                    System.out.println(apiResponse.toString());
+
                     if(getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " ("  + ")", Toast.LENGTH_SHORT).show();
-
                         if (apiResponse.getResponseObject() instanceof User) {
-                            Log.d("lolo", "user");
-                          //  User user = (User) apiResponse.getResponseObject();
-                          //  if (user != null) {
-                                // Dersom response på GET, PUT, POST:
-                            //    userId = user.getUser_id();
-
-
-                  //          }
-
-                        }else if (apiResponse.getResponseObject() instanceof ArrayList) {
-                            ArrayList<ProgramType> types = (ArrayList<ProgramType>) apiResponse.getResponseObject();
-                            Log.d("lolo", types.toString());
-
-                            if (types != null) {
-                                // Dersom response på GET, PUT, POST:
-                                //programTypes.add(new ProgramType("1", "3", "test1", "jjsldfjk", "io"));
-
-                                for (ProgramType p : types)
+                          User user = (User) apiResponse.getResponseObject();
+                           if (user != null) {
+                               //Dersom response på GET, PUT, POST:
+                               userId = user.getUser_id();
+                           }
+                        } else if (apiResponse.getResponseObject() instanceof ArrayList) {
+                            ArrayList list = (ArrayList) apiResponse.getResponseObject();
+                            if(list.get(0) instanceof ProgramType) {
+                                ArrayList<ProgramType> types = (ArrayList)apiResponse.getResponseObject();
+                                for (ProgramType p : types) {
+                                    System.out.println(p.getName());
                                     programTypes.add(p);
-
-                                ;
+                                }
+                            }
                         }
                     }
-                }
                 }
             };
             dataViewModel.getApiResponse().observe(getViewLifecycleOwner(), apiResponseObserver);
@@ -242,7 +173,6 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
 
 
     private void subscribeToErrors() {
-
         if (apiErrorObserver == null) {
             // Observerer endringer i errorMessage:
             apiErrorObserver = new Observer<ApiError>() {
@@ -262,7 +192,7 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
         ProgramType type = (ProgramType) parent.getItemAtPosition(position);
-
+        System.out.println("POSITIONJ: " + position);
     }
 
     @Override
