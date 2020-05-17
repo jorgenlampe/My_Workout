@@ -380,6 +380,7 @@ public class DataRepository {
                                 }
                                 ApiResponse resp = new ApiResponse(true, "OK", tmpList, myJsonGetRequest.getHttpStatusCode());
                                 apiResponse.postValue(resp);
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

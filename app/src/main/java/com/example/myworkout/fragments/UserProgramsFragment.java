@@ -28,6 +28,7 @@ import com.example.myworkout.helpers.ApiResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import androidx.recyclerview.widget.RecyclerView;
@@ -159,37 +160,41 @@ public class UserProgramsFragment extends Fragment {
 
     }
 
+
+
     public void subscribeToApiResponse() {
         if (apiResponseObserver == null) {
             // Observerer endringer:
+
             apiResponseObserver = new Observer<ApiResponse>() {
+
                 @Override
                 public void onChanged(ApiResponse apiResponse) {
 
                     if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
-                        UserProgram [] programs = (UserProgram[]) apiResponse.getResponseObject();
+                        ArrayList programs = (ArrayList) apiResponse.getResponseObject();
 
-                        if (programs != null) {
+                        if (programs.size() > 0) {
                             // Dersom response på GET, PUT, POST:
-                            Log.d("reponse", "rezponse");
-                            //mAdapter = new UserProgramAdapter(programs);
+
+                            mAdapter = new UserProgramAdapter(programs);
                             recyclerView.setAdapter(mAdapter);
-                    //koble adapter og sette textView.....
+                            //koble adapter og sette textView.....
 
                         }
                     }
-                    ;
+
+                }
+                };
 
                     dataViewModel.getApiResponse().observe(getViewLifecycleOwner(), apiResponseObserver);
 
-
-                }
-            };
+            }
 
         }
 
-    }
+
 
     private void subscribeToErrors() {
 

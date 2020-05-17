@@ -4,6 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myworkout.R;
@@ -11,6 +12,7 @@ import com.example.myworkout.entities.UserProgram;
 import com.example.myworkout.fragments.UserProgramsFragment;
 
 import java.util.List;
+import java.util.Objects;
 
 public class UserProgramAdapter extends RecyclerView.Adapter<UserProgramAdapter.MyViewHolder> {
 
@@ -28,9 +30,11 @@ public class UserProgramAdapter extends RecyclerView.Adapter<UserProgramAdapter.
         private TextView tv2;
         public UserProgramsFragment userProgramsFragment;
 
-        public MyViewHolder(UserProgramsFragment fragment) {   //onCheckedChangeListener???
+        public MyViewHolder(UserProgramsFragment fragment) {
+            super(fragment.getView());
+            //onCheckedChangeListener???
 
-            super(fragment.getView());  //????
+            //super(fragment.getView());  //????
 
             userProgramsFragment = fragment;
 
@@ -39,6 +43,9 @@ public class UserProgramAdapter extends RecyclerView.Adapter<UserProgramAdapter.
             itemView.setOnClickListener((View.OnClickListener) this);   //????
         }
 
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
     }
 
         // Create new views (invoked by the layout manager)
