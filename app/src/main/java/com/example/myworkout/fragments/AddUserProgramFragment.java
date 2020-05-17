@@ -39,10 +39,7 @@ import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 
 public class AddUserProgramFragment extends Fragment implements AdapterView.OnItemSelectedListener {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+
 
     private ArrayList<ProgramType> programTypes;
 
@@ -84,16 +81,9 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
 
         spinner = view.findViewById(R.id.spinner_program_type);
         spinner.setOnItemSelectedListener(this);
-
         programTypes = new ArrayList<>();
-        ArrayAdapter<ProgramType> adapter =
-                new ArrayAdapter<>(getContext(),  android.R.layout.simple_spinner_dropdown_item, programTypes);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-// Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+
 
         etAddName = view.findViewById(R.id.etAddName);
         etAddDescription = view.findViewById(R.id.etAddDescription);
@@ -132,7 +122,6 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
                 if (firebaseUser!=null) {
                     firebaseId = firebaseUser.getUid();
                 }
-                System.out.println(programType + " + " + firebaseId + " " + name + " " + description + " " + timing + " " + userId);
                 dataViewModel.postUserProgram(getContext(), programType, firebaseId, name, description, timing, userId);
             }
         });
@@ -144,9 +133,7 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
             apiResponseObserver = new Observer<ApiResponse>() {
                 @Override
                 public void onChanged(ApiResponse apiResponse) {
-                    System.out.println(apiResponse.toString());
-
-                    if(getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
+                     if(getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " ("  + ")", Toast.LENGTH_SHORT).show();
                         if (apiResponse.getResponseObject() instanceof User) {
                           User user = (User) apiResponse.getResponseObject();
@@ -158,10 +145,13 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
                             ArrayList list = (ArrayList) apiResponse.getResponseObject();
                             if(list.get(0) instanceof ProgramType) {
                                 ArrayList<ProgramType> types = (ArrayList)apiResponse.getResponseObject();
-                                for (ProgramType p : types) {
-                                    System.out.println(p.getName());
-                                    programTypes.add(p);
-                                }
+                                programTypes.addAll(types);
+                                ArrayAdapter<ProgramType> adapter =
+                                        new ArrayAdapter<>(getContext(),  android.R.layout.simple_spinner_dropdown_item, programTypes);
+                                // Specify the layout to use when the list of choices appears
+                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                // Apply the adapter to the spinner
+                                spinner.setAdapter(adapter);
                             }
                         }
                     }
@@ -190,13 +180,11 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-        ProgramType type = (ProgramType) parent.getItemAtPosition(position);
-        System.out.println("POSITIONJ: " + position);
+        programType = programTypes.get(position).getId();
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
+        programType = "0";
     }
 }
