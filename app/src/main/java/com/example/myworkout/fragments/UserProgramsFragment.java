@@ -126,6 +126,9 @@ public class UserProgramsFragment extends Fragment {
             firebaseId = firebaseUser.getUid();
         }
 
+        dataViewModel.getUserPrograms(getContext(), firebaseId);
+
+
         btnAddUserProgram = getView().findViewById(R.id.btnAddUserProgram);
 
         btnAddUserProgram.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +145,6 @@ public class UserProgramsFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getContext());
 
 
-        dataViewModel.getUserPrograms(getContext(), firebaseId);
 
 
 
@@ -163,15 +165,15 @@ public class UserProgramsFragment extends Fragment {
             apiResponseObserver = new Observer<ApiResponse>() {
                 @Override
                 public void onChanged(ApiResponse apiResponse) {
+
                     if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
-                        List<UserProgram> programs = (List<UserProgram>) apiResponse.getResponseObject();
+                        UserProgram [] programs = (UserProgram[]) apiResponse.getResponseObject();
 
-                        Log.d("zzzyy", "rezponze");
                         if (programs != null) {
                             // Dersom response på GET, PUT, POST:
-
-                            mAdapter = new UserProgramAdapter(programs);
+                            Log.d("reponse", "rezponse");
+                            //mAdapter = new UserProgramAdapter(programs);
                             recyclerView.setAdapter(mAdapter);
                     //koble adapter og sette textView.....
 

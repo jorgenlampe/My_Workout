@@ -153,6 +153,7 @@ public class DataRepository {
             // Dersom nedlasting pågår og skjermen roteres vil downloading være true, ingen grunn til å starte nedlasting på nytt:
             if (!this.downloading) {
                 String url = USERS_PREFIX + firebaseId + "?_api_key=" + API_KEY;
+
                 queue = MySingletonQueue.getInstance(context).getRequestQueue();
                 downloading = true;
                 myJsonGetRequest = new MyJsonObjectRequest(
@@ -356,6 +357,7 @@ public class DataRepository {
     public void getUserPrograms(Context context, String firebaseId) {
         if (!this.downloading) {
             String url = USERS_PREFIX + firebaseId + "?_api_key=" + API_KEY + "&_expand_children=true";
+            Log.d("uzuz", url);
             queue = MySingletonQueue.getInstance(context).getRequestQueue();
             downloading = true;
             myJsonGetRequest = new MyJsonObjectRequest(
@@ -371,8 +373,9 @@ public class DataRepository {
                                 JSONArray jsonUserPrograms = jsonObject.getJSONArray("user_programs");
                                 for (int i = 0; i < jsonUserPrograms.length(); i++) {
                                     JSONObject userProgramAsJson = jsonUserPrograms.getJSONObject(i);
-                                    System.out.println(userProgramAsJson.toString());
+                                    //System.out.println(userProgramAsJson.toString());
                                     UserProgram userProgram = gson.fromJson(userProgramAsJson.toString(), UserProgram.class);
+                                    System.out.println((userProgram.toString()));
                                     tmpList.add(userProgram);
                                 }
                                 ApiResponse resp = new ApiResponse(true, "OK", tmpList, myJsonGetRequest.getHttpStatusCode());

@@ -18,6 +18,8 @@ class UserProgramSession {
         this.extraJsonData = extraJsonData;
     }
 
+    public UserProgramSession(){}
+
     public String getUserProgramId() {
         return userProgramId;
     }

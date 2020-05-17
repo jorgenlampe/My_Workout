@@ -12,6 +12,8 @@ class UserProgramExercise {
         this.exerciseId = exerciseId;
     }
 
+    public UserProgramExercise(){}
+
     public String getRid() {
         return rid;
     }
