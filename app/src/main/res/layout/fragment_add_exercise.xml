@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragments.AddUserProgramFragment">
+
+
+
+    <Spinner
+        android:id="@+id/spinner_program_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etAddName"
+        android:hint="@string/hintName">
+    </EditText>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etAddDescription"
+        android:hint="@string/hintDescription"></EditText>
+
+    <CheckBox
+        android:id="@+id/brukTiming"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hintTiming" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnAddNewExercise"
+        android:text="@string/btnAddExercise"></Button>
+
+
+</LinearLayout>

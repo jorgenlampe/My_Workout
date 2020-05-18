@@ -1,6 +1,5 @@
 package com.example.myworkout.adapters;
 
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,15 +8,15 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myworkout.R;
+import com.example.myworkout.entities.Exercise;
 import com.example.myworkout.entities.UserProgram;
-import com.example.myworkout.fragments.UserProgramsFragment;
 
 import java.util.ArrayList;
 
-public class UserProgramAdapter extends RecyclerView.Adapter<UserProgramAdapter.MyViewHolder> {
+public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyViewHolder> {
 
     private OnItemClickListener mListener;
-    private ArrayList<UserProgram> userPrograms;
+    private ArrayList<Exercise> exercises;
 
     public interface OnItemClickListener {
         void onItemClick(int position);
@@ -34,9 +33,9 @@ public class UserProgramAdapter extends RecyclerView.Adapter<UserProgramAdapter.
 
         public MyViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
-            tvName = itemView.findViewById(R.id.tvUserProgramName);
+            tvName = itemView.findViewById(R.id.tvExerciseName);
             tvName.setTextSize(20);
-              tvDescription = itemView.findViewById(R.id.tvUserProgramDescription);
+            tvDescription = itemView.findViewById(R.id.tvExerciseDescription);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -52,27 +51,27 @@ public class UserProgramAdapter extends RecyclerView.Adapter<UserProgramAdapter.
         }
     }
 
-    public UserProgramAdapter(ArrayList<UserProgram> programs) {
-        userPrograms = programs;
+    public ExerciseAdapter(ArrayList<Exercise> exerciseList) {
+        exercises = exerciseList;
     }
 
     @Override
-    public UserProgramAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_program_view, parent, false);
+    public ExerciseAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.exercise_view, parent, false);
         MyViewHolder viewHolder = new MyViewHolder(v, mListener);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        UserProgram currentProgram = userPrograms.get(position);
-        holder.tvDescription.setText(currentProgram.getDescription());
-        holder.tvName.setText(currentProgram.getName());
+        Exercise currentExercise = exercises.get(position);
+        holder.tvDescription.setText(currentExercise.getDescription());
+        holder.tvName.setText(currentExercise.getName());
     }
 
     @Override
     public int getItemCount() {
-        return userPrograms.size();
+        return exercises.size();
     }
 }
 

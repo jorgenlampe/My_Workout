@@ -121,13 +121,6 @@ public class UserProgramsFragment extends Fragment {
 
     }
 
-    public void setUserProgram(UserProgram program) {
-
-        // todo fikses....
-        tvUserProgramName.setText("test test");
-        tvUserProgramDescription.setText(program.getName());
-
-    }
 
 
     public void subscribeToApiResponse() {

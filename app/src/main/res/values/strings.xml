@@ -18,5 +18,6 @@
     <string name="hintName">Navn på program...</string>
     <string name="hintDescription">Beskrivelse...</string>
     <string name="hintTiming">Bruk tidtaking?</string>
-    <string name="btnAddUserProgram">Add user program</string>
+    <string name="btnAddUserProgram">Legg til program</string>
+    <string name="btnAddExercise">Legg til øvelse</string>
 </resources>
