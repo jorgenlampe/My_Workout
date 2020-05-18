@@ -179,7 +179,7 @@ public class UserProgramsFragment extends Fragment {
                             // Dersom response på GET, PUT, POST:
 
                             mAdapter = new UserProgramAdapter(programs);
-                            recyclerView.setAdapter(mAdapter);
+                         //   recyclerView.setAdapter(mAdapter);
                             //koble adapter og sette textView.....
 
                         }

@@ -12,6 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.myworkout.entities.Exercise;
 import com.example.myworkout.entities.ProgramType;
 import com.example.myworkout.entities.User;
 import com.example.myworkout.entities.UserProgram;
@@ -135,8 +136,51 @@ public class DataRepository {
 
     }
 
-    public void getExercises(String rid) {
+    public void getExercises(Context context) {
+
+        String url = EXERCISES_PREFIX + "?_api_key=" + API_KEY;
+
+        if (!this.downloading) {
+
+            queue = MySingletonQueue.getInstance(context).getRequestQueue();
+            downloading = true;
+            myJsonArrayGetRequest = new MyJsonArrayRequest(
+                    Request.Method.GET,
+                    url,
+                    null,
+                    new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray jsonArray) {
+                            try {
+                                Gson gson = new Gson();
+                                ArrayList<Exercise> tmpList = new ArrayList<>();
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject exerciseAsJson = jsonArray.getJSONObject(i);
+                                    Exercise exercise = gson.fromJson(exerciseAsJson.toString(), Exercise.class);
+                                    System.out.println(exercise.getDescription());
+                                    tmpList.add(exercise);
+                                }
+                                ApiResponse resp = new ApiResponse(true, "OK", tmpList, myJsonArrayGetRequest.getHttpStatusCode());
+                                apiResponse.setValue(resp);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            ApiError apiError = VolleyErrorParser.parse(error);
+                            errorMessage.postValue(apiError);
+
+                        }
+                    });
+            queue.add(myJsonArrayGetRequest);
+        }
+        downloading = false;
     }
+
 
     public void postExercise() {
     }

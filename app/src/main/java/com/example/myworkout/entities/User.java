@@ -1,6 +1,7 @@
 package com.example.myworkout.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class User implements Serializable {
 
@@ -10,14 +11,34 @@ public class User implements Serializable {
     private String name;
     private int id;
     private int birth_year;
+    private List<UserProgram> user_programs;
+
+    public String getFirebaseId() {
+        return firebaseId;
+    }
+
+    public void setFirebaseId(String firebaseId) {
+        this.firebaseId = firebaseId;
+    }
+
+    public int getId() {
+        return id;
+    }
 
 
-    //TODO User-objektet inneholder igjen objekter av andre typer (UserProgram, UserProgramExercises osv.)
+    public List<UserProgram> getUser_programs() {
+        return user_programs;
+    }
 
-    public User(String firebaseId, String phone, String email, String name, int birth_year, int id) {
+    public void setUser_programs(List<UserProgram> user_programs) {
+        this.user_programs = user_programs;
+    }
+
+    public User(int id, String firebaseId, String email, String phone, String name, int birth_year, List<UserProgram> user_programs) {
         this.firebaseId = firebaseId;
         this.phone = phone;
         this.email = email;
+        this.user_programs = user_programs;
         this.name = name;
         this.birth_year = birth_year;
         this.id = id;

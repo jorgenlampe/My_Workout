@@ -91,4 +91,8 @@ public class DataViewModel extends AndroidViewModel {
                                 boolean use_timing, int id) {
             mRepository.postUserProgram(context, app_program_type_id, name, description, use_timing, id);
     }
+
+    public void getExercises(Context context){
+        mRepository.getExercises(context);
+    }
 }
