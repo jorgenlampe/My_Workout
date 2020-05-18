@@ -417,9 +417,7 @@ public class DataRepository {
                                 JSONArray jsonUserPrograms = jsonObject.getJSONArray("user_programs");
                                 for (int i = 0; i < jsonUserPrograms.length(); i++) {
                                     JSONObject userProgramAsJson = jsonUserPrograms.getJSONObject(i);
-                                    //System.out.println(userProgramAsJson.toString());
                                     UserProgram userProgram = gson.fromJson(userProgramAsJson.toString(), UserProgram.class);
-                                    System.out.println((userProgram.toString()));
                                     tmpList.add(userProgram);
                                 }
                                 ApiResponse resp = new ApiResponse(true, "OK", tmpList, myJsonGetRequest.getHttpStatusCode());

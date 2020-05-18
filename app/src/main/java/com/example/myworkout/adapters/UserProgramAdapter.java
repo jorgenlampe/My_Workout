@@ -1,79 +1,78 @@
 package com.example.myworkout.adapters;
 
+import android.text.Layout;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myworkout.R;
 import com.example.myworkout.entities.UserProgram;
 import com.example.myworkout.fragments.UserProgramsFragment;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.ArrayList;
 
 public class UserProgramAdapter extends RecyclerView.Adapter<UserProgramAdapter.MyViewHolder> {
 
-    public UserProgramsFragment userProgramsFragment;
-    private List<UserProgram> userPrograms;
+    private OnItemClickListener mListener;
+    private ArrayList<UserProgram> userPrograms;
 
-    public UserProgramAdapter(List<UserProgram> programs) {
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView tvName;
+        public TextView tvDescription;
+
+        public MyViewHolder(View itemView, final OnItemClickListener listener) {
+            super(itemView);
+            tvName = itemView.findViewById(R.id.tvUserProgramName);
+            tvDescription = itemView.findViewById(R.id.tvUserProgramDescription);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener != null) {
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    public UserProgramAdapter(ArrayList<UserProgram> programs) {
         userPrograms = programs;
     }
 
-
-    public static class MyViewHolder extends RecyclerView.ViewHolder {  //implements View.OnClickListener?
-
-        private TextView tv1;
-        private TextView tv2;
-        public UserProgramsFragment userProgramsFragment;
-
-        public MyViewHolder(UserProgramsFragment fragment) {
-            super(fragment.getView());
-            //onCheckedChangeListener???
-
-            //super(fragment.getView());  //????
-
-            userProgramsFragment = fragment;
-
-            tv1 = itemView.findViewById(R.id.tvUserProgramName);
-            tv2 = itemView.findViewById(R.id.tvUserProgramDescription);
-            itemView.setOnClickListener((View.OnClickListener) this);   //????
-        }
-
-        public MyViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
+    @Override
+    public UserProgramAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_program_view, parent, false);
+        MyViewHolder viewHolder = new MyViewHolder(v, mListener);
+        return viewHolder;
     }
 
-        // Create new views (invoked by the layout manager)
-        @Override
-        public UserProgramAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                                  int viewType) {
-            // create a new view
-            UserProgramsFragment view = new UserProgramsFragment();
-            MyViewHolder vh = new MyViewHolder(view);
-            return vh;
-        }
-
-        // Replace the contents of a view (invoked by the layout manager)
-        @Override
-        public void onBindViewHolder(MyViewHolder holder, int position) {
-            // - get element from your dataset at this position
-            // - replace the contents of the view with that element
-            holder.tv1.setText("heisann");
-            holder.userProgramsFragment.setUserProgram(userPrograms.get(position));
-            //.setQuestion(questions.get(position), answersChosen[position]);
-        }
-
-
-        // Return the size of your dataset (invoked by the layout manager)
-        @Override
-        public int getItemCount() {
-            return userPrograms.size();
-        }
+    @Override
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        UserProgram currentProgram = userPrograms.get(position);
+        holder.tvDescription.setText(currentProgram.getDescription());
+        holder.tvName.setText(currentProgram.getName());
     }
+
+    @Override
+    public int getItemCount() {
+        return userPrograms.size();
+    }
+}
 
 

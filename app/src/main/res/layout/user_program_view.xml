@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    >
 
-    <TextView
-        android:id="@+id/tvUserProgramName"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></TextView>
-
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/tvUserProgramDescription"></TextView>
+        android:layout_margin="5dp"
+        android:layout_marginBottom="5dp">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tvUserProgramName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Test 1" />
+
+        <TextView
+            android:id="@+id/tvUserProgramDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvUserProgramName"
+            android:text="Text 2" />
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

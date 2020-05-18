@@ -52,10 +52,22 @@
         <action
             android:id="@+id/action_userProgramsFragment_to_addUserFragment"
             app:destination="@id/addUserFragment" />
+        <action
+            android:id="@+id/action_toUserProgramFragment"
+            app:destination="@id/userProgramFragment" />
     </fragment>
     <fragment
         android:id="@+id/addUserFragment"
         android:name="com.example.myworkout.fragments.AddUserProgramFragment"
         android:label="fragment_add_user"
         tools:layout="@layout/fragment_add_user_program" />
+    <fragment
+        android:id="@+id/userProgramFragment"
+        android:name="com.example.myworkout.fragments.UserProgramFragment"
+        android:label="fragment_user_program"
+        tools:layout="@layout/fragment_user_program" >
+        <argument
+            android:name="userProgramRid"
+            app:argType="string" />
+    </fragment>
 </navigation>
