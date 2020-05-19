@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ public class UserProgramFragment extends Fragment {
     private String rid;
     private String user_program_id;
 
-    private Button btnAddExercise;  //todo implementere denne
+    private Button btnAddExercise;
 
     private DataViewModel dataViewModel;
 
@@ -83,6 +84,7 @@ public class UserProgramFragment extends Fragment {
         dataViewModel.getExercises(getContext());   //todo skal vel være getUserProgramExercises
 
         rid = UserProgramFragmentArgs.fromBundle(getArguments()).getUserProgramRid();
+        Log.d("ridzz", rid);
         user_program_id = UserProgramFragmentArgs.fromBundle(getArguments()).getUserProgramId();
 
         btnAddExercise = getView().findViewById(R.id.btnAddExercise);
