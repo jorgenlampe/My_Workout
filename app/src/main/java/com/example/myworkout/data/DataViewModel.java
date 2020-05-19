@@ -22,11 +22,11 @@ public class DataViewModel extends AndroidViewModel {
 
 
     public DataViewModel(Application application) {
-            super(application); // <====
-            mRepository = new DataRepository(application);
-            mApiError = mRepository.getErrorMessage();
-            mApiResponse = mRepository.getApiResponse();
-        }
+        super(application); // <====
+        mRepository = new DataRepository(application);
+        mApiError = mRepository.getErrorMessage();
+        mApiResponse = mRepository.getApiResponse();
+    }
 
 
     public MutableLiveData<ApiError> getApiError() {
@@ -44,7 +44,6 @@ public class DataViewModel extends AndroidViewModel {
     }
 
 
-
     // POST user
     public void postUser(Context context,
                          String firebase_id,
@@ -52,7 +51,7 @@ public class DataViewModel extends AndroidViewModel {
                          String phone,
                          String email,
                          int birth_year) {
-        mRepository.postUser(context, firebase_id, name, phone, email,birth_year);
+        mRepository.postUser(context, firebase_id, name, phone, email, birth_year);
     }
 
     // PUT user
@@ -61,14 +60,12 @@ public class DataViewModel extends AndroidViewModel {
                         String name,
                         String phone,
                         String email,
-                        int birth_year)
-    {
+                        int birth_year) {
         mRepository.putUser(context, firebase_id, name, phone, email, birth_year);
     }
 
     // DELETE user
-    public void deleteUser(Context context, String firebase_id, FirebaseUser firebaseUser)
-    {
+    public void deleteUser(Context context, String firebase_id, FirebaseUser firebaseUser) {
         mRepository.deleteUser(context, firebase_id, firebaseUser);
     }
 
@@ -89,10 +86,21 @@ public class DataViewModel extends AndroidViewModel {
                                 String name,
                                 String description,
                                 boolean use_timing, int id) {
-            mRepository.postUserProgram(context, app_program_type_id, name, description, use_timing, id);
+        mRepository.postUserProgram(context, app_program_type_id, name, description, use_timing, id);
     }
 
-    public void getExercises(Context context){
+    public void getExercises(Context context) {
         mRepository.getExercises(context);
     }
+
+
+    public void postExercise(Context context, String name, String description, String icon, String infoboxColor) {
+        mRepository.postExercise(context, name, description, icon, infoboxColor);
+
+    }
+
+    public void postUserProgramExercise(Context context, String user_program_id, String app_exercise_id){
+        mRepository.postUserProgramExercise(context, user_program_id, app_exercise_id);
+    }
+
 }

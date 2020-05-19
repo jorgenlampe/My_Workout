@@ -7,31 +7,31 @@
     tools:context=".fragments.AddUserProgramFragment">
 
 
-
-    <Spinner
-        android:id="@+id/spinner_program_type"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etAddName"
-        android:hint="@string/hintName">
+        android:hint="@string/hintExerciseName">
     </EditText>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etAddDescription"
-        android:hint="@string/hintDescription"></EditText>
+        android:hint="@string/hintExerciseDescription"></EditText>
 
-    <CheckBox
-        android:id="@+id/brukTiming"
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hintTiming" />
+        android:id="@+id/etAddIcon"
+        android:hint="@string/hintIcon"></EditText>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etAddInfoboxColor"
+        android:hint="@string/hintInfoboxColor"></EditText>
+
 
     <Button
         android:layout_width="match_parent"

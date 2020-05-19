@@ -73,8 +73,11 @@
             android:id="@+id/actionToExerciseFragment"
             app:destination="@id/exerciseFragment" />
         <action
-            android:id="@+id/action_userProgramFragment_to_addExerciseFragment"
+            android:id="@+id/actionToAddExerciseFragment"
             app:destination="@id/addExerciseFragment" />
+        <argument
+            android:name="userProgramId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/exerciseFragment"
@@ -89,5 +92,9 @@
         android:id="@+id/addExerciseFragment"
         android:name="com.example.myworkout.fragments.AddExerciseFragment"
         android:label="fragment_add_exercise"
-        tools:layout="@layout/fragment_add_exercise" />
+        tools:layout="@layout/fragment_add_exercise" >
+        <argument
+            android:name="userProgramId"
+            app:argType="string" />
+    </fragment>
 </navigation>

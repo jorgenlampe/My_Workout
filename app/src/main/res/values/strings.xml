@@ -20,4 +20,8 @@
     <string name="hintTiming">Bruk tidtaking?</string>
     <string name="btnAddUserProgram">Legg til program</string>
     <string name="btnAddExercise">Legg til øvelse</string>
+    <string name="hintExerciseName">Navn på øvelse...</string>
+    <string name="hintExerciseDescription">Beskrivelse...</string>
+    <string name="hintIcon">Ikon (tekst, navn på .png-fil) ...</string>
+    <string name="hintInfoboxColor">Farge (f.eks. #FE0980)...</string>
 </resources>

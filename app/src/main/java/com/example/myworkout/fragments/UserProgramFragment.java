@@ -20,14 +20,10 @@ import android.widget.Toast;
 
 import com.example.myworkout.R;
 import com.example.myworkout.adapters.ExerciseAdapter;
-import com.example.myworkout.adapters.UserProgramAdapter;
 import com.example.myworkout.data.DataViewModel;
 import com.example.myworkout.entities.Exercise;
-import com.example.myworkout.entities.UserProgram;
 import com.example.myworkout.helpers.ApiError;
 import com.example.myworkout.helpers.ApiResponse;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -39,6 +35,9 @@ public class UserProgramFragment extends Fragment {
 
     private TextView tvExerciseName;
     private TextView tvExerciseDescription;
+
+    private String rid;
+    private String user_program_id;
 
     private Button btnAddExercise;  //todo implementere denne
 
@@ -81,23 +80,29 @@ public class UserProgramFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
 
-        dataViewModel.getExercises(getContext());
+        dataViewModel.getExercises(getContext());   //todo skal vel være getUserProgramExercises
 
-      //  btnAddExercise = getView().findViewById(R.id.btnAddExercise);
+        rid = UserProgramFragmentArgs.fromBundle(getArguments()).getUserProgramRid();
+        user_program_id = UserProgramFragmentArgs.fromBundle(getArguments()).getUserProgramId();
 
-      /*  btnAddExercise.setOnClickListener(new View.OnClickListener() {
+        btnAddExercise = getView().findViewById(R.id.btnAddExercise);
+
+        btnAddExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(view).navigate(R.id.action_userProgramFragment_to_addExerciseFragment);
+                //Navigation.findNavController(view).navigate(R.id.actionToAddExerciseFragment);
+
+                UserProgramFragmentDirections.ActionToAddExerciseFragment actionToAddExerciseFragment = UserProgramFragmentDirections.actionToAddExerciseFragment(user_program_id);
+                NavHostFragment.findNavController(UserProgramFragment.this).navigate(actionToAddExerciseFragment);
             }
         });
-*/
+
         layoutManager = new LinearLayoutManager(getContext());
 
-        TextView tvRid = view.findViewById(R.id.tvRid);
+        //TextView tvRid = view.findViewById(R.id.tvRid);
         //Henter Rid
-        String Rid = UserProgramFragmentArgs.fromBundle(getArguments()).getUserProgramRid();
-        tvRid.setText(Rid);
+
+        //tvRid.setText(Rid);
     }
 
 

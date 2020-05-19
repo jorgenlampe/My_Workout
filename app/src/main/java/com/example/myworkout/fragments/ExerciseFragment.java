@@ -26,6 +26,8 @@ public class ExerciseFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private String rid;
+
     public ExerciseFragment() {
         // Required empty public constructor
     }
@@ -62,5 +64,10 @@ public class ExerciseFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_exercise, container, false);
+    }
+
+    public void onViewCreated(final View view, Bundle savedInstanceState){
+
+        rid = UserProgramFragmentArgs.fromBundle(getArguments()).getUserProgramRid();
     }
 }

@@ -16,6 +16,7 @@ import com.example.myworkout.entities.Exercise;
 import com.example.myworkout.entities.ProgramType;
 import com.example.myworkout.entities.User;
 import com.example.myworkout.entities.UserProgram;
+import com.example.myworkout.entities.UserProgramExercise;
 import com.example.myworkout.helpers.ApiError;
 import com.example.myworkout.helpers.ApiResponse;
 import com.example.myworkout.helpers.MyJsonArrayRequest;
@@ -182,7 +183,59 @@ public class DataRepository {
     }
 
 
-    public void postExercise() {
+
+    public void postExercise(Context context, String name, String description, String icon, String infobox_color){
+
+        final HashMap<String, String> params = new HashMap<String, String>();
+        params.put("_api_key", API_KEY);
+        params.put("name", name);
+        params.put("description", description);
+        params.put("icon", icon);
+        params.put("infobox_color", infobox_color);
+
+        queue = MySingletonQueue.getInstance(context).getRequestQueue();
+
+        myJsonPostRequest = new MyJsonObjectRequest(
+                Request.Method.POST,
+                EXERCISES_PREFIX,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Gson gson = new Gson();
+                        try {
+                            String message = response.getString("message");
+                            JSONObject userAsJsonObject = response.getJSONObject("record");
+                            Exercise exercise = gson.fromJson(userAsJsonObject.toString(), Exercise.class);
+                            ApiResponse resp = new ApiResponse(true, message, exercise, myJsonPostRequest.getHttpStatusCode());
+                            apiResponse.postValue(resp);
+                        } catch (JSONException e) {
+                            ApiError apiError = new ApiError(-1, e.getMessage());
+                            errorMessage.postValue(apiError);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        ApiError apiError = VolleyErrorParser.parse(error);
+                        errorMessage.postValue(apiError);
+                    }
+                }
+        ) {
+            @Override
+            public byte[] getBody() {
+                return new JSONObject(params).toString().getBytes();
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+        queue.add(myJsonPostRequest);
+
+
     }
 
     public void putExercise() {
@@ -510,7 +563,59 @@ public class DataRepository {
     public void getUserProgramExercises() {
     }
 
-    public void postUserProgramExercise() {
+    public void postUserProgramExercise(Context context, String user_program_id, String app_exercise_id){
+
+        final HashMap<String, String> params = new HashMap<String, String>();
+        params.put("_api_key", API_KEY);
+        params.put("user_program_id", user_program_id);
+        params.put("app_exercise_id", app_exercise_id);  //todo feilmld. null...
+
+        Log.d("lotfi", API_KEY);
+        Log.d("lotfi", user_program_id);
+        Log.d("lotfi", app_exercise_id);
+
+        queue = MySingletonQueue.getInstance(context).getRequestQueue();
+
+        myJsonPostRequest = new MyJsonObjectRequest(
+                Request.Method.POST,
+                USER_PROGRAM_EXERCISES_PREFIX,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Gson gson = new Gson();
+                        try {
+                            String message = response.getString("message");
+                            JSONObject userProgramExerciseAsJsonObject = response.getJSONObject("record");
+                            UserProgramExercise exercise = gson.fromJson(userProgramExerciseAsJsonObject.toString(), UserProgramExercise.class);
+                            ApiResponse resp = new ApiResponse(true, message, exercise, myJsonPostRequest.getHttpStatusCode());
+                            apiResponse.postValue(resp);
+                        } catch (JSONException e) {
+                            ApiError apiError = new ApiError(-1, e.getMessage());
+                            errorMessage.postValue(apiError);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        ApiError apiError = VolleyErrorParser.parse(error);
+                        errorMessage.postValue(apiError);
+                    }
+                }
+        ) {
+            @Override
+            public byte[] getBody() {
+                return new JSONObject(params).toString().getBytes();
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+        queue.add(myJsonPostRequest);
+
     }
 
     public void putUserProgramExercise() {

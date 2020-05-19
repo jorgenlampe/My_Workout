@@ -8,19 +8,22 @@ public class Exercise {
     private String description;
     private String icon;
     private String infobox_oolor;
-    //private String program_id;
+    private String user_program_id;
    // private String programName;
 
 
+    public String getUser_program_id() {
+        return user_program_id;
+    }
 
-
-    public Exercise(String id, String rid, String name, String description, String icon, String infobox_oolor) {
+    public Exercise(String id, String rid, String name, String description, String icon, String infobox_oolor, String user_program_id) {
         this.id = id;
         this.rid = rid;
         this.name = name;
         this.description = description;
         this.icon = icon;
         this.infobox_oolor = infobox_oolor;
+        this.user_program_id = user_program_id;
     }
 
     public String getId() {

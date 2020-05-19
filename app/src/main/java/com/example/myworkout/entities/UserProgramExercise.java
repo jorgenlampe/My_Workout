@@ -1,15 +1,15 @@
 package com.example.myworkout.entities;
 
-class UserProgramExercise {
+public class UserProgramExercise {
 
     private String rid;
-    private String userProgramId;
-    private String exerciseId;
+    private String user_program_id;
+    private String app_exercise_id;
 
     public UserProgramExercise(String rid, String userProgramId, String exerciseId) {
         this.rid = rid;
-        this.userProgramId = userProgramId;
-        this.exerciseId = exerciseId;
+        this.user_program_id = userProgramId;
+        this.app_exercise_id = exerciseId;
     }
 
     public UserProgramExercise(){}
@@ -22,19 +22,19 @@ class UserProgramExercise {
         this.rid = rid;
     }
 
-    public String getUserProgramId() {
-        return userProgramId;
+    public String getUser_program_id() {
+        return user_program_id;
     }
 
-    public void setUserProgramId(String userProgramId) {
-        this.userProgramId = userProgramId;
+    public void setUser_program_id(String user_program_id) {
+        this.user_program_id = user_program_id;
     }
 
-    public String getExerciseId() {
-        return exerciseId;
+    public String getApp_exercise_id() {
+        return app_exercise_id;
     }
 
-    public void setExerciseId(String exerciseId) {
-        this.exerciseId = exerciseId;
+    public void setApp_exercise_id(String app_exercise_id) {
+        this.app_exercise_id = app_exercise_id;
     }
 }

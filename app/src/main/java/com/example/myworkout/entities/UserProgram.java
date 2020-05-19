@@ -10,7 +10,7 @@ public class UserProgram {
     private int app_program_type_id;
     private int use_timing;
     private String user_id;
-    private int id;
+    private String id;
     private String api_key;
     private List<UserProgramExercise> user_program_exercises;
     private List<UserProgramSession> user_program_sessions;
@@ -28,7 +28,7 @@ public class UserProgram {
         this.user_id = user_id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -78,7 +78,7 @@ public class UserProgram {
         return user_id;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -88,7 +88,7 @@ public class UserProgram {
         return getDescription();
     }
 
-    public UserProgram(int id, String rid, String api_key, String user_id, int app_program_type_id, String name, String description, int use_timing, List<UserProgramExercise> user_program_exercises,
+    public UserProgram(String id, String rid, String api_key, String user_id, int app_program_type_id, String name, String description, int use_timing, List<UserProgramExercise> user_program_exercises,
                        List<UserProgramSession> user_program_sessions, ProgramType app_program_type){
         this.name = name;
         this.user_id = user_id;
