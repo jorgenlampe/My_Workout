@@ -81,7 +81,7 @@ public class UserProgramFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
 
-        dataViewModel.getExercises(getContext());   //todo skal vel være getUserProgramExercises
+        dataViewModel.getExercises(getContext());
 
         rid = UserProgramFragmentArgs.fromBundle(getArguments()).getUserProgramRid();
         Log.d("ridzz", rid);
@@ -101,10 +101,6 @@ public class UserProgramFragment extends Fragment {
 
         layoutManager = new LinearLayoutManager(getContext());
 
-        //TextView tvRid = view.findViewById(R.id.tvRid);
-        //Henter Rid
-
-        //tvRid.setText(Rid);
     }
 
 

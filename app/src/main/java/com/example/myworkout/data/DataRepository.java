@@ -560,19 +560,50 @@ public class DataRepository {
     public void deleteUserProgram() {
     }
 
-    public void getUserProgramExercises() {
-    }
+    public void getUserProgramExercise(Context context, String rid) {
+
+        String url = USER_PROGRAM_EXERCISES_PREFIX + rid + "?_api_key=" + API_KEY;
+
+            if (!this.downloading) {
+
+                queue = MySingletonQueue.getInstance(context).getRequestQueue();
+                downloading = true;
+                myJsonGetRequest = new MyJsonObjectRequest(
+                        Request.Method.GET,
+                        url,
+                        null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject jsonObject) {
+                                Gson gson = new Gson();
+                                UserProgramExercise userProgramExercise = gson.fromJson(jsonObject.toString(), UserProgramExercise.class);
+                                ApiResponse resp = new ApiResponse(true, "OK", userProgramExercise, myJsonGetRequest.getHttpStatusCode());
+                                apiResponse.postValue(resp);
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                ApiError apiError = VolleyErrorParser.parse(error);
+                                errorMessage.setValue(apiError);
+                            }
+                        });
+                queue.add(myJsonGetRequest);
+
+            }
+
+        downloading = false;
+
+
+        }
+
 
     public void postUserProgramExercise(Context context, String user_program_id, String app_exercise_id){
 
         final HashMap<String, String> params = new HashMap<String, String>();
         params.put("_api_key", API_KEY);
         params.put("user_program_id", user_program_id);
-        params.put("app_exercise_id", app_exercise_id);  //todo feilmld. null...
-
-        Log.d("lotfi", API_KEY);
-        Log.d("lotfi", user_program_id);
-        Log.d("lotfi", app_exercise_id);
+        params.put("app_exercise_id", app_exercise_id);
 
         queue = MySingletonQueue.getInstance(context).getRequestQueue();
 

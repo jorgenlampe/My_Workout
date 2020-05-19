@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.myworkout.R;
 import com.example.myworkout.data.DataViewModel;
 import com.example.myworkout.entities.Exercise;
+import com.example.myworkout.entities.UserProgramExercise;
 import com.example.myworkout.helpers.ApiError;
 import com.example.myworkout.helpers.ApiResponse;
 
@@ -162,6 +163,11 @@ public class AddExerciseFragment extends Fragment {
 
                             dataViewModel.postUserProgramExercise(getContext(), user_program_id, app_exercise_id);
 
+                        }
+
+                        if (apiResponse.getResponseObject() instanceof UserProgramExercise){
+                            UserProgramExercise userProgramExercise = (UserProgramExercise)apiResponse.getResponseObject();
+                            Log.d("userProgramExerciseRid", userProgramExercise.getRid());
                         }
 
 
