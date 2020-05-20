@@ -562,10 +562,9 @@ public class DataRepository {
 
     public void getUserProgramExercise(Context context, String rid) {
 
-        String url = USER_PROGRAM_EXERCISES_PREFIX + rid + "?_api_key=" + API_KEY;
-
+        String url = USER_PROGRAM_PREFIX + rid + "?_api_key=" + API_KEY + "&_expand_children=true";
+        System.out.println(url);
             if (!this.downloading) {
-
                 queue = MySingletonQueue.getInstance(context).getRequestQueue();
                 downloading = true;
                 myJsonGetRequest = new MyJsonObjectRequest(
@@ -575,10 +574,22 @@ public class DataRepository {
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject jsonObject) {
-                                Gson gson = new Gson();
-                                UserProgramExercise userProgramExercise = gson.fromJson(jsonObject.toString(), UserProgramExercise.class);
-                                ApiResponse resp = new ApiResponse(true, "OK", userProgramExercise, myJsonGetRequest.getHttpStatusCode());
-                                apiResponse.postValue(resp);
+                                try {
+                                    Gson gson = new Gson();
+                                    ArrayList<Exercise> tmpList = new ArrayList<>();
+                                    JSONArray jsonExercises = jsonObject.getJSONArray("user_program_exercises");
+                                    for (int i = 0; i < jsonExercises.length(); i++) {
+                                        JSONObject userProgramExerciseAsJson = jsonExercises.getJSONObject(i);
+                                        JSONObject exerciseAsJson = userProgramExerciseAsJson.getJSONObject("app_exercise");
+                                        Exercise exercise = gson.fromJson(exerciseAsJson.toString(), Exercise.class);
+                                        tmpList.add(exercise);
+                                        System.out.println(exercise.getDescription());
+                                    }
+                                    ApiResponse resp = new ApiResponse(true, "OK", tmpList, myJsonGetRequest.getHttpStatusCode());
+                                    apiResponse.postValue(resp);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
                         },
                         new Response.ErrorListener() {

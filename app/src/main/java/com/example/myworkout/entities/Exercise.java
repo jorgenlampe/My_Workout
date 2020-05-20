@@ -16,14 +16,13 @@ public class Exercise {
         return user_program_id;
     }
 
-    public Exercise(String id, String rid, String name, String description, String icon, String infobox_oolor, String user_program_id) {
+    public Exercise(String id, String rid, String name, String description, String icon, String infobox_color) {
         this.id = id;
         this.rid = rid;
         this.name = name;
         this.description = description;
         this.icon = icon;
-        this.infobox_oolor = infobox_oolor;
-        this.user_program_id = user_program_id;
+        this.infobox_oolor = infobox_color;
     }
 
     public String getId() {

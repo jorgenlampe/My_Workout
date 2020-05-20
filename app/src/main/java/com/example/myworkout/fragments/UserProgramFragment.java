@@ -80,11 +80,10 @@ public class UserProgramFragment extends Fragment {
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
-
-        dataViewModel.getExercises(getContext());
-
         rid = UserProgramFragmentArgs.fromBundle(getArguments()).getUserProgramRid();
-        Log.d("ridzz", rid);
+
+        dataViewModel.getUserProgramExercise(getContext(), rid);
+
         user_program_id = UserProgramFragmentArgs.fromBundle(getArguments()).getUserProgramId();
 
         btnAddExercise = getView().findViewById(R.id.btnAddExercise);
