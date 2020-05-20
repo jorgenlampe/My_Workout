@@ -4,6 +4,7 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +22,7 @@ public class UserProgramAdapter extends RecyclerView.Adapter<UserProgramAdapter.
 
     public interface OnItemClickListener {
         void onItemClick(int position);
+        void onDeleteClick(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -31,12 +33,14 @@ public class UserProgramAdapter extends RecyclerView.Adapter<UserProgramAdapter.
 
         public TextView tvName;
         public TextView tvDescription;
+        public ImageView imgRemove;
 
         public MyViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvUserProgramName);
             tvName.setTextSize(20);
-              tvDescription = itemView.findViewById(R.id.tvUserProgramDescription);
+            tvDescription = itemView.findViewById(R.id.tvUserProgramDescription);
+            imgRemove = itemView.findViewById(R.id.imgDelete);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -45,6 +49,18 @@ public class UserProgramAdapter extends RecyclerView.Adapter<UserProgramAdapter.
                         int position = getAdapterPosition();
                         if(position != RecyclerView.NO_POSITION) {
                             listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+
+            imgRemove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener != null) {
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION) {
+                            listener.onDeleteClick(position);
                         }
                     }
                 }

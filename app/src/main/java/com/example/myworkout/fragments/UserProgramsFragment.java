@@ -126,14 +126,13 @@ public class UserProgramsFragment extends Fragment {
     public void subscribeToApiResponse() {
         if (apiResponseObserver == null) {
             // Observerer endringer:
-
             apiResponseObserver = new Observer<ApiResponse>() {
-
                 @Override
                 public void onChanged(ApiResponse apiResponse) {
                     if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
                         final ArrayList<UserProgram> programs = (ArrayList) apiResponse.getResponseObject();
+                        if(programs == null) return;
                         if (programs.size() > 0) {
                             // Dersom response på GET, PUT, POST:
                             mAdapter = new UserProgramAdapter(programs);
@@ -144,6 +143,13 @@ public class UserProgramsFragment extends Fragment {
                                 public void onItemClick(int position) {
                                     UserProgramsFragmentDirections.ActionToUserProgramFragment actionToUserProgramFragment = UserProgramsFragmentDirections.actionToUserProgramFragment(programs.get(position).getRid(), programs.get(position).getId()); //todo endret fra programs.get(position).getRid()....
                                     NavHostFragment.findNavController(UserProgramsFragment.this).navigate(actionToUserProgramFragment);
+                                }
+
+                                @Override
+                                public void onDeleteClick(int position) {
+                                    dataViewModel.deleteUserProgram(programs.get(position).getRid(), getContext());
+                                    programs.remove(position);
+                                    mAdapter.notifyItemRemoved(position);
                                 }
                             });
                         }

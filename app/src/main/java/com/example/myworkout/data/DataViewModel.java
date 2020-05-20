@@ -93,6 +93,8 @@ public class DataViewModel extends AndroidViewModel {
         mRepository.postUserProgram(context, app_program_type_id, name, description, use_timing, id);
     }
 
+    //DELETE UserProgram
+    public void deleteUserProgram(String rid, Context context) { mRepository.deleteUserProgram(rid,context);}
     public void getExercises(Context context) {
         mRepository.getExercises(context);
     }

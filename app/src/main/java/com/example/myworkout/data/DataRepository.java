@@ -470,7 +470,6 @@ public class DataRepository {
     public void getUserPrograms(Context context, String firebaseId) {
         if (!this.downloading) {
             String url = USERS_PREFIX + firebaseId + "?_api_key=" + API_KEY + "&_expand_children=true";
-            Log.d("uzuz", url);
             queue = MySingletonQueue.getInstance(context).getRequestQueue();
             downloading = true;
             myJsonGetRequest = new MyJsonObjectRequest(
@@ -573,7 +572,36 @@ public class DataRepository {
     public void putUserProgram() {
     }
 
-    public void deleteUserProgram() {
+    public void deleteUserProgram(String rid, Context context) {
+        String url = USER_PROGRAM_PREFIX + rid + "?_api_key=" + API_KEY;
+
+        queue = MySingletonQueue.getInstance(context).getRequestQueue();
+
+        myJsonDeleteRequest = new MyJsonObjectRequest(
+                Request.Method.DELETE,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        ApiResponse resp = new ApiResponse(true, "OK", null, myJsonDeleteRequest.getHttpStatusCode());
+                        apiResponse.postValue(resp);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        ApiError apiError = VolleyErrorParser.parse(error);
+                        errorMessage.postValue(apiError);
+                    }
+                }
+        ) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+        queue.add(myJsonDeleteRequest);
     }
 
     public void getUserProgramExercise(Context context, String rid) {
@@ -599,7 +627,6 @@ public class DataRepository {
                                         JSONObject exerciseAsJson = userProgramExerciseAsJson.getJSONObject("app_exercise");
                                         Exercise exercise = gson.fromJson(exerciseAsJson.toString(), Exercise.class);
                                         tmpList.add(exercise);
-                                        System.out.println(exercise.getDescription());
                                     }
                                     ApiResponse resp = new ApiResponse(true, "OK", tmpList, myJsonGetRequest.getHttpStatusCode());
                                     apiResponse.postValue(resp);

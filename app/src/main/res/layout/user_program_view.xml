@@ -22,6 +22,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tvUserProgramName"
             android:text="Text 2" />
+
+        <ImageView
+            android:id="@+id/imgDelete"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_remove"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 
 
