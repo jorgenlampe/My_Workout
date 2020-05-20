@@ -417,8 +417,6 @@ public class DataRepository {
     public void deleteUser(final Context context,
                            String firebase_id, FirebaseUser firebaseUser) {
 
-                AuthCredential credential = EmailAuthProvider
-                .getCredential("user@example.com", "password1234");
 
         firebaseUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -576,7 +574,7 @@ public class DataRepository {
     public void deleteUserProgram() {
     }
 
-    public void getUserProgramExercise(Context context, String rid) {
+    public void getUserProgramExercises(Context context, String rid) {
 
         String url = USER_PROGRAM_PREFIX + rid + "?_api_key=" + API_KEY + "&_expand_children=true";
         System.out.println(url);

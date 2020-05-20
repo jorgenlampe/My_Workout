@@ -13,20 +13,12 @@
         android:layout_height="wrap_content"
         android:text="@string/btnAddExercise"></Button>
 
-    <TextView
-        android:id="@+id/tvRid"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
     <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/my_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical" />
-
-
-
 
 
 </LinearLayout>

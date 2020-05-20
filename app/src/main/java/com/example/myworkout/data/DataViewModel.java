@@ -79,8 +79,8 @@ public class DataViewModel extends AndroidViewModel {
         mRepository.getUserPrograms(context, firebaseId);
     }
 
-    public void getUserProgramExercise(Context context, String rid){
-        mRepository.getUserProgramExercise(context, rid);
+    public void getUserProgramExercises(Context context, String rid){
+        mRepository.getUserProgramExercises(context, rid);
     }
 
     //POST UserPrograms
