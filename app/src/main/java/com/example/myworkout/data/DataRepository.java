@@ -247,7 +247,36 @@ public class DataRepository {
     public void putExercise() {
     }
 
-    public void deleteExercise() {
+    public void deleteExercise(String rid, Context context) {
+        String url = EXERCISES_PREFIX + rid + "?_api_key=" + API_KEY;
+
+        queue = MySingletonQueue.getInstance(context).getRequestQueue();
+
+        myJsonDeleteRequest = new MyJsonObjectRequest(
+                Request.Method.DELETE,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        ApiResponse resp = new ApiResponse(true, "OK", null, myJsonDeleteRequest.getHttpStatusCode());
+                        apiResponse.postValue(resp);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        ApiError apiError = VolleyErrorParser.parse(error);
+                        errorMessage.postValue(apiError);
+                    }
+                }
+        ) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+        queue.add(myJsonDeleteRequest);
     }
 
     public void getUser(Context context, final String firebaseId, boolean forceDownload) {
@@ -643,11 +672,42 @@ public class DataRepository {
                 queue.add(myJsonGetRequest);
 
             }
-
         downloading = false;
+    }
 
+    //Brukes ikke..SLETTE? TODO
+    public void deleteUserProgramExercise(Context context, String rid) {
+        String url = USER_PROGRAM_EXERCISES_PREFIX + rid + "?_api_key=" + API_KEY;
 
-        }
+        queue = MySingletonQueue.getInstance(context).getRequestQueue();
+
+        myJsonDeleteRequest = new MyJsonObjectRequest(
+                Request.Method.DELETE,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        ApiResponse resp = new ApiResponse(true, "OK", null, myJsonDeleteRequest.getHttpStatusCode());
+                        apiResponse.postValue(resp);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        ApiError apiError = VolleyErrorParser.parse(error);
+                        errorMessage.postValue(apiError);
+                    }
+                }
+        ) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+        queue.add(myJsonDeleteRequest);
+    }
+
 
     public void getExercise(Context context, String rid) {
 

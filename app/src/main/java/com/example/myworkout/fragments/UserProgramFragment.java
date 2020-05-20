@@ -115,8 +115,8 @@ public class UserProgramFragment extends Fragment {
                     if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
                         final ArrayList<Exercise> exercises = (ArrayList) apiResponse.getResponseObject();
+                        if(exercises == null) return;
                         if (exercises.size() > 0) {
-                            Log.d("æ", "exercises OK");
                             // Dersom response på GET, PUT, POST:
                             mAdapter = new ExerciseAdapter(exercises);
                             recyclerView.setAdapter(mAdapter);
@@ -126,6 +126,12 @@ public class UserProgramFragment extends Fragment {
                                 public void onItemClick(int position) {
                                     UserProgramFragmentDirections.ActionToExerciseFragment actionToExerciseFragment = UserProgramFragmentDirections.actionToExerciseFragment(exercises.get(position).getRid());
                                     NavHostFragment.findNavController(UserProgramFragment.this).navigate(actionToExerciseFragment);
+                                }
+                                @Override
+                                public void onDeleteClick(int position) {
+                                    dataViewModel.deleteExercise(exercises.get(position).getRid(), getContext());
+                                    exercises.remove(position);
+                                    mAdapter.notifyItemRemoved(position);
                                 }
                             });
                         }

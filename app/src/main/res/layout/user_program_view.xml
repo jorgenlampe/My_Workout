@@ -24,7 +24,7 @@
             android:text="Text 2" />
 
         <ImageView
-            android:id="@+id/imgDelete"
+            android:id="@+id/programDelete"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_remove"

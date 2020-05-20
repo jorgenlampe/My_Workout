@@ -40,7 +40,7 @@ public class UserProgramAdapter extends RecyclerView.Adapter<UserProgramAdapter.
             tvName = itemView.findViewById(R.id.tvUserProgramName);
             tvName.setTextSize(20);
             tvDescription = itemView.findViewById(R.id.tvUserProgramDescription);
-            imgRemove = itemView.findViewById(R.id.imgDelete);
+            imgRemove = itemView.findViewById(R.id.programDelete);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
