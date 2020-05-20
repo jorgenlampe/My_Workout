@@ -622,6 +622,47 @@ public class DataRepository {
 
         }
 
+    public void getExercise(Context context, String rid) {
+
+        String url = EXERCISES_PREFIX + rid + "?_api_key=" + API_KEY;
+        System.out.println(url);
+        if (!this.downloading) {
+            queue = MySingletonQueue.getInstance(context).getRequestQueue();
+            downloading = true;
+            myJsonGetRequest = new MyJsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject jsonObject) {
+                            try {
+                                Gson gson = new Gson();
+                                Exercise exercise = gson.fromJson(jsonObject.toString(), Exercise.class);
+                                ApiResponse resp = new ApiResponse(true, "OK", exercise, myJsonGetRequest.getHttpStatusCode());
+                                apiResponse.postValue(resp);
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            ApiError apiError = VolleyErrorParser.parse(error);
+                            errorMessage.setValue(apiError);
+                        }
+                    });
+            queue.add(myJsonGetRequest);
+
+        }
+
+        downloading = false;
+
+
+    }
+
 
     public void postUserProgramExercise(Context context, String user_program_id, String app_exercise_id){
 

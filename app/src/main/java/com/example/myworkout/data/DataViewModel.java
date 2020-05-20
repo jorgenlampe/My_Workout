@@ -83,6 +83,9 @@ public class DataViewModel extends AndroidViewModel {
         mRepository.getUserProgramExercises(context, rid);
     }
 
+    public void getExercise(Context context, String rid){
+        mRepository.getExercise(context, rid);
+    }
     //POST UserPrograms
     public void postUserProgram(Context context,
                                 String app_program_type_id,

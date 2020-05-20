@@ -1,5 +1,7 @@
 package com.example.myworkout.entities;
 
+import java.util.ArrayList;
+
 public class UserProgramExercise {
 
     private String rid;
