@@ -3,7 +3,9 @@ package com.example.myworkout.data;
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.volley.Request;
@@ -23,6 +25,10 @@ import com.example.myworkout.helpers.MyJsonArrayRequest;
 import com.example.myworkout.helpers.MyJsonObjectRequest;
 import com.example.myworkout.helpers.VolleyErrorParser;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
@@ -408,10 +414,20 @@ public class DataRepository {
     }
 
 
-    public void deleteUser(Context context,
+    public void deleteUser(final Context context,
                            String firebase_id, FirebaseUser firebaseUser) {
 
-        firebaseUser.delete();
+                AuthCredential credential = EmailAuthProvider
+                .getCredential("user@example.com", "password1234");
+
+        firebaseUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(context, "Firebase user deleted", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         StringBuilder builder = new StringBuilder();
 
