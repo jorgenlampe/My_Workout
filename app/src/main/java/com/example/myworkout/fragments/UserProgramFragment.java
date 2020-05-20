@@ -81,8 +81,9 @@ public class UserProgramFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         rid = UserProgramFragmentArgs.fromBundle(getArguments()).getUserProgramRid();
+        Log.d("ø", rid);
 
-        dataViewModel.getUserProgramExercise(getContext(), rid);
+        dataViewModel.getUserProgramExercises(getContext(), rid);
 
         user_program_id = UserProgramFragmentArgs.fromBundle(getArguments()).getUserProgramId();
 
@@ -115,6 +116,7 @@ public class UserProgramFragment extends Fragment {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
                         final ArrayList<Exercise> exercises = (ArrayList) apiResponse.getResponseObject();
                         if (exercises.size() > 0) {
+                            Log.d("æ", "exercises OK");
                             // Dersom response på GET, PUT, POST:
                             mAdapter = new ExerciseAdapter(exercises);
                             recyclerView.setAdapter(mAdapter);
