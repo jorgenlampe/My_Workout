@@ -1,9 +1,11 @@
 package com.example.myworkout.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,6 +14,8 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.myworkout.R;
 import com.example.myworkout.data.DataViewModel;
 import com.example.myworkout.entities.Exercise;
@@ -35,6 +39,8 @@ public class ExerciseFragment extends Fragment {
     private String mParam2;
 
     private String rid;
+
+    private ImageView image;
 
     private Observer<ApiResponse> apiResponseObserver = null;
     private Observer<ApiError> apiErrorObserver = null;
@@ -84,6 +90,8 @@ public class ExerciseFragment extends Fragment {
         tvName = view.findViewById(R.id.tvExerciseName);
         tvDescription = view.findViewById(R.id.tvExerciseDescription);
 
+        image = view.findViewById(R.id.image);
+
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 
         subscribeToApiResponse();
@@ -116,7 +124,20 @@ public class ExerciseFragment extends Fragment {
                          Exercise exercise = (Exercise)apiResponse.getResponseObject();
 
                          tvName.setText(exercise.getName());
+                         tvName.setTextSize(20);
                          tvDescription.setText(exercise.getDescription());
+
+                         String url = "https://tusk.systems/trainingapp/v2/api.php/app_exercises/icons8-ninja_filled.png";
+
+                        RequestOptions options = new RequestOptions()
+                                .centerCrop()
+                                .placeholder(R.mipmap.ic_launcher_round)
+                                .error(R.mipmap.ic_launcher_round);
+
+                        Glide.with(getContext()).load
+                                (url).apply(options).into(image);
+
+                        //icons8-ninja_filled.png
 
                             // Dersom response på GET, PUT, POST:
 

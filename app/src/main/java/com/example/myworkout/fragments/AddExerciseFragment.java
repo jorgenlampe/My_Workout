@@ -130,6 +130,7 @@ public class AddExerciseFragment extends Fragment {
                 icon = etAddIcon.getText().toString();
                 infoboxColor = etAddInfoboxColor.getText().toString();
 
+
                 //Sjekker at bruker har fyllt ut feltene
                 if (name.isEmpty() || description.isEmpty()) {
                     Toast.makeText(getContext(), "Fill out form before sending!", Toast.LENGTH_LONG).show();
@@ -138,6 +139,7 @@ public class AddExerciseFragment extends Fragment {
 
 
                 dataViewModel.postExercise(getContext(), name, description, icon, infoboxColor);
+
 
 
 
