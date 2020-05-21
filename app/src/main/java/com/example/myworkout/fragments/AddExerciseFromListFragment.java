@@ -142,6 +142,11 @@ public class AddExerciseFromListFragment extends Fragment {
                                                     exercises.get(position).getRid(), exercises.get(position).getId());
                                     NavHostFragment.findNavController(AddExerciseFromListFragment.this).navigate(actionToAddExerciseFromListDetailFragment);
                                 }
+
+                                @Override
+                                public void onDeleteClick(int position) {
+
+                                }
                             });
                         }
                     }
