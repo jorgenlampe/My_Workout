@@ -95,6 +95,7 @@ public class UserProgramFragment extends Fragment {
 
 
             UserProgramFragmentDirections.ActionToAddExerciseFromListFragment actionToAddExerciseFromListFragment = UserProgramFragmentDirections.actionToAddExerciseFromListFragment(user_program_id);
+
             NavHostFragment.findNavController(UserProgramFragment.this).navigate(actionToAddExerciseFromListFragment);
 
             }

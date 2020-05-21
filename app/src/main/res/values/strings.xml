@@ -25,4 +25,5 @@
     <string name="hintExerciseDescription">Beskrivelse...</string>
     <string name="hintIcon">Ikon (tekst, navn på .png-fil) ...</string>
     <string name="hintInfoboxColor">Farge (f.eks. #FE0980)...</string>
+    <string name="btnAddToUserProgram">Legg øvelse til program</string>
 </resources>

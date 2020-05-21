@@ -120,5 +120,11 @@
         <argument
             android:name="userProgramId"
             app:argType="string" />
+        <argument
+            android:name="exerciseRid"
+            app:argType="string" />
+        <argument
+            android:name="appExerciseId"
+            app:argType="string" />
     </fragment>
 </navigation>

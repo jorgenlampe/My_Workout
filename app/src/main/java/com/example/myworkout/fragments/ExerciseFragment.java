@@ -127,6 +127,7 @@ public class ExerciseFragment extends Fragment {
                          tvName.setTextSize(20);
                          tvDescription.setText(exercise.getDescription());
 
+                         //todo finne url til bilde
                          String url = "https://tusk.systems/trainingapp/v2/api.php/app_exercises/icons8-ninja_filled.png";
 
                         RequestOptions options = new RequestOptions()

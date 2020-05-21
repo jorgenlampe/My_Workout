@@ -142,7 +142,7 @@ public class UserProgramsFragment extends Fragment {
                             mAdapter.setOnItemClickListener(new UserProgramAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(int position) {
-                                    UserProgramsFragmentDirections.ActionToUserProgramFragment actionToUserProgramFragment = UserProgramsFragmentDirections.actionToUserProgramFragment(programs.get(position).getRid(), programs.get(position).getId()); //todo endret fra programs.get(position).getRid()....
+                                    UserProgramsFragmentDirections.ActionToUserProgramFragment actionToUserProgramFragment = UserProgramsFragmentDirections.actionToUserProgramFragment(programs.get(position).getRid(), programs.get(position).getId()); //
                                     NavHostFragment.findNavController(UserProgramsFragment.this).navigate(actionToUserProgramFragment);
                                 }
                             });
