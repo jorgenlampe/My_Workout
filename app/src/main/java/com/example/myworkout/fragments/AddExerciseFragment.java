@@ -6,8 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -99,6 +97,7 @@ public class AddExerciseFragment extends Fragment {
                     Toast.makeText(getContext(), "Fill out form before sending!", Toast.LENGTH_LONG).show();
                     return;
                 }
+
 
                 dataViewModel.postExercise(getContext(), name, description, icon, infoboxColor);
                 NavHostFragment.findNavController(AddExerciseFragment.this).navigateUp();

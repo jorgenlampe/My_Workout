@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,7 +39,8 @@ public class UserProgramFragment extends Fragment {
     private String rid;
     private String user_program_id;
 
-    private Button btnAddExercise;
+    private Button btnAddNewExercise;
+    private Button btnAddExerciseFromList;
 
     private DataViewModel dataViewModel;
 
@@ -89,9 +89,25 @@ public class UserProgramFragment extends Fragment {
 
         user_program_id = UserProgramFragmentArgs.fromBundle(getArguments()).getUserProgramId();
 
-        btnAddExercise = getView().findViewById(R.id.btnAddExercise);
+        btnAddExerciseFromList = getView().findViewById(R.id.btnAddExerciseFromList);
 
-        btnAddExercise.setOnClickListener(new View.OnClickListener() {
+        btnAddExerciseFromList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+            UserProgramFragmentDirections.ActionToAddExerciseFromListFragment actionToAddExerciseFromListFragment = UserProgramFragmentDirections.actionToAddExerciseFromListFragment(user_program_id);
+
+            NavHostFragment.findNavController(UserProgramFragment.this).navigate(actionToAddExerciseFromListFragment);
+
+            }
+        });
+
+
+
+        btnAddNewExercise = getView().findViewById(R.id.btnAddNewExercise);
+
+        btnAddNewExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UserProgramFragmentDirections.ActionToAddExerciseFragment actionToAddExerciseFragment = UserProgramFragmentDirections.actionToAddExerciseFragment(user_program_id);

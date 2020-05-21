@@ -80,6 +80,9 @@
         <argument
             android:name="userProgramId"
             app:argType="string" />
+        <action
+            android:id="@+id/actionToAddExerciseFromListFragment"
+            app:destination="@id/addExerciseFromListFragment" />
     </fragment>
     <fragment
         android:id="@+id/exerciseFragment"
@@ -97,6 +100,33 @@
         tools:layout="@layout/fragment_add_exercise" >
         <argument
             android:name="userProgramId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/addExerciseFromListFragment"
+        android:name="com.example.myworkout.fragments.AddExerciseFromListFragment"
+        android:label="fragment_add_exercise_from_list"
+        tools:layout="@layout/fragment_add_exercise_from_list" >
+        <action
+            android:id="@+id/actionToAddExerciseFromListDetailFragment"
+            app:destination="@id/addExerciseFromListDetailFragment" />
+        <argument
+            android:name="userProgramId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/addExerciseFromListDetailFragment"
+        android:name="com.example.myworkout.fragments.AddExerciseFromListDetailFragment"
+        android:label="fragment_add_exercise_from_list_detail"
+        tools:layout="@layout/fragment_add_exercise_from_list_detail" >
+        <argument
+            android:name="userProgramId"
+            app:argType="string" />
+        <argument
+            android:name="exerciseRid"
+            app:argType="string" />
+        <argument
+            android:name="appExerciseId"
             app:argType="string" />
     </fragment>
 </navigation>

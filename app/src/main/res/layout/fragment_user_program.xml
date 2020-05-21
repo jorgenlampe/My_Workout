@@ -8,11 +8,16 @@
 
 
     <Button
-        android:id="@+id/btnAddExercise"
+        android:id="@+id/btnAddNewExercise"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/btnAddExercise"></Button>
+        android:text="@string/btnAddNewExercise"></Button>
 
+    <Button
+        android:id="@+id/btnAddExerciseFromList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnAddExerciseFromList"></Button>
 
     <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/my_recycler_view"
