@@ -50,8 +50,9 @@
         android:label="fragment_user_program"
         tools:layout="@layout/fragment_user_programs" >
         <action
-            android:id="@+id/action_userProgramsFragment_to_addUserFragment"
-            app:destination="@id/addUserFragment" />
+            android:id="@+id/action_toAddUserFragment"
+            app:destination="@id/addUserFragment"
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_toUserProgramFragment"
             app:destination="@id/userProgramFragment" />
@@ -74,7 +75,8 @@
             app:destination="@id/exerciseFragment" />
         <action
             android:id="@+id/actionToAddExerciseFragment"
-            app:destination="@id/addExerciseFragment" />
+            app:destination="@id/addExerciseFragment"
+            app:popUpToInclusive="false" />
         <argument
             android:name="userProgramId"
             app:argType="string" />

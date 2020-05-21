@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -123,6 +124,7 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
                     firebaseId = firebaseUser.getUid();
                 }
                 dataViewModel.postUserProgram(getContext(), programType, firebaseId, name, description, timing, userId);
+                NavHostFragment.findNavController(AddUserProgramFragment.this).navigateUp();
             }
         });
     }

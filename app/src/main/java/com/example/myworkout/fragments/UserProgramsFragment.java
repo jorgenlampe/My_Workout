@@ -11,7 +11,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,31 +21,19 @@ import android.widget.Toast;
 import com.example.myworkout.R;
 import com.example.myworkout.adapters.UserProgramAdapter;
 import com.example.myworkout.data.DataViewModel;
-import com.example.myworkout.entities.User;
 import com.example.myworkout.entities.UserProgram;
 import com.example.myworkout.helpers.ApiError;
 import com.example.myworkout.helpers.ApiResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 
 public class UserProgramsFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     private Observer<ApiResponse> apiResponseObserver = null;
     private Observer<ApiError> apiErrorObserver = null;
-
-    private TextView tvUserProgramName;
-    private TextView tvUserProgramDescription;
 
     private Button btnAddUserProgram;
 
@@ -61,37 +48,33 @@ public class UserProgramsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_programs, container, false);
 
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
-
-        tvUserProgramName = view.findViewById(R.id.tvUserProgramName);
-        tvUserProgramDescription = view.findViewById(R.id.tvUserProgramDescription);
 
         recyclerView = view.findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());//bedre ytelse med fast størrelse på layout
         recyclerView.setLayoutManager(layoutManager);
 
-
         subscribeToApiResponse();
         subscribeToErrors();
 
+        //Oppdaterer observer ved backpress
+        if(apiResponseObserver != null) {
+            dataViewModel.getApiResponse().observe(getViewLifecycleOwner(), apiResponseObserver);
+        }
         return view;
     }
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
-
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         String firebaseId = null;
@@ -102,23 +85,16 @@ public class UserProgramsFragment extends Fragment {
 
         dataViewModel.getUserPrograms(getContext(), firebaseId);
 
-
         btnAddUserProgram = getView().findViewById(R.id.btnAddUserProgram);
 
         btnAddUserProgram.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(view).navigate(R.id.action_userProgramsFragment_to_addUserFragment);
+                Navigation.findNavController(view).navigate(R.id.action_toAddUserFragment);
             }
         });
 
-        //todo test
-
-//todo test
-
         layoutManager = new LinearLayoutManager(getContext());
-
-
     }
 
 
@@ -132,6 +108,7 @@ public class UserProgramsFragment extends Fragment {
                     if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
                         final ArrayList<UserProgram> programs = (ArrayList) apiResponse.getResponseObject();
+                        System.out.println("observer");
                         if(programs == null) return;
                         if (programs.size() > 0) {
                             // Dersom response på GET, PUT, POST:

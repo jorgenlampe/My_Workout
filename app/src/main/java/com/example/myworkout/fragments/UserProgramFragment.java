@@ -74,6 +74,10 @@ public class UserProgramFragment extends Fragment {
         subscribeToApiResponse();
         subscribeToErrors();
 
+        //Oppdaterer observer ved backpress
+        if(apiResponseObserver != null) {
+            dataViewModel.getApiResponse().observe(getViewLifecycleOwner(), apiResponseObserver);
+        }
 
         return view;
     }
@@ -81,8 +85,6 @@ public class UserProgramFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         rid = UserProgramFragmentArgs.fromBundle(getArguments()).getUserProgramRid();
-        Log.d("ø", rid);
-
         dataViewModel.getUserProgramExercises(getContext(), rid);
 
         user_program_id = UserProgramFragmentArgs.fromBundle(getArguments()).getUserProgramId();
@@ -92,8 +94,6 @@ public class UserProgramFragment extends Fragment {
         btnAddExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Navigation.findNavController(view).navigate(R.id.actionToAddExerciseFragment);
-
                 UserProgramFragmentDirections.ActionToAddExerciseFragment actionToAddExerciseFragment = UserProgramFragmentDirections.actionToAddExerciseFragment(user_program_id);
                 NavHostFragment.findNavController(UserProgramFragment.this).navigate(actionToAddExerciseFragment);
             }
@@ -107,7 +107,6 @@ public class UserProgramFragment extends Fragment {
     public void subscribeToApiResponse() {
         if (apiResponseObserver == null) {
             // Observerer endringer:
-
             apiResponseObserver = new Observer<ApiResponse>() {
 
                 @Override
@@ -117,6 +116,7 @@ public class UserProgramFragment extends Fragment {
                         final ArrayList<Exercise> exercises = (ArrayList) apiResponse.getResponseObject();
                         if(exercises == null) return;
                         if (exercises.size() > 0) {
+                            System.out.println(exercises.size() + " SDFASDF");
                             // Dersom response på GET, PUT, POST:
                             mAdapter = new ExerciseAdapter(exercises);
                             recyclerView.setAdapter(mAdapter);

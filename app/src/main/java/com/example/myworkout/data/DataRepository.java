@@ -517,7 +517,7 @@ public class DataRepository {
                                 }
                                 ApiResponse resp = new ApiResponse(true, "OK", tmpList, myJsonGetRequest.getHttpStatusCode());
                                 apiResponse.postValue(resp);
-
+                                System.out.println("tmplist: " + tmpList.size());
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -532,6 +532,7 @@ public class DataRepository {
                     });
             queue.add(myJsonGetRequest);
         }
+        downloading = false;
     }
 
 
