@@ -124,7 +124,6 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
                     firebaseId = firebaseUser.getUid();
                 }
                 dataViewModel.postUserProgram(getContext(), programType, firebaseId, name, description, timing, userId);
-                NavHostFragment.findNavController(AddUserProgramFragment.this).navigateUp();
             }
         });
     }
@@ -155,6 +154,9 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
                                 // Apply the adapter to the spinner
                                 spinner.setAdapter(adapter);
                             }
+                        } else if (apiResponse.getResponseObject() instanceof UserProgram) {
+                            //går tilbake til listen dersom programmet ble laget
+                            NavHostFragment.findNavController(AddUserProgramFragment.this).navigateUp();
                         }
                     }
                 }

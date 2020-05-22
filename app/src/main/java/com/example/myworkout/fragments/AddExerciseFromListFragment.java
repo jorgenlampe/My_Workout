@@ -104,7 +104,6 @@ public class AddExerciseFromListFragment extends Fragment {
         subscribeToErrors();
 
 
-
         return view;
     }
 
@@ -130,7 +129,7 @@ public class AddExerciseFromListFragment extends Fragment {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
                         final ArrayList<Exercise> exercises = (ArrayList) apiResponse.getResponseObject();
                         if (exercises.size() > 0) {
-
+                            System.out.println(exercises.size());
                             mAdapter = new ExerciseAdapter(exercises);
                             recyclerView.setAdapter(mAdapter);
                             //bruker onitemclicklistener interface laget i adapter..
@@ -138,7 +137,7 @@ public class AddExerciseFromListFragment extends Fragment {
                                 @Override
                                 public void onItemClick(int position) {
                                     AddExerciseFromListFragmentDirections.ActionToAddExerciseFromListDetailFragment actionToAddExerciseFromListDetailFragment =
-    AddExerciseFromListFragmentDirections.actionToAddExerciseFromListDetailFragment(user_program_id,
+                                            AddExerciseFromListFragmentDirections.actionToAddExerciseFromListDetailFragment(user_program_id,
                                                     exercises.get(position).getRid(), exercises.get(position).getId());
                                     NavHostFragment.findNavController(AddExerciseFromListFragment.this).navigate(actionToAddExerciseFromListDetailFragment);
                                 }

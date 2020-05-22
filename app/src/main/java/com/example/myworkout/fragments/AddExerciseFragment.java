@@ -98,10 +98,7 @@ public class AddExerciseFragment extends Fragment {
                     Toast.makeText(getContext(), "Fill out form before sending!", Toast.LENGTH_LONG).show();
                     return;
                 }
-
-
                 dataViewModel.postExercise(getContext(), name, description, icon, infoboxColor);
-                NavHostFragment.findNavController(AddExerciseFragment.this).navigateUp();
             }
         });
 
@@ -123,6 +120,7 @@ public class AddExerciseFragment extends Fragment {
                             app_exercise_id = exercise.getId();
 
                             dataViewModel.postUserProgramExercise(getContext(), user_program_id, app_exercise_id);
+                            NavHostFragment.findNavController(AddExerciseFragment.this).navigateUp();
 
                         }
 
