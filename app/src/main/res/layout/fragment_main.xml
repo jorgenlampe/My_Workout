@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragments.MainFragment">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnToUserPrograms"
+        android:text="@string/toUserPrograms"></Button>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnToSessions"
+        android:text="@string/toSessions"></Button>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnAddSession"
+        android:text="@string/btnAddNewSession"></Button>
+
+   <TextView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:id="@+id/tvStats"></TextView>
+
+</LinearLayout>

@@ -91,8 +91,6 @@ public class UserProgramFragment extends Fragment {
 
         user_program_id = UserProgramFragmentArgs.fromBundle(getArguments()).getUserProgramId();
 
-
-
         btnAddExerciseFromList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

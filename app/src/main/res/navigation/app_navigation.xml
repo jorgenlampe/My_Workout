@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_navigation"
-    app:startDestination="@id/navigation">
+    app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/programTypeFragment"
@@ -129,4 +129,29 @@
             android:name="appExerciseId"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.myworkout.fragments.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/actionMainFragmentToUserProgramsFragment"
+            app:destination="@id/userProgramsFragment" />
+        <action
+            android:id="@+id/actionMainFragmentToSessionsFragment"
+            app:destination="@id/sessionsFragment" />
+        <action
+            android:id="@+id/actionMainFragmentToAddSessionFragment"
+            app:destination="@id/addSessionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sessionsFragment"
+        android:name="com.example.myworkout.fragments.SessionsFragment"
+        android:label="fragment_sessions"
+        tools:layout="@layout/fragment_sessions" />
+    <fragment
+        android:id="@+id/addSessionFragment"
+        android:name="com.example.myworkout.AddSessionFragment"
+        android:label="fragment_add_session"
+        tools:layout="@layout/fragment_add_session" />
 </navigation>

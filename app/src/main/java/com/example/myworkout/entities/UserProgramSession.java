@@ -2,7 +2,7 @@ package com.example.myworkout.entities;
 
 import java.util.Date;
 
-class UserProgramSession {
+public class UserProgramSession {
 
     private String userProgramId;
     private Date date;

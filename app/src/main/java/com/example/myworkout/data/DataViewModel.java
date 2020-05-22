@@ -116,4 +116,12 @@ public class DataViewModel extends AndroidViewModel {
         mRepository.deleteExercise(rid, context);
     }
 
+    public void getSessions(Context context, String firebaseId){
+        mRepository.getSessions(context, firebaseId);
+    }
+
+    public void getUserStats(Context context, String firebaseId){
+        mRepository.getUserStats(context, firebaseId);
+    }
+
 }

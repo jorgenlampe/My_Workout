@@ -143,6 +143,8 @@ public class UserFragment extends Fragment {
             firebaseId = firebaseUser.getUid();
         }
 
+        Log.d("firaga", firebaseId);
+
         dataViewModel.getUser(getActivity(), firebaseId, false);
 
 
