@@ -35,8 +35,7 @@ public class AddExerciseFragment extends Fragment {
     private EditText etAddIcon;
     private EditText etAddInfoboxColor;
 
-
-    private Button addExercise;
+    private Button btnAddNewExercise;
 
     private String description;
     private String name;
@@ -69,7 +68,7 @@ public class AddExerciseFragment extends Fragment {
         etAddIcon = view.findViewById(R.id.etAddIcon);
         etAddInfoboxColor = view.findViewById(R.id.etAddInfoboxColor);
 
-        addExercise = view.findViewById(R.id._btnAddExercise);
+        btnAddNewExercise = view.findViewById(R.id.btnAddNewExercise);
 
         subscribeToApiResponse();
         subscribeToErrors();
@@ -79,15 +78,16 @@ public class AddExerciseFragment extends Fragment {
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
+        //todo programType skal velges fra liste...
+
 
         user_program_id = AddExerciseFragmentArgs.fromBundle(getArguments()).getUserProgramId();
 
      //   rid = UserProgramFragmentArgs.fromBundle(getArguments()).getUserProgramRid();
 
-        addExercise.setOnClickListener(new View.OnClickListener() {
+        btnAddNewExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 name = etAddName.getText().toString();
                 description = etAddDescription.getText().toString();
                 icon = etAddIcon.getText().toString();
@@ -98,10 +98,7 @@ public class AddExerciseFragment extends Fragment {
                     Toast.makeText(getContext(), "Fill out form before sending!", Toast.LENGTH_LONG).show();
                     return;
                 }
-
                 dataViewModel.postExercise(getContext(), name, description, icon, infoboxColor);
-
-                NavHostFragment.findNavController(AddExerciseFragment.this).navigateUp();
             }
         });
 
@@ -114,28 +111,26 @@ public class AddExerciseFragment extends Fragment {
             apiResponseObserver = new Observer<ApiResponse>() {
                 @Override
                 public void onChanged(ApiResponse apiResponse) {
-                    if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
-                        Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
+                    if(getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
+                        Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " ("  + ")", Toast.LENGTH_SHORT).show();
 
-                        Log.d("responze", apiResponse.getResponseObject().toString());
-
-                        if (apiResponse.getResponseObject() instanceof Exercise) {
-                            Exercise exercise = (Exercise) apiResponse.getResponseObject();
+                        if (apiResponse.getResponseObject() instanceof Exercise){
+                            Exercise exercise = (Exercise)apiResponse.getResponseObject();
 
                             app_exercise_id = exercise.getId();
 
                             dataViewModel.postUserProgramExercise(getContext(), user_program_id, app_exercise_id);
+                            NavHostFragment.findNavController(AddExerciseFragment.this).navigateUp();
 
                         }
 
-                        if (apiResponse.getResponseObject() instanceof UserProgramExercise) {
-                            UserProgramExercise userProgramExercise = (UserProgramExercise) apiResponse.getResponseObject();
+                        if (apiResponse.getResponseObject() instanceof UserProgramExercise){
+                            UserProgramExercise userProgramExercise = (UserProgramExercise)apiResponse.getResponseObject();
                             Log.d("userProgramExerciseRid", userProgramExercise.getRid());
                         }
 
 
                     }
-
                 }
             };
             dataViewModel.getApiResponse().observe(getViewLifecycleOwner(), apiResponseObserver);
