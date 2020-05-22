@@ -136,7 +136,7 @@ public class MainFragment extends Fragment {
           @Override
           public void onClick(View v) {
 
-             //MainFragmentDirections.ActionMainFragmentToUserProgramsFragment action = MainFragmentDirections.actionMainFragmentToUserProgramsFragment();
+
             NavHostFragment.findNavController(MainFragment.this).navigate(MainFragmentDirections.actionMainFragmentToUserProgramsFragment());
           }
       });
@@ -144,7 +144,7 @@ public class MainFragment extends Fragment {
         btnToSessions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //MainFragmentDirections.ActionMainFragmentToSessionsFragment action = MainFragmentDirections.actionMainFragmentToSessionsFragment();
+
                 NavHostFragment.findNavController(MainFragment.this).navigate(MainFragmentDirections.actionMainFragmentToSessionsFragment());
             }
         });

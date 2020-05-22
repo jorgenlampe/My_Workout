@@ -2,6 +2,7 @@ package com.example.myworkout.data;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -809,6 +810,7 @@ public class DataRepository {
 
         if (!this.downloading) {
             String url = USERS_PREFIX + firebaseId + "?_api_key=" + API_KEY + "&_expand_children=true";
+
             queue = MySingletonQueue.getInstance(context).getRequestQueue();
             downloading = true;
             myJsonGetRequest = new MyJsonObjectRequest(
@@ -860,7 +862,7 @@ public class DataRepository {
 
     }
 
-    public void postUserProgramSession(Context context, String _api_key, String user_program_id, String date, int time_spent, String description, String extra_json_data) {
+    public void postUserProgramSession(Context context, String user_program_id, String date, long time_spent, String description, String extra_json_data) {
 
 
         final HashMap<String, String> params = new HashMap<String, String>();

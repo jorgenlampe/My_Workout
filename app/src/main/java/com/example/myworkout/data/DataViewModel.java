@@ -120,6 +120,10 @@ public class DataViewModel extends AndroidViewModel {
         mRepository.getSessions(context, firebaseId);
     }
 
+    public void postUserProgramSession(Context context, String user_program_id, String date, long time_spent, String description, String extra_json_data) {
+        mRepository.postUserProgramSession(context, user_program_id, date, time_spent, description, extra_json_data);
+    }
+
     public void getUserStats(Context context, String firebaseId){
         mRepository.getUserStats(context, firebaseId);
     }

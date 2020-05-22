@@ -29,4 +29,10 @@
     <string name="toUserPrograms">Vis treningsprogrammer</string>
     <string name="toSessions">Vis økter</string>
     <string name="btnAddNewSession">Registrer ny treningsøkt</string>
+    <string name="addSessionDate">Dato: (yyyy-mm-dd)</string>
+    <string name="addSessionTimeSpent">Tid brukt (sekunder)</string>
+    <string name="addSessionDescription">Beskrivelse...</string>
+    <string name="addSessionExtra">Ekstra info...</string>
+    <string name="btnAddSession">Legg til økt</string>
+
 </resources>

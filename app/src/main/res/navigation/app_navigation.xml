@@ -151,7 +151,7 @@
         tools:layout="@layout/fragment_sessions" />
     <fragment
         android:id="@+id/addSessionFragment"
-        android:name="com.example.myworkout.AddSessionFragment"
+        android:name="com.example.myworkout.fragments.AddSessionFragment"
         android:label="fragment_add_session"
         tools:layout="@layout/fragment_add_session" />
 </navigation>

@@ -1,16 +1,14 @@
 package com.example.myworkout.entities;
 
-import java.util.Date;
-
 public class UserProgramSession {
 
     private String userProgramId;
-    private Date date;
+    private String date;
     private long timeSpent;
     private String description;
     private String extraJsonData;
 
-    public UserProgramSession(String userProgramId, Date date, long timeSpent, String description, String extraJsonData) {
+    public UserProgramSession(String userProgramId, String date, long timeSpent, String description, String extraJsonData) {
         this.userProgramId = userProgramId;
         this.date = date;
         this.timeSpent = timeSpent;
@@ -28,11 +26,11 @@ public class UserProgramSession {
         this.userProgramId = userProgramId;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

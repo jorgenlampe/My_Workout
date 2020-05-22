@@ -10,13 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myworkout.R;
 import com.example.myworkout.entities.UserProgram;
+import com.example.myworkout.entities.UserProgramSession;
 
 import java.util.ArrayList;
 
 public class UserProgramSessionAdapter extends RecyclerView.Adapter<UserProgramSessionAdapter.MyViewHolder> {
 
     private OnItemClickListener mListener;
-    private ArrayList<UserProgram> userPrograms;
+    private ArrayList<UserProgramSession> userProgramSessions;
 
     public interface OnItemClickListener {
         void onItemClick(int position);
@@ -29,16 +30,17 @@ public class UserProgramSessionAdapter extends RecyclerView.Adapter<UserProgramS
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tvName;
+        public TextView tvTimeSpent;
         public TextView tvDescription;
+        public TextView tvExtra;
         public ImageView imgRemove;
 
         public MyViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
-            tvName = itemView.findViewById(R.id.tvUserProgramName);
-            tvName.setTextSize(20);
-            tvDescription = itemView.findViewById(R.id.tvUserProgramDescription);
-            imgRemove = itemView.findViewById(R.id.programDelete);
+            tvTimeSpent = itemView.findViewById(R.id.tvTimeSpent);
+            tvDescription = itemView.findViewById(R.id.tvDescription);
+            tvExtra = itemView.findViewById(R.id.tvExtra);
+            imgRemove = itemView.findViewById(R.id.sessionDelete);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -66,27 +68,28 @@ public class UserProgramSessionAdapter extends RecyclerView.Adapter<UserProgramS
         }
     }
 
-    public UserProgramSessionAdapter(ArrayList<UserProgram> programs) {
-        userPrograms = programs;
+    public UserProgramSessionAdapter(ArrayList<UserProgramSession> sessions) {
+        userProgramSessions = sessions;
     }
 
     @Override
     public UserProgramSessionAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_program_view, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.session_view, parent, false);
         MyViewHolder viewHolder = new MyViewHolder(v, mListener);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        UserProgram currentProgram = userPrograms.get(position);
-        holder.tvDescription.setText(currentProgram.getDescription());
-        holder.tvName.setText(currentProgram.getName());
+        UserProgramSession currentSession = userProgramSessions.get(position);
+        holder.tvTimeSpent.setText(String.valueOf(currentSession.getTimeSpent()));
+        holder.tvDescription.setText(currentSession.getDescription());
+        holder.tvExtra.setText(currentSession.getExtraJsonData());
     }
 
     @Override
     public int getItemCount() {
-        return userPrograms.size();
+        return userProgramSessions.size();
     }
 }
 
