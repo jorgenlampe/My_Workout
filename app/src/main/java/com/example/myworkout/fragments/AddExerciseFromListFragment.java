@@ -26,16 +26,8 @@ import com.example.myworkout.helpers.ApiResponse;
 import java.util.ArrayList;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AddExerciseFromListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class AddExerciseFromListFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     private String user_program_id;
     private String exerciseRid;
@@ -49,40 +41,11 @@ public class AddExerciseFromListFragment extends Fragment {
     private ExerciseAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public AddExerciseFromListFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AddExerciseFromList.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AddExerciseFromListFragment newInstance(String param1, String param2) {
-        AddExerciseFromListFragment fragment = new AddExerciseFromListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -102,7 +65,10 @@ public class AddExerciseFromListFragment extends Fragment {
 
         subscribeToApiResponse();
         subscribeToErrors();
-
+        //Oppdaterer observer ved backpress
+        if(apiResponseObserver != null) {
+            dataViewModel.getApiResponse().observe(getViewLifecycleOwner(), apiResponseObserver);
+        }
 
         return view;
     }
@@ -128,8 +94,8 @@ public class AddExerciseFromListFragment extends Fragment {
                     if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
                         final ArrayList<Exercise> exercises = (ArrayList) apiResponse.getResponseObject();
+                        if(exercises == null) return;
                         if (exercises.size() > 0) {
-                            System.out.println(exercises.size());
                             mAdapter = new ExerciseAdapter(exercises);
                             recyclerView.setAdapter(mAdapter);
                             //bruker onitemclicklistener interface laget i adapter..
@@ -144,7 +110,9 @@ public class AddExerciseFromListFragment extends Fragment {
 
                                 @Override
                                 public void onDeleteClick(int position) {
-
+                                    dataViewModel.deleteExercise(exercises.get(position).getRid(), getContext());
+                                    exercises.remove(position);
+                                    mAdapter.notifyItemRemoved(position);
                                 }
                             });
                         }

@@ -109,7 +109,8 @@
         tools:layout="@layout/fragment_add_exercise_from_list" >
         <action
             android:id="@+id/actionToAddExerciseFromListDetailFragment"
-            app:destination="@id/addExerciseFromListDetailFragment" />
+            app:destination="@id/addExerciseFromListDetailFragment"
+            app:popUpTo="@id/addExerciseFromListFragment" />
         <argument
             android:name="userProgramId"
             app:argType="string" />
