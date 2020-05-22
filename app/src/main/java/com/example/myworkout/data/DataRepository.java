@@ -192,6 +192,7 @@ public class DataRepository {
 
     public void postExercise(Context context, String name, String description, String icon, String infobox_color){
 
+
         final HashMap<String, String> params = new HashMap<String, String>();
         params.put("_api_key", API_KEY);
         params.put("name", name);
@@ -211,8 +212,8 @@ public class DataRepository {
                         Gson gson = new Gson();
                         try {
                             String message = response.getString("message");
-                            JSONObject userAsJsonObject = response.getJSONObject("record");
-                            Exercise exercise = gson.fromJson(userAsJsonObject.toString(), Exercise.class);
+                            JSONObject exerciseAsJsonObject = response.getJSONObject("record");
+                            Exercise exercise = gson.fromJson(exerciseAsJsonObject.toString(), Exercise.class);
                             ApiResponse resp = new ApiResponse(true, message, exercise, myJsonPostRequest.getHttpStatusCode());
                             apiResponse.postValue(resp);
                         } catch (JSONException e) {

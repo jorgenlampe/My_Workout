@@ -70,6 +70,8 @@ public class UserProgramFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());//bedre ytelse med fast størrelse på layout
         recyclerView.setLayoutManager(layoutManager);
 
+        btnAddNewExercise = view.findViewById(R.id.btnAddNewExercise);
+        btnAddExerciseFromList = view.findViewById(R.id.btnAddExerciseFromList);
 
         subscribeToApiResponse();
         subscribeToErrors();
@@ -89,7 +91,7 @@ public class UserProgramFragment extends Fragment {
 
         user_program_id = UserProgramFragmentArgs.fromBundle(getArguments()).getUserProgramId();
 
-        btnAddExerciseFromList = getView().findViewById(R.id.btnAddExerciseFromList);
+
 
         btnAddExerciseFromList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,11 +107,12 @@ public class UserProgramFragment extends Fragment {
 
 
 
-        btnAddNewExercise = getView().findViewById(R.id.btnAddNewExercise);
+
 
         btnAddNewExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 UserProgramFragmentDirections.ActionToAddExerciseFragment actionToAddExerciseFragment = UserProgramFragmentDirections.actionToAddExerciseFragment(user_program_id);
                 NavHostFragment.findNavController(UserProgramFragment.this).navigate(actionToAddExerciseFragment);
             }

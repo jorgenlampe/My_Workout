@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.AddUserProgramFragment">
+    tools:context=".fragments.AddExerciseFragment">
 
 
     <EditText
@@ -33,11 +33,11 @@
         android:hint="@string/hintInfoboxColor"></EditText>
 
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnAddNewExercise"
-        android:text="@string/btnAddNewExercise"></Button>
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/_btnAddExercise"
+    android:text="Legg til øvelse"></Button>
 
 
 </LinearLayout>
