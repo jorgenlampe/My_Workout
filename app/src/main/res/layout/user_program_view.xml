@@ -24,6 +24,15 @@
             android:text="Text 2" />
 
         <ImageView
+            android:id="@+id/programEdit"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignRight="@id/programDelete"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="50dp"
+            android:src="@drawable/ic_edit" />
+
+        <ImageView
             android:id="@+id/programDelete"
             android:layout_width="50dp"
             android:layout_height="50dp"

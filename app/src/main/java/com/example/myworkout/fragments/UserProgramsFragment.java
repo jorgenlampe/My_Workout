@@ -128,6 +128,12 @@ public class UserProgramsFragment extends Fragment {
                                     programs.remove(position);
                                     mAdapter.notifyItemRemoved(position);
                                 }
+
+                                @Override
+                                public void onEditClick(int position) {
+                                    UserProgramsFragmentDirections.ActionToEditUserProgram actionToEditUserProgram = UserProgramsFragmentDirections.actionToEditUserProgram(programs.get(position).getRid());
+                                    NavHostFragment.findNavController(UserProgramsFragment.this).navigate(actionToEditUserProgram);
+                                }
                             });
                         }
                     }

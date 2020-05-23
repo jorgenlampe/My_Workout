@@ -74,9 +74,19 @@ public class DataViewModel extends AndroidViewModel {
         mRepository.getProgramTypes(context, forceDownload);
     }
 
+    //GET 1 User Program
+    public void getUserProgram(Context context, String rid) {
+        mRepository.getUserProgram(context, rid);
+    }
+
     //GET UserPrograms
     public void getUserPrograms(Context context, String firebaseId) {
         mRepository.getUserPrograms(context, firebaseId);
+    }
+
+    //PUT UserProgram
+    public void putUserProgram(Context context, String rid, String user_id, String app_program_type_id, String name, String description, boolean use_timing) {
+        mRepository.putUserProgram(context, rid, user_id, app_program_type_id, name, description, use_timing);
     }
 
     public void getUserProgramExercises(Context context, String rid){

@@ -1,6 +1,5 @@
 package com.example.myworkout.fragments;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,8 +8,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,36 +29,34 @@ import com.example.myworkout.helpers.ApiResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
-
-
-public class AddUserProgramFragment extends Fragment implements AdapterView.OnItemSelectedListener {
-
+public class EditUserProgramFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     private ArrayList<ProgramType> programTypes;
 
     private Spinner spinner;
-    private EditText etAddName;
-    private EditText etAddDescription;
-    private CheckBox etAddTiming;
-    private Button btnAddNewUserProgram;
+    private EditText editName;
+    private EditText editDescription;
+    private CheckBox editTiming;
+    private Button btnEditUserProgram;
 
     private String programType;
-    private int userId;
+    private String userId;
     private String name;
     private String description;
     private boolean timing;
+    String rid;
+    private UserProgram currentUserProgram;
+    int userProgramCounter = 0; //Primitiv måte å sjekke om programmet har blitt endret...redirekter tilbake til listen om programmet har blitt endret
 
     private Observer<ApiResponse> apiResponseObserver = null;
     private Observer<ApiError> apiErrorObserver = null;
 
     private DataViewModel dataViewModel;
 
-    public AddUserProgramFragment() {
+
+    public EditUserProgramFragment() {
         // Required empty public constructor
     }
 
@@ -69,40 +64,43 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment'
-        View view = inflater.inflate(R.layout.fragment_add_user_program, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_edit_user_program, container, false);
 
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
-        spinner = view.findViewById(R.id.spinner_program_type);
+
+        spinner = view.findViewById(R.id.spinner_edit_program_type);
         spinner.setOnItemSelectedListener(this);
         programTypes = new ArrayList<>();
 
-        etAddName = view.findViewById(R.id.etAddName);
-        etAddDescription = view.findViewById(R.id.etAddDescription);
-        etAddTiming = view.findViewById(R.id.brukTiming);
+        editName = view.findViewById(R.id.editProgramName);
+        editDescription = view.findViewById(R.id.editProgramDescription);
+        editTiming = view.findViewById(R.id.editTiming);
 
-        btnAddNewUserProgram = view.findViewById(R.id.btnAddUserProgram);
+        btnEditUserProgram = view.findViewById(R.id.btnEditUserProgram);
 
         subscribeToApiResponse();
         subscribeToErrors();
-
+        // Inflate the layout for this fragment
         return view;
     }
 
     @Override
-    public void onViewCreated(final View view, Bundle savedInstanceState){
+    public void onViewCreated(final View view, Bundle savedInstanceState) {
+
+        rid = EditUserProgramFragmentArgs.fromBundle(getArguments()).getUserProgramRid();
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         dataViewModel.getUser(getContext(), firebaseUser.getUid(), true);
         dataViewModel.getProgramTypes(getContext(), true);
+        dataViewModel.getUserProgram(getContext(), rid);
 
-        btnAddNewUserProgram.setOnClickListener(new View.OnClickListener() {
+        btnEditUserProgram.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                name = etAddName.getText().toString();
-                description = etAddDescription.getText().toString();
-                timing = etAddTiming.isChecked();
-                System.out.println("sasdasdsd" + timing);
+                name = editName.getText().toString();
+                description = editDescription.getText().toString();
+                timing = editTiming.isChecked();
                 //Sjekker at bruker har fyllt ut feltene
                 if(name.isEmpty() || description.isEmpty()) {
                     Toast.makeText(getContext(), "Fill out form before sending!", Toast.LENGTH_LONG).show();
@@ -113,7 +111,7 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
                 if (firebaseUser!=null) {
                     firebaseId = firebaseUser.getUid();
                 }
-                dataViewModel.postUserProgram(getContext(), programType, firebaseId, name, description, timing, userId);
+                dataViewModel.putUserProgram(getContext(), rid, userId, programType, name, description, timing);
             }
         });
     }
@@ -124,14 +122,13 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
             apiResponseObserver = new Observer<ApiResponse>() {
                 @Override
                 public void onChanged(ApiResponse apiResponse) {
-                     if(getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
+                    if(getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " ("  + ")", Toast.LENGTH_SHORT).show();
                         if (apiResponse.getResponseObject() instanceof User) {
-                          User user = (User) apiResponse.getResponseObject();
-                           if (user != null) {
-                               //Dersom response på GET, PUT, POST:
-                               userId = user.getUser_id();
-                           }
+                            User user = (User) apiResponse.getResponseObject();
+                            if (user != null) {
+                                userId = String.valueOf(user.getUser_id());
+                            }
                         } else if (apiResponse.getResponseObject() instanceof ArrayList) {
                             ArrayList list = (ArrayList) apiResponse.getResponseObject();
                             if(list.get(0) instanceof ProgramType) {
@@ -145,8 +142,22 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
                                 spinner.setAdapter(adapter);
                             }
                         } else if (apiResponse.getResponseObject() instanceof UserProgram) {
-                            //går tilbake til listen dersom programmet ble laget
-                            NavHostFragment.findNavController(AddUserProgramFragment.this).navigateUp();
+                            if (userProgramCounter == 0) {
+                                currentUserProgram = (UserProgram) apiResponse.getResponseObject();
+                                editName.setText(currentUserProgram.getName());
+                                editDescription.setText(currentUserProgram.getDescription());
+                                if (currentUserProgram.getUse_timing() == 1) {
+                                    editTiming.setChecked(true);
+                                }
+                                for (int i = 0; i < programTypes.size(); i++) {
+                                    if (programTypes.get(i).getId().equals(currentUserProgram.getApp_program_type_id())) {
+                                        spinner.setSelection(i);
+                                    }
+                                }
+                                userProgramCounter++;
+                            } else {
+                                NavHostFragment.findNavController(EditUserProgramFragment.this).navigateUp();
+                            }
                         }
                     }
                 }
