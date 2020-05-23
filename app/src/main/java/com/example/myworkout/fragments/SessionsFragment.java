@@ -136,7 +136,7 @@ public class SessionsFragment extends Fragment {
                     if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
                         final ArrayList<UserProgramSession> sessions = (ArrayList) apiResponse.getResponseObject();
-                        System.out.println("observer");
+
                         if(sessions == null) return;
                         if (sessions.size() > 0) {
                             // Dersom response på GET, PUT, POST:

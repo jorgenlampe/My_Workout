@@ -20,20 +20,22 @@
             android:id="@+id/tvTimeSpent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/tvDate"
             android:text="Test 1" />
 
         <TextView
             android:id="@+id/tvDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvTimeSpent"
+            android:layout_below="@+id/tvTimeSpent"
             android:text="Text 2" />
 
        <TextView
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:id="@+id/tvExtra"
-           android:layout_below="@id/tvDescription"></TextView>
+           android:layout_below="@+id/tvDescription"
+           ></TextView>
 
         <ImageView
             android:id="@+id/sessionDelete"

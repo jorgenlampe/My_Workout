@@ -4,19 +4,30 @@ public class UserProgramSession {
 
     private String userProgramId;
     private String date;
-    private long timeSpent;
+    private Float time_spent;
     private String description;
-    private String extraJsonData;
+    private String extra_json_data;
+    private String id;
+    private String rid;
 
-    public UserProgramSession(String userProgramId, String date, long timeSpent, String description, String extraJsonData) {
-        this.userProgramId = userProgramId;
-        this.date = date;
-        this.timeSpent = timeSpent;
-        this.description = description;
-        this.extraJsonData = extraJsonData;
+    public String getId() {
+        return id;
     }
 
-    public UserProgramSession(){}
+    public String getRid() {
+        return rid;
+    }
+
+    public UserProgramSession(String id, String rid, String userProgramId, String date, Float timeSpent, String description, String extraJsonData) {
+        this.id = id;
+        this.rid = rid;
+        this.userProgramId = userProgramId;
+        this.date = date;
+        this.time_spent = timeSpent;
+        this.description = description;
+        this.extra_json_data = extraJsonData;
+    }
+
 
     public String getUserProgramId() {
         return userProgramId;
@@ -34,12 +45,8 @@ public class UserProgramSession {
         this.date = date;
     }
 
-    public long getTimeSpent() {
-        return timeSpent;
-    }
-
-    public void setTimeSpent(long timeSpent) {
-        this.timeSpent = timeSpent;
+    public Float getTime_spent() {
+        return time_spent;
     }
 
     public String getDescription() {
@@ -50,11 +57,11 @@ public class UserProgramSession {
         this.description = description;
     }
 
-    public String getExtraJsonData() {
-        return extraJsonData;
+    public String getExtra_json_data() {
+        return extra_json_data;
     }
 
-    public void setExtraJsonData(String extraJsonData) {
-        this.extraJsonData = extraJsonData;
+    public void setExtra_json_data(String extra_json_data) {
+        this.extra_json_data = extra_json_data;
     }
 }

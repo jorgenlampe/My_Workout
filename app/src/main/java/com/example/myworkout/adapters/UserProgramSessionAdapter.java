@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myworkout.R;
-import com.example.myworkout.entities.UserProgram;
 import com.example.myworkout.entities.UserProgramSession;
 
 import java.util.ArrayList;
@@ -85,9 +84,10 @@ public class UserProgramSessionAdapter extends RecyclerView.Adapter<UserProgramS
     public void onBindViewHolder(MyViewHolder holder, int position) {
         UserProgramSession currentSession = userProgramSessions.get(position);
         holder.tvDate.setText(String.valueOf(currentSession.getDate()));
-        holder.tvTimeSpent.setText(String.valueOf(currentSession.getTimeSpent()));
+        holder.tvTimeSpent.setText(String.valueOf(currentSession.getTime_spent()));
+        holder.tvTimeSpent.setText(String.valueOf(currentSession.getTime_spent()) + " sekunder");
         holder.tvDescription.setText(currentSession.getDescription());
-        holder.tvExtra.setText(currentSession.getExtraJsonData());
+        holder.tvExtra.setText(currentSession.getExtra_json_data());
     }
 
     @Override

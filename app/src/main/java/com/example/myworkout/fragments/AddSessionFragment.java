@@ -141,7 +141,7 @@ public class AddSessionFragment extends Fragment implements AdapterView.OnItemSe
             @Override
             public void onClick(View v) {
                 String date = etDate.getText().toString();
-                String timeSpent = etTimeSpent.getText().toString();
+                float timeSpent = Float.parseFloat(etTimeSpent.getText().toString());
                 String description = etDescription.getText().toString();
                 String extra = etExtra.getText().toString();
 
