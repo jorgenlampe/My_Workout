@@ -115,10 +115,13 @@ public class DataViewModel extends AndroidViewModel {
 
     public void postExercise(Context context, String name, String description, String icon, String infoboxColor) {
         mRepository.postExercise(context, name, description, icon, infoboxColor);
-
     }
 
-    public void postUserProgramExercise(Context context, String user_program_id, String app_exercise_id){
+    public void putExercise(Context context, String rid, String name, String description, String icon, String infobox_color) {
+        mRepository.putExercise(context, rid, name, description, icon, infobox_color);
+    }
+
+        public void postUserProgramExercise(Context context, String user_program_id, String app_exercise_id){
         mRepository.postUserProgramExercise(context, user_program_id, app_exercise_id);
     }
 

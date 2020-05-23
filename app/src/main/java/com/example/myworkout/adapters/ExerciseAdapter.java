@@ -22,6 +22,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
     public interface OnItemClickListener {
         void onItemClick(int position);
         void onDeleteClick(int position);
+        void onEditClick(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -33,6 +34,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
         public TextView tvName;
         public TextView tvDescription;
         public ImageView imgRemove;
+        public ImageView imgEdit;
 
         public MyViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
@@ -40,6 +42,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
             tvName.setTextSize(20);
             tvDescription = itemView.findViewById(R.id.tvExerciseDescription);
             imgRemove = itemView.findViewById(R.id.exerciseDelete);
+            imgEdit = itemView.findViewById(R.id.exerciseEdit);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -60,6 +63,18 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
                         int position = getAdapterPosition();
                         if(position != RecyclerView.NO_POSITION) {
                             listener.onDeleteClick(position);
+                        }
+                    }
+                }
+            });
+
+            imgEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener != null) {
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION) {
+                            listener.onEditClick(position);
                         }
                     }
                 }

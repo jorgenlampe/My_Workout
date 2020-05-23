@@ -86,6 +86,9 @@
         <action
             android:id="@+id/actionToAddExerciseFromListFragment"
             app:destination="@id/addExerciseFromListFragment" />
+        <action
+            android:id="@+id/action_toEditExerciseFragment"
+            app:destination="@id/editExerciseFragment" />
     </fragment>
     <fragment
         android:id="@+id/exerciseFragment"
@@ -117,6 +120,9 @@
         <argument
             android:name="userProgramId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_fromExistingToEditExerciseFragment"
+            app:destination="@id/editExerciseFragment" />
     </fragment>
     <fragment
         android:id="@+id/addExerciseFromListDetailFragment"
@@ -165,6 +171,14 @@
         tools:layout="@layout/fragment_edit_user_program" >
         <argument
             android:name="UserProgramRid"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/editExerciseFragment"
+        android:name="com.example.myworkout.fragments.EditExerciseFragment"
+        android:label="EditExerciseFragment" >
+        <argument
+            android:name="ExerciseRid"
             app:argType="string" />
     </fragment>
 </navigation>

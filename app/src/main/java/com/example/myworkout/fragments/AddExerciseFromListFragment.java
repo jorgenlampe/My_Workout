@@ -114,6 +114,12 @@ public class AddExerciseFromListFragment extends Fragment {
                                     exercises.remove(position);
                                     mAdapter.notifyItemRemoved(position);
                                 }
+                                @Override
+                                public void onEditClick(int position) {
+                                    AddExerciseFromListFragmentDirections.ActionFromExistingToEditExerciseFragment actionFromExistingToEditExerciseFragment =
+                                            AddExerciseFromListFragmentDirections.actionFromExistingToEditExerciseFragment(exercises.get(position).getRid());
+                                    NavHostFragment.findNavController(AddExerciseFromListFragment.this).navigate(actionFromExistingToEditExerciseFragment);
+                                }
                             });
                         }
                     }

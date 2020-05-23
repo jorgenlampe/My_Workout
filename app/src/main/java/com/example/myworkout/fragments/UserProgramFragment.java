@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavHost;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -104,9 +105,6 @@ public class UserProgramFragment extends Fragment {
         });
 
 
-
-
-
         btnAddNewExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,6 +147,11 @@ public class UserProgramFragment extends Fragment {
                                     dataViewModel.deleteExercise(exercises.get(position).getRid(), getContext());
                                     exercises.remove(position);
                                     mAdapter.notifyItemRemoved(position);
+                                }
+                                @Override
+                                public void onEditClick(int position) {
+                                    UserProgramFragmentDirections.ActionToEditExerciseFragment actionToEditExerciseFragment = UserProgramFragmentDirections.actionToEditExerciseFragment(exercises.get(position).getRid());
+                                    NavHostFragment.findNavController(UserProgramFragment.this).navigate(actionToEditExerciseFragment);
                                 }
                             });
                         }

@@ -45,9 +45,6 @@ public class AddExerciseFragment extends Fragment {
     private String user_program_id;
     private String app_exercise_id;
 
-  //  private String rid;
-
-   ;
     private DataViewModel dataViewModel;
 
     public AddExerciseFragment() {
@@ -78,12 +75,7 @@ public class AddExerciseFragment extends Fragment {
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
-        //todo programType skal velges fra liste...
-
-
         user_program_id = AddExerciseFragmentArgs.fromBundle(getArguments()).getUserProgramId();
-
-     //   rid = UserProgramFragmentArgs.fromBundle(getArguments()).getUserProgramRid();
 
         btnAddNewExercise.setOnClickListener(new View.OnClickListener() {
             @Override

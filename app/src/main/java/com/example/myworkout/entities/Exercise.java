@@ -7,7 +7,7 @@ public class Exercise {
     private String name;
     private String description;
     private String icon;
-    private String infobox_oolor;
+    private String infobox_color;
     private String user_program_id;
    // private String programName;
 
@@ -22,7 +22,7 @@ public class Exercise {
         this.name = name;
         this.description = description;
         this.icon = icon;
-        this.infobox_oolor = infobox_color;
+        this.infobox_color = infobox_color;
     }
 
     public String getId() {
@@ -49,12 +49,12 @@ public class Exercise {
         this.icon = icon;
     }
 
-    public void setInfobox_oolor(String infobox_oolor) {
-        this.infobox_oolor = infobox_oolor;
+    public void setInfobox_color(String infobox_color) {
+        this.infobox_color = infobox_color;
     }
 
-    public String getInfobox_oolor() {
-        return infobox_oolor;
+    public String getInfobox_color() {
+        return infobox_color;
     }
 
     public void setDescription(String description) {

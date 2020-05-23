@@ -1,14 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.EditExerciseFragment">
+    android:orientation="vertical"
+    tools:context=".fragments.AddExerciseFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <EditText
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:id="@+id/editExerciseName"
+        android:hint="@string/hintExerciseName">
+    </EditText>
 
-</FrameLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editExerciseDescription"
+        android:hint="@string/hintExerciseDescription"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editExerciseIcon"
+        android:hint="@string/hintIcon"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editExerciseColor"
+        android:hint="@string/hintInfoboxColor"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnEditExercise"
+        android:text="@string/btnEditExercise"/>
+
+</LinearLayout>

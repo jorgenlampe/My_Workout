@@ -77,9 +77,6 @@ public class DataRepository {
     public DataRepository(Application application) {
     }
 
-
-    // endre navn til get, post, put...
-
     /*
      * Henter ALLE ProgramTypes
      * */
@@ -240,7 +237,55 @@ public class DataRepository {
 
     }
 
-    public void putExercise() {
+    public void putExercise(Context context, String rid, String name, String description, String icon, String infobox_color) {
+        final HashMap<String, String> params = new HashMap<String, String>();
+        params.put("_api_key", API_KEY);
+        params.put("rid", rid);
+        params.put("name", name);
+        params.put("description", description);
+        params.put("icon", icon);
+        params.put("infobox_color", infobox_color);
+
+        queue = MySingletonQueue.getInstance(context).getRequestQueue();
+        myJsonPutRequest = new MyJsonObjectRequest(
+                Request.Method.PUT,
+                EXERCISES_PREFIX,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Gson gson = new Gson();
+                        try {
+                            String message = response.getString("message");
+                            JSONObject exerciseAsJsonObject = response.getJSONObject("record");
+                            Exercise currentExercise = gson.fromJson(exerciseAsJsonObject.toString(), Exercise.class);
+                            ApiResponse resp = new ApiResponse(true, message, currentExercise, myJsonPutRequest.getHttpStatusCode());
+                            apiResponse.postValue(resp);
+                        } catch (JSONException e) {
+                            ApiError apiError = new ApiError(-1, e.getMessage());
+                            errorMessage.postValue(apiError);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        ApiError apiError = VolleyErrorParser.parse(error);
+                        errorMessage.postValue(apiError);
+                    }
+                }
+        ) {
+            @Override
+            public byte[] getBody() {
+                return new JSONObject(params).toString().getBytes();
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+        queue.add(myJsonPutRequest);
     }
 
     public void deleteExercise(String rid, Context context) {
