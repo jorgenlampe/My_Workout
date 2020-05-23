@@ -820,24 +820,25 @@ public class DataRepository {
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject jsonObject) {
+
                             try {
                                 Gson gson = new Gson();
                                 ArrayList<UserProgramSession> tmpList = new ArrayList<>();
                                 JSONArray jsonUserPrograms = jsonObject.getJSONArray("user_programs");
-                                for (int i = 0; i < jsonUserPrograms.length(); i++) {
 
-                                    JSONArray jsonSessions = jsonObject.getJSONArray("user_program_sessions");
+                                    for (int a = 0; a < jsonUserPrograms.length(); a++) {
+                                        JSONObject userProgramAsJson = jsonUserPrograms.getJSONObject(a);
+                                        UserProgram program = gson.fromJson(userProgramAsJson   .toString(), UserProgram.class);
+                                        ArrayList<UserProgramSession> sessionsTemp =
+                                                (ArrayList<UserProgramSession>) program.getUser_program_sessions();
 
-                                    for (int a = 0; a < jsonSessions.length(); a++){
-                                        JSONObject sessionAsJson = jsonSessions.getJSONObject(a);
-                                        UserProgramSession userProgramSession = gson.fromJson(sessionAsJson.toString(), UserProgramSession.class);
-                                        tmpList.add(userProgramSession);
+                                        for (int i = 0; i < sessionsTemp.size(); i++) {
+                                            tmpList.add(sessionsTemp.get(i));
+                                        }
+
+
                                     }
 
-                                    //JSONObject userProgramAsJson = jsonUserPrograms.getJSONObject(i);
-                                   // UserProgram userProgram = gson.fromJson(userProgramAsJson.toString(), UserProgram.class);
-                                  //  tmpList.add(userProgram);
-                                }
                                 ApiResponse resp = new ApiResponse(true, "OK", tmpList, myJsonGetRequest.getHttpStatusCode());
                                 apiResponse.postValue(resp);
                                 System.out.println("tmplist: " + tmpList.size());
