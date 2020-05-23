@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -140,15 +141,16 @@ public class AddSessionFragment extends Fragment implements AdapterView.OnItemSe
             @Override
             public void onClick(View v) {
                 String date = etDate.getText().toString();
-                long timeSpent = Long.parseLong(etTimeSpent.getText().toString());
+                String timeSpent = etTimeSpent.getText().toString();
                 String description = etDescription.getText().toString();
                 String extra = etExtra.getText().toString();
+
 
                dataViewModel.postUserProgramSession(getContext(), user_program_id, date, timeSpent, description, extra);
             }
 
         });
-        //postsession
+
 
     }
 
@@ -208,6 +210,7 @@ public class AddSessionFragment extends Fragment implements AdapterView.OnItemSe
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         userProgram = userPrograms.get(position).getName();
+        user_program_id = userPrograms.get(position).getId();
     }
 
     @Override

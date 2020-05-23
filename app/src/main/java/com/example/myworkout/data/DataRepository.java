@@ -862,14 +862,14 @@ public class DataRepository {
 
     }
 
-    public void postUserProgramSession(Context context, String user_program_id, String date, long time_spent, String description, String extra_json_data) {
+    public void postUserProgramSession(Context context, String user_program_id, String date, String time_spent, String description, String extra_json_data) {
 
 
         final HashMap<String, String> params = new HashMap<String, String>();
         params.put("_api_key", API_KEY);
         params.put("user_program_id", user_program_id);
         params.put("date", date);
-        params.put("time_spent", String.valueOf(time_spent));
+        params.put("time_spent", time_spent);
         params.put("description", description);
         params.put("extra_json_data", extra_json_data);
 
