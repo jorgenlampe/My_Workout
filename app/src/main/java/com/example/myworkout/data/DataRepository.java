@@ -185,8 +185,7 @@ public class DataRepository {
     }
 
 
-
-    public void postExercise(Context context, String name, String description, String icon, String infobox_color){
+    public void postExercise(Context context, String name, String description, String icon, String infobox_color) {
 
 
         final HashMap<String, String> params = new HashMap<String, String>();
@@ -491,6 +490,37 @@ public class DataRepository {
         queue.add(myJsonDeleteRequest);
     }
 
+    public void getUserProgram(Context context, String rid) {
+
+        if (!this.downloading) {
+            String url = USER_PROGRAM_PREFIX + rid + "?_api_key=" + API_KEY;
+            queue = MySingletonQueue.getInstance(context).getRequestQueue();
+            downloading = true;
+            myJsonGetRequest = new MyJsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject jsonObject) {
+                            Gson gson = new Gson();
+                            UserProgram userProgram = gson.fromJson(jsonObject.toString(), UserProgram.class);
+                            ApiResponse resp = new ApiResponse(true, "OK", userProgram, myJsonGetRequest.getHttpStatusCode());
+                            apiResponse.postValue(resp);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            ApiError apiError = VolleyErrorParser.parse(error);
+                            errorMessage.setValue(apiError);
+                        }
+                    });
+            queue.add(myJsonGetRequest);
+        }
+        downloading = false;
+    }
+
     public void getUserPrograms(Context context, String firebaseId) {
         if (!this.downloading) {
             String url = USERS_PREFIX + firebaseId + "?_api_key=" + API_KEY + "&_expand_children=true";
@@ -546,9 +576,9 @@ public class DataRepository {
         params.put("name", name);
         params.put("description", description);
         if (use_timing) {
-            params.put("use_timing", "0");
-        } else {
             params.put("use_timing", "1");
+        } else {
+            params.put("use_timing", "0");
         }
 
         queue = MySingletonQueue.getInstance(context).getRequestQueue();
@@ -594,7 +624,62 @@ public class DataRepository {
         queue.add(myJsonPostRequest);
     }
 
-    public void putUserProgram() {
+    public void putUserProgram(Context context, String rid, String user_id, String app_program_type_id, String name, String description, boolean use_timing) {
+        final HashMap<String, String> params = new HashMap<String, String>();
+        params.put("_api_key", API_KEY);
+        params.put("rid", rid);
+        params.put("user_id", user_id);
+        params.put("app_program_type_id", app_program_type_id);
+        params.put("name", name);
+        params.put("description", description);
+        if (use_timing) {
+            params.put("use_timing", "1");
+        } else {
+            params.put("use_timing", "0");
+        }
+
+        // Generell PUT:
+//            private void put(final Context context, String mUrlString, final HashMap params) {
+        queue = MySingletonQueue.getInstance(context).getRequestQueue();
+        myJsonPutRequest = new MyJsonObjectRequest(
+                Request.Method.PUT,
+                USER_PROGRAM_PREFIX,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Gson gson = new Gson();
+                        try {
+                            String message = response.getString("message");
+                            JSONObject userProgramAsJsonObject = response.getJSONObject("record");
+                            UserProgram userProgram = gson.fromJson(userProgramAsJsonObject.toString(), UserProgram.class);
+                            ApiResponse resp = new ApiResponse(true, message, userProgram, myJsonPutRequest.getHttpStatusCode());
+                            apiResponse.postValue(resp);
+                        } catch (JSONException e) {
+                            ApiError apiError = new ApiError(-1, e.getMessage());
+                            errorMessage.postValue(apiError);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        ApiError apiError = VolleyErrorParser.parse(error);
+                        errorMessage.postValue(apiError);
+                    }
+                }
+        ) {
+            @Override
+            public byte[] getBody() {
+                return new JSONObject(params).toString().getBytes();
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+        queue.add(myJsonPutRequest);
     }
 
     public void deleteUserProgram(String rid, Context context) {
@@ -633,41 +718,41 @@ public class DataRepository {
 
         String url = USER_PROGRAM_PREFIX + rid + "?_api_key=" + API_KEY + "&_expand_children=true";
         System.out.println(url);
-            if (!this.downloading) {
-                queue = MySingletonQueue.getInstance(context).getRequestQueue();
-                downloading = true;
-                myJsonGetRequest = new MyJsonObjectRequest(
-                        Request.Method.GET,
-                        url,
-                        null,
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject jsonObject) {
-                                try {
-                                    Gson gson = new Gson();
-                                    ArrayList<Exercise> tmpList = new ArrayList<>();
-                                    JSONArray jsonExercises = jsonObject.getJSONArray("user_program_exercises");
-                                    for (int i = 0; i < jsonExercises.length(); i++) {
-                                        JSONObject userProgramExerciseAsJson = jsonExercises.getJSONObject(i);
-                                        JSONObject exerciseAsJson = userProgramExerciseAsJson.getJSONObject("app_exercise");
-                                        Exercise exercise = gson.fromJson(exerciseAsJson.toString(), Exercise.class);
-                                        tmpList.add(exercise);
-                                    }
-                                    ApiResponse resp = new ApiResponse(true, "OK", tmpList, myJsonGetRequest.getHttpStatusCode());
-                                    apiResponse.postValue(resp);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
+        if (!this.downloading) {
+            queue = MySingletonQueue.getInstance(context).getRequestQueue();
+            downloading = true;
+            myJsonGetRequest = new MyJsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject jsonObject) {
+                            try {
+                                Gson gson = new Gson();
+                                ArrayList<Exercise> tmpList = new ArrayList<>();
+                                JSONArray jsonExercises = jsonObject.getJSONArray("user_program_exercises");
+                                for (int i = 0; i < jsonExercises.length(); i++) {
+                                    JSONObject userProgramExerciseAsJson = jsonExercises.getJSONObject(i);
+                                    JSONObject exerciseAsJson = userProgramExerciseAsJson.getJSONObject("app_exercise");
+                                    Exercise exercise = gson.fromJson(exerciseAsJson.toString(), Exercise.class);
+                                    tmpList.add(exercise);
                                 }
+                                ApiResponse resp = new ApiResponse(true, "OK", tmpList, myJsonGetRequest.getHttpStatusCode());
+                                apiResponse.postValue(resp);
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                ApiError apiError = VolleyErrorParser.parse(error);
-                                errorMessage.setValue(apiError);
-                            }
-                        });
-                queue.add(myJsonGetRequest);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            ApiError apiError = VolleyErrorParser.parse(error);
+                            errorMessage.setValue(apiError);
+                        }
+                    });
+            queue.add(myJsonGetRequest);
 
             }
         downloading = false;
@@ -749,7 +834,7 @@ public class DataRepository {
     }
 
 
-    public void postUserProgramExercise(Context context, String user_program_id, String app_exercise_id){
+    public void postUserProgramExercise(Context context, String user_program_id, String app_exercise_id) {
 
         final HashMap<String, String> params = new HashMap<String, String>();
         params.put("_api_key", API_KEY);

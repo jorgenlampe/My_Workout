@@ -10,6 +10,15 @@ public class ProgramType {
     private String icon;
     private String backColor;
 
+    public ProgramType(String id, String rid, String api_key, String description, String icon, String backColor) {
+        this.id = id;
+        this.rid = rid;
+        this.description = description;
+        this.backColor = backColor;
+        this.icon = icon;
+        this.api_key = api_key;
+    }
+
     public String getId() {
         return id;
     }
@@ -44,14 +53,6 @@ public class ProgramType {
         this.backColor = backColor;
     }
 
-    public ProgramType(String id, String rid, String api_key, String description, String icon, String backColor) {
-        this.id = id;
-        this.rid = rid;
-        this.description = description;
-        this.backColor = backColor;
-        this.icon = icon;
-        this.api_key = api_key;
-    }
 
     @Override
     public String toString(){

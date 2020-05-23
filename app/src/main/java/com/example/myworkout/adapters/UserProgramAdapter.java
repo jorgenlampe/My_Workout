@@ -23,6 +23,7 @@ public class UserProgramAdapter extends RecyclerView.Adapter<UserProgramAdapter.
     public interface OnItemClickListener {
         void onItemClick(int position);
         void onDeleteClick(int position);
+        void onEditClick(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -34,6 +35,7 @@ public class UserProgramAdapter extends RecyclerView.Adapter<UserProgramAdapter.
         public TextView tvName;
         public TextView tvDescription;
         public ImageView imgRemove;
+        public ImageView imgEdit;
 
         public MyViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
@@ -41,6 +43,7 @@ public class UserProgramAdapter extends RecyclerView.Adapter<UserProgramAdapter.
             tvName.setTextSize(20);
             tvDescription = itemView.findViewById(R.id.tvUserProgramDescription);
             imgRemove = itemView.findViewById(R.id.programDelete);
+            imgEdit = itemView.findViewById(R.id.programEdit);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -61,6 +64,18 @@ public class UserProgramAdapter extends RecyclerView.Adapter<UserProgramAdapter.
                         int position = getAdapterPosition();
                         if(position != RecyclerView.NO_POSITION) {
                             listener.onDeleteClick(position);
+                        }
+                    }
+                }
+            });
+
+            imgEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener != null) {
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION) {
+                            listener.onEditClick(position);
                         }
                     }
                 }

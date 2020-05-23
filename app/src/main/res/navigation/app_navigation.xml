@@ -56,6 +56,9 @@
         <action
             android:id="@+id/action_toUserProgramFragment"
             app:destination="@id/userProgramFragment" />
+        <action
+            android:id="@+id/action_toEditUserProgram"
+            app:destination="@id/editUserProgramFragment" />
     </fragment>
     <fragment
         android:id="@+id/addUserFragment"
@@ -155,4 +158,13 @@
         android:name="com.example.myworkout.fragments.AddSessionFragment"
         android:label="fragment_add_session"
         tools:layout="@layout/fragment_add_session" />
+    <fragment
+        android:id="@+id/editUserProgramFragment"
+        android:name="com.example.myworkout.fragments.EditUserProgramFragment"
+        android:label="fragment_edit_user_program"
+        tools:layout="@layout/fragment_edit_user_program" >
+        <argument
+            android:name="UserProgramRid"
+            app:argType="string" />
+    </fragment>
 </navigation>

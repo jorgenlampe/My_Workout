@@ -22,6 +22,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tvExerciseName"
             android:text="Text 2" />
+        <ImageView
+            android:id="@+id/exerciseEdit"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignRight="@id/exerciseDelete"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="50dp"
+            android:src="@drawable/ic_edit" />
 
         <ImageView
             android:id="@+id/exerciseDelete"

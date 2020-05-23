@@ -7,7 +7,7 @@ public class UserProgram {
     private String name;
     private String description;
     private String rid;
-    private int app_program_type_id;
+    private String app_program_type_id;
     private int use_timing;
     private String user_id;
     private String id;
@@ -16,7 +16,22 @@ public class UserProgram {
     private List<UserProgramSession> user_program_sessions;
     private ProgramType app_program_type;
 
-    public void setApp_program_type_id(int app_program_type_id) {
+    public UserProgram(String id, String rid, String api_key, String user_id, String app_program_type_id, String name, String description, int use_timing, List<UserProgramExercise> user_program_exercises,
+                       List<UserProgramSession> user_program_sessions, ProgramType app_program_type){
+        this.name = name;
+        this.user_id = user_id;
+        this.description = description;
+        this.app_program_type_id = app_program_type_id;
+        this.use_timing = use_timing;
+        this.id = id;
+        this.rid = rid;
+        this.app_program_type = app_program_type;
+        this.api_key = api_key;
+        this.user_program_exercises = user_program_exercises;
+        this.user_program_sessions = user_program_sessions;
+    }
+
+    public void setApp_program_type_id(String app_program_type_id) {
         this.app_program_type_id = app_program_type_id;
     }
 
@@ -64,9 +79,7 @@ public class UserProgram {
         this.app_program_type = app_program_type;
     }
 
-
-
-    public int getApp_program_type_id() {
+    public String getApp_program_type_id() {
         return app_program_type_id;
     }
 
@@ -86,21 +99,6 @@ public class UserProgram {
     public String toString(){
 
         return getDescription();
-    }
-
-    public UserProgram(String id, String rid, String api_key, String user_id, int app_program_type_id, String name, String description, int use_timing, List<UserProgramExercise> user_program_exercises,
-                       List<UserProgramSession> user_program_sessions, ProgramType app_program_type){
-        this.name = name;
-        this.user_id = user_id;
-        this.description = description;
-        this.app_program_type_id = app_program_type_id;
-        this.use_timing = use_timing;
-        this.id = id;
-        this.rid = rid;
-        this.app_program_type = app_program_type;
-        this.api_key = api_key;
-        this.user_program_exercises = user_program_exercises;
-        this.user_program_sessions = user_program_sessions;
     }
 
     public String getName() {

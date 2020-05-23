@@ -34,5 +34,6 @@
     <string name="addSessionDescription">Beskrivelse...</string>
     <string name="addSessionExtra">Ekstra info...</string>
     <string name="btnAddSession">Legg til økt</string>
+    <string name="btnEditUserProgram">Endre program</string>
 
 </resources>
