@@ -30,6 +30,7 @@ public class UserProgramSessionAdapter extends RecyclerView.Adapter<UserProgramS
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
+        public TextView tvDate;
         public TextView tvTimeSpent;
         public TextView tvDescription;
         public TextView tvExtra;
@@ -37,6 +38,7 @@ public class UserProgramSessionAdapter extends RecyclerView.Adapter<UserProgramS
 
         public MyViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
+            tvDate = itemView.findViewById(R.id.tvDate);
             tvTimeSpent = itemView.findViewById(R.id.tvTimeSpent);
             tvDescription = itemView.findViewById(R.id.tvDescription);
             tvExtra = itemView.findViewById(R.id.tvExtra);
@@ -82,6 +84,7 @@ public class UserProgramSessionAdapter extends RecyclerView.Adapter<UserProgramS
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         UserProgramSession currentSession = userProgramSessions.get(position);
+        holder.tvDate.setText(String.valueOf(currentSession.getDate()));
         holder.tvTimeSpent.setText(String.valueOf(currentSession.getTimeSpent()));
         holder.tvDescription.setText(currentSession.getDescription());
         holder.tvExtra.setText(currentSession.getExtraJsonData());

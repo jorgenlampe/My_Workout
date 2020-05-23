@@ -11,6 +11,12 @@
         android:layout_marginBottom="5dp">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvDate"
+            android:text="test0"></TextView>
+
+        <TextView
             android:id="@+id/tvTimeSpent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -754,7 +754,7 @@ public class DataRepository {
                     });
             queue.add(myJsonGetRequest);
 
-        }
+            }
         downloading = false;
     }
 
@@ -905,24 +905,25 @@ public class DataRepository {
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject jsonObject) {
+
                             try {
                                 Gson gson = new Gson();
                                 ArrayList<UserProgramSession> tmpList = new ArrayList<>();
                                 JSONArray jsonUserPrograms = jsonObject.getJSONArray("user_programs");
-                                for (int i = 0; i < jsonUserPrograms.length(); i++) {
 
-                                    JSONArray jsonSessions = jsonObject.getJSONArray("user_program_sessions");
+                                    for (int a = 0; a < jsonUserPrograms.length(); a++) {
+                                        JSONObject userProgramAsJson = jsonUserPrograms.getJSONObject(a);
+                                        UserProgram program = gson.fromJson(userProgramAsJson   .toString(), UserProgram.class);
+                                        ArrayList<UserProgramSession> sessionsTemp =
+                                                (ArrayList<UserProgramSession>) program.getUser_program_sessions();
 
-                                    for (int a = 0; a < jsonSessions.length(); a++) {
-                                        JSONObject sessionAsJson = jsonSessions.getJSONObject(a);
-                                        UserProgramSession userProgramSession = gson.fromJson(sessionAsJson.toString(), UserProgramSession.class);
-                                        tmpList.add(userProgramSession);
+                                        for (int i = 0; i < sessionsTemp.size(); i++) {
+                                            tmpList.add(sessionsTemp.get(i));
+                                        }
+
+
                                     }
 
-                                    //JSONObject userProgramAsJson = jsonUserPrograms.getJSONObject(i);
-                                    // UserProgram userProgram = gson.fromJson(userProgramAsJson.toString(), UserProgram.class);
-                                    //  tmpList.add(userProgram);
-                                }
                                 ApiResponse resp = new ApiResponse(true, "OK", tmpList, myJsonGetRequest.getHttpStatusCode());
                                 apiResponse.postValue(resp);
                                 System.out.println("tmplist: " + tmpList.size());
@@ -943,16 +944,18 @@ public class DataRepository {
         downloading = false;
 
 
+
+
     }
 
-    public void postUserProgramSession(Context context, String user_program_id, String date, long time_spent, String description, String extra_json_data) {
+    public void postUserProgramSession(Context context, String user_program_id, String date, String time_spent, String description, String extra_json_data) {
 
 
         final HashMap<String, String> params = new HashMap<String, String>();
         params.put("_api_key", API_KEY);
         params.put("user_program_id", user_program_id);
         params.put("date", date);
-        params.put("time_spent", String.valueOf(time_spent));
+        params.put("time_spent", time_spent);
         params.put("description", description);
         params.put("extra_json_data", extra_json_data);
 
@@ -997,6 +1000,8 @@ public class DataRepository {
             }
         };
         queue.add(myJsonPostRequest);
+
+
 
 
     }
@@ -1044,6 +1049,7 @@ public class DataRepository {
 
         }
         downloading = false;
+
 
 
     }
