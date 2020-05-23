@@ -90,6 +90,12 @@ public class AddExerciseFragment extends Fragment {
                     Toast.makeText(getContext(), "Fill out form before sending!", Toast.LENGTH_LONG).show();
                     return;
                 }
+
+                //Sjekker at farge er i riktig format
+                if(!infoboxColor.matches("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")) {
+                    Toast.makeText(getContext(), "Wrong color. Must be in HEX", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 dataViewModel.postExercise(getContext(), name, description, icon, infoboxColor);
             }
         });

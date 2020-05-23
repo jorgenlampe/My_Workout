@@ -55,8 +55,6 @@ public class EditUserFragment extends Fragment {
         // Required empty public constructor
     }
 
-    //onCreateVieww.... View view = inflater.inflate(R.layout.fragment_user, container, false); return view..
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
 
