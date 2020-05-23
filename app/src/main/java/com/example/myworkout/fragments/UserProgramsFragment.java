@@ -81,6 +81,7 @@ public class UserProgramsFragment extends Fragment {
 
         if (firebaseUser != null) {
             firebaseId = firebaseUser.getUid();
+            System.out.println(firebaseId);
         }
 
         dataViewModel.getUserPrograms(getContext(), firebaseId);

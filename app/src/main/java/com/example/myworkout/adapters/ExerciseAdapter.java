@@ -1,11 +1,13 @@
 package com.example.myworkout.adapters;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myworkout.R;
@@ -35,6 +37,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
         public TextView tvDescription;
         public ImageView imgRemove;
         public ImageView imgEdit;
+        public CardView card;
 
         public MyViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
@@ -43,6 +46,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
             tvDescription = itemView.findViewById(R.id.tvExerciseDescription);
             imgRemove = itemView.findViewById(R.id.exerciseDelete);
             imgEdit = itemView.findViewById(R.id.exerciseEdit);
+            card = itemView.findViewById(R.id.exerciseCard);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -98,6 +102,12 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyView
         Exercise currentExercise = exercises.get(position);
         holder.tvDescription.setText(currentExercise.getDescription());
         holder.tvName.setText(currentExercise.getName());
+        try {
+            holder.card.setCardBackgroundColor(Color.parseColor(currentExercise.getInfobox_color()));
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
