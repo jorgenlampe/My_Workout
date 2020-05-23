@@ -87,7 +87,13 @@ public class ExerciseFragment extends Fragment {
                          tvDescription.setText(exercise.getDescription());
 
                          //todo finne url til bilde
-                         String url = "https://tusk.systems/trainingapp/v2/api.php/app_exercises/icons8-ninja_filled.png";
+                         String url = "https://tusk.systems/trainingapp/icons/";
+
+                         StringBuilder sb = new StringBuilder();
+                         sb.append(url);
+                         sb.append(exercise.getIcon());
+
+                         String imageUrl = sb.toString();
 
                         RequestOptions options = new RequestOptions()
                                 .centerCrop()
@@ -95,7 +101,7 @@ public class ExerciseFragment extends Fragment {
                                 .error(R.mipmap.ic_launcher_round);
 
                         Glide.with(getContext()).load
-                                (url).apply(options).into(image);
+                                (imageUrl).apply(options).into(image);
 
                         //icons8-ninja_filled.png
 

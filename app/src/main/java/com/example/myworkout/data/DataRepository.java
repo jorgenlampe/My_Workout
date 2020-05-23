@@ -1059,8 +1059,7 @@ public class DataRepository {
 
     public void getUserStats(Context context, String firebaseId) {
 
-        String url = USER_STATS_PREFIX + firebaseId + "?_api_key=" + API_KEY;
-        System.out.println(url);
+        String url = USER_STATS_PREFIX + firebaseId + "?_api_key=" + API_KEY + "&_expand_children=true";
 
         if (!this.downloading) {
             queue = MySingletonQueue.getInstance(context).getRequestQueue();

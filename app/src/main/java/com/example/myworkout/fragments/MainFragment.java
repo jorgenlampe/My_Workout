@@ -53,7 +53,11 @@ public class MainFragment extends Fragment {
     private Button btnToSessions;
     private Button btnAddNewSession;
 
-    private TextView tvStats;
+    private TextView tvLastWeek;
+    private TextView tvCurrentWeek;
+    private TextView tvCurrentMonth;
+    private TextView tvLastMonth;
+    private TextView tvCurrentYear;
 
     private DataViewModel dataViewModel;
 
@@ -105,7 +109,13 @@ public class MainFragment extends Fragment {
         btnAddNewSession = view.findViewById(R.id.btnAddSession);
         btnToSessions = view.findViewById(R.id.btnToSessions);
         btnToUserPrograms = view.findViewById(R.id.btnToUserPrograms);
-        tvStats = view.findViewById(R.id.tvStats);
+
+        tvLastWeek = view.findViewById(R.id.tvLastWeek);
+        tvCurrentMonth = view.findViewById(R.id.tvCurrentMonth);
+        tvCurrentWeek = view.findViewById(R.id.tvCurrentWeek);
+        tvLastMonth = view.findViewById(R.id.tvLastMonth);
+        tvCurrentYear = view.findViewById(R.id.tvCurrentYear);
+
 
         subscribeToApiResponse();
         subscribeToErrors();
@@ -171,7 +181,11 @@ public class MainFragment extends Fragment {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
                         UserStats stats = (UserStats) apiResponse.getResponseObject();
 
-                      tvStats.setText(stats.getStats());
+                        tvCurrentWeek.setText("This week: " + stats.getCurrentWeek());
+                        tvLastWeek.setText("Last week: " + stats.getLast7days());
+                        tvCurrentMonth.setText("This month: " + stats.getCurrentMonth());
+                        tvLastMonth.setText("Last month: " + stats.getLast30days());
+                        tvCurrentYear.setText("This year: " + stats.getCurrentYear());
 
                     }
 

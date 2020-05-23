@@ -27,6 +27,36 @@
    <TextView
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:id="@+id/tvStats"></TextView>
+       android:id="@+id/tvStats"
+       android:text="@string/stats"
+       android:textSize="30sp"></TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvLastWeek"></TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvCurrentWeek"></TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvCurrentMonth"></TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvLastMonth"></TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvCurrentYear"
+></TextView>
+
+
 
 </LinearLayout>

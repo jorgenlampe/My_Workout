@@ -37,5 +37,6 @@
     <string name="btnEditUserProgram">Endre program</string>
     <string name="btnAddExercise">Legg til øvelse</string>
     <string name="btnEditExercise">Endre øvelse</string>
+    <string name="stats">STATISTIKK:</string>
 
 </resources>
