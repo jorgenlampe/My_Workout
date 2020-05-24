@@ -233,7 +233,8 @@ public class DataRepository {
 
     public void deleteProgramType(Context context, String rid) {
 
-        String url = PROGRAMTYPE_PREFIX + rid;
+        String url = PROGRAMTYPE_PREFIX + rid + "?_api_key=" + API_KEY;
+
         myJsonDeleteRequest = new MyJsonObjectRequest(
                 Request.Method.DELETE,
                 url,

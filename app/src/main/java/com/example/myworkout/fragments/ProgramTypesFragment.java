@@ -139,7 +139,7 @@ public class ProgramTypesFragment extends Fragment {
                             mAdapter.setOnItemClickListener(new ProgramTypeAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(int position) {
-                                    Log.d("lolo", "deleteClick");
+
                                 }
 
                                 @Override
@@ -151,6 +151,7 @@ public class ProgramTypesFragment extends Fragment {
 
                                 @Override
                                 public void onEditClick(int position) {
+
                                    // UserProgramsFragmentDirections.ActionToEditUserProgram actionToEditUserProgram = UserProgramsFragmentDirections.actionToEditUserProgram(programs.get(position).getRid());
                                   //  NavHostFragment.findNavController(UserProgramsFragment.this).navigate(actionToEditUserProgram);
                                 }

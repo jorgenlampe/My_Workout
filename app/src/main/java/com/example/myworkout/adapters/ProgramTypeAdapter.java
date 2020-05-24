@@ -42,15 +42,13 @@ public class ProgramTypeAdapter extends RecyclerView.Adapter<ProgramTypeAdapter.
         public ImageView imgRemove;
         public ImageView imgEdit;
         public ImageView imgIcon;
-        public RelativeLayout layout;
 
         public MyViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
 
             tvDescription = itemView.findViewById(R.id.tvProgramTypeDescription);
             imgRemove = itemView.findViewById(R.id.programTypeDelete);
-            imgEdit = itemView.findViewById(R.id.programTypeDelete);
-            layout = itemView.findViewById(R.id.program_type_layout);
+            imgEdit = itemView.findViewById(R.id.programTypeEdit);
             imgIcon = itemView.findViewById(R.id.programTypeIcon);
             card = itemView.findViewById(R.id.programTypeCard);
 
@@ -132,8 +130,6 @@ public class ProgramTypeAdapter extends RecyclerView.Adapter<ProgramTypeAdapter.
                 (imageUrl).apply(options).into(holder.imgIcon);
 
 
-//todo icon
-        //todo holder.layout.setBackgroundColor(Color.parseColor(currentProgramType.getBackColor()));
     }
 
     @Override
