@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -134,6 +135,26 @@ public class ProgramTypesFragment extends Fragment {
                             // Dersom response på GET, PUT, POST:
                             mAdapter = new ProgramTypeAdapter(programTypes);
                             recyclerView.setAdapter(mAdapter);
+
+                            mAdapter.setOnItemClickListener(new ProgramTypeAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(int position) {
+                                    Log.d("lolo", "deleteClick");
+                                }
+
+                                @Override
+                                public void onDeleteClick(int position) {
+                                    dataViewModel.deleteProgramType(getContext(), programTypes.get(position).getRid());
+                                    programTypes.remove(position);
+                                    mAdapter.notifyItemRemoved(position);
+                                }
+
+                                @Override
+                                public void onEditClick(int position) {
+                                   // UserProgramsFragmentDirections.ActionToEditUserProgram actionToEditUserProgram = UserProgramsFragmentDirections.actionToEditUserProgram(programs.get(position).getRid());
+                                  //  NavHostFragment.findNavController(UserProgramsFragment.this).navigate(actionToEditUserProgram);
+                                }
+                            });
 
                         }
                     }

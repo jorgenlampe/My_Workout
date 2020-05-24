@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -36,7 +37,7 @@ public class ProgramTypeAdapter extends RecyclerView.Adapter<ProgramTypeAdapter.
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tvName;
+        public CardView card;
         public TextView tvDescription;
         public ImageView imgRemove;
         public ImageView imgEdit;
@@ -51,6 +52,7 @@ public class ProgramTypeAdapter extends RecyclerView.Adapter<ProgramTypeAdapter.
             imgEdit = itemView.findViewById(R.id.programTypeDelete);
             layout = itemView.findViewById(R.id.program_type_layout);
             imgIcon = itemView.findViewById(R.id.programTypeIcon);
+            card = itemView.findViewById(R.id.programTypeCard);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -105,6 +107,13 @@ public class ProgramTypeAdapter extends RecyclerView.Adapter<ProgramTypeAdapter.
     public void onBindViewHolder(MyViewHolder holder, int position) {
         ProgramType currentProgramType = programTypes.get(position);
         holder.tvDescription.setText(currentProgramType.getDescription());
+
+        try {
+            holder.card.setCardBackgroundColor(Color.parseColor(currentProgramType.getBack_color()));
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
 
         String url = "https://tusk.systems/trainingapp/icons/";
 
