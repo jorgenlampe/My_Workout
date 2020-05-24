@@ -141,4 +141,8 @@ public class DataViewModel extends AndroidViewModel {
         mRepository.getUserStats(context, firebaseId);
     }
 
+    public void postProgramType(Context context, String description, String icon, String back_color){
+        mRepository.postProgramType(context, description, icon, back_color);
+    }
+
 }

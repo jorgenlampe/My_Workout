@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/programTypeCard"
+    android:layout_marginTop="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="5dp"
+        android:id="@+id/program_type_layout">
+
+
+        <TextView
+            android:id="@+id/tvProgramTypeDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Text 2" />
+        <ImageView
+            android:id="@+id/userProgramEdit"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignRight="@id/programTypeDelete"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="50dp"
+            android:src="@drawable/ic_edit" />
+
+        <ImageView
+            android:id="@+id/programTypeDelete"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_remove"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

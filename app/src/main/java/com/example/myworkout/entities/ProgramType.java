@@ -8,13 +8,13 @@ public class ProgramType {
     private String name;
     private String description;
     private String icon;
-    private String backColor;
+    private String back_color;
 
     public ProgramType(String id, String rid, String api_key, String description, String icon, String backColor) {
         this.id = id;
         this.rid = rid;
         this.description = description;
-        this.backColor = backColor;
+        this.back_color = backColor;
         this.icon = icon;
         this.api_key = api_key;
     }
@@ -45,12 +45,12 @@ public class ProgramType {
         this.icon = icon;
     }
 
-    public String getBackColor() {
-        return backColor;
+    public String getBack_color() {
+        return back_color;
     }
 
-    public void setBackColor(String backColor) {
-        this.backColor = backColor;
+    public void setBack_color(String back_color) {
+        this.back_color = back_color;
     }
 
 

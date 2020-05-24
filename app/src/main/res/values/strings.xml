@@ -38,5 +38,10 @@
     <string name="btnAddExercise">Legg til øvelse</string>
     <string name="btnEditExercise">Endre øvelse</string>
     <string name="stats">STATISTIKK:</string>
+    <string name="toProgramTypes">Vis programtyper</string>
+    <string name="btnAddProgramType">Legg til programtype</string>
+    <string name="programTypeAddDescription">Beskrivelse...</string>
+    <string name="programTypeAddIcon">Bilde (tekst, navn på .png-fil)</string>
+    <string name="programTypeAddBackColor">Bakgrunnsfarge (tekst, f.eks. #FE0980)</string>
 
 </resources>

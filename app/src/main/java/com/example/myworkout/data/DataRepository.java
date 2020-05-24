@@ -124,7 +124,56 @@ public class DataRepository {
     }
 
 
-    public void postProgramType() {
+    public void postProgramType(Context context, String description, String icon, String back_color) {
+
+        final HashMap<String, String> params = new HashMap<String, String>();
+        params.put("_api_key", API_KEY);
+        params.put("description", description);
+        params.put("back_color", back_color);
+        params.put("icon", icon);
+
+        String url = PROGRAMTYPE_PREFIX + "?_api_key=" + API_KEY;
+        queue = MySingletonQueue.getInstance(context).getRequestQueue();
+
+        myJsonPostRequest = new MyJsonObjectRequest(
+                Request.Method.POST,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Gson gson = new Gson();
+                        try {
+                            String message = response.getString("message");
+                            JSONObject programTypeAsJsonObject = response.getJSONObject("record");
+                            ProgramType programType = gson.fromJson(programTypeAsJsonObject.toString(), ProgramType.class);
+                            ApiResponse resp = new ApiResponse(true, message, programType, myJsonPostRequest.getHttpStatusCode());
+                            apiResponse.postValue(resp);
+                        } catch (JSONException e) {
+                            ApiError apiError = new ApiError(-1, e.getMessage());
+                            errorMessage.postValue(apiError);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        ApiError apiError = VolleyErrorParser.parse(error);
+                        errorMessage.postValue(apiError);
+                    }
+                }
+        ) {
+            @Override
+            public byte[] getBody() {
+                return new JSONObject(params).toString().getBytes();
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+        queue.add(myJsonPostRequest);
 
     }
 

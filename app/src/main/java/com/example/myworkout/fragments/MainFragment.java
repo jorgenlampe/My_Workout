@@ -31,6 +31,7 @@ import com.example.myworkout.helpers.ApiError;
 import com.example.myworkout.helpers.ApiResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.internal.$Gson$Preconditions;
 
 import java.util.ArrayList;
 
@@ -52,6 +53,8 @@ public class MainFragment extends Fragment {
     private Button btnToUserPrograms;
     private Button btnToSessions;
     private Button btnAddNewSession;
+    private Button btnToProgramTypes;
+    private Button btnAddProgramType;
 
     private TextView tvLastWeek;
     private TextView tvCurrentWeek;
@@ -109,6 +112,8 @@ public class MainFragment extends Fragment {
         btnAddNewSession = view.findViewById(R.id.btnAddSession);
         btnToSessions = view.findViewById(R.id.btnToSessions);
         btnToUserPrograms = view.findViewById(R.id.btnToUserPrograms);
+        btnToProgramTypes = view.findViewById(R.id.btnToProgramTypes);
+        btnAddProgramType = view.findViewById(R.id.btnAddProgramType);
 
         tvLastWeek = view.findViewById(R.id.tvLastWeek);
         tvCurrentMonth = view.findViewById(R.id.tvCurrentMonth);
@@ -167,6 +172,20 @@ public class MainFragment extends Fragment {
             }
         });
 
+        btnToProgramTypes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(MainFragment.this).navigate(MainFragmentDirections.actionMainFragmentToProgramTypesFragment());
+            }
+        });
+
+        btnAddProgramType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(MainFragment.this).navigate(MainFragmentDirections.actionMainFragmentToAddProgramType());
+            }
+        });
+
     }
 
 
@@ -180,6 +199,7 @@ public class MainFragment extends Fragment {
                     if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
                         UserStats stats = (UserStats) apiResponse.getResponseObject();
+
 
                         tvCurrentWeek.setText("This week: " + stats.getCurrentWeek());
                         tvLastWeek.setText("Last week: " + stats.getLast7days());

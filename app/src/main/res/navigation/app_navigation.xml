@@ -153,6 +153,12 @@
         <action
             android:id="@+id/actionMainFragmentToAddSessionFragment"
             app:destination="@id/addSessionFragment" />
+        <action
+            android:id="@+id/actionMainFragmentToProgramTypesFragment"
+            app:destination="@id/programTypesFragment2" />
+        <action
+            android:id="@+id/actionMainFragmentToAddProgramType"
+            app:destination="@id/addProgramTypeFragment" />
     </fragment>
     <fragment
         android:id="@+id/sessionsFragment"
@@ -181,4 +187,14 @@
             android:name="ExerciseRid"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/programTypesFragment2"
+        android:name="com.example.myworkout.fragments.ProgramTypesFragment"
+        android:label="fragment_program_types"
+        tools:layout="@layout/fragment_program_types" />
+    <fragment
+        android:id="@+id/addProgramTypeFragment"
+        android:name="com.example.myworkout.fragments.AddProgramTypeFragment"
+        android:label="fragment_add_program_type"
+        tools:layout="@layout/fragment_add_program_type" />
 </navigation>

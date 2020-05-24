@@ -24,6 +24,19 @@
         android:id="@+id/btnAddSession"
         android:text="@string/btnAddNewSession"></Button>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnToProgramTypes"
+        android:text="@string/toProgramTypes"></Button>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnAddProgramType"
+        android:text="@string/btnAddProgramType"></Button>
+
+
    <TextView
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
