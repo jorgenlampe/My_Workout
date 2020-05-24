@@ -19,8 +19,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Text 2" />
+
+
         <ImageView
-            android:id="@+id/userProgramEdit"
+            android:id="@+id/programTypeIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignRight="@id/programTypeEdit"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="50dp"/>
+
+        <ImageView
+            android:id="@+id/programTypeEdit"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignRight="@id/programTypeDelete"

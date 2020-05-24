@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.myworkout.R;
 import com.example.myworkout.entities.ProgramType;
 import com.example.myworkout.entities.UserProgram;
@@ -38,6 +40,7 @@ public class ProgramTypeAdapter extends RecyclerView.Adapter<ProgramTypeAdapter.
         public TextView tvDescription;
         public ImageView imgRemove;
         public ImageView imgEdit;
+        public ImageView imgIcon;
         public RelativeLayout layout;
 
         public MyViewHolder(View itemView, final OnItemClickListener listener) {
@@ -47,7 +50,7 @@ public class ProgramTypeAdapter extends RecyclerView.Adapter<ProgramTypeAdapter.
             imgRemove = itemView.findViewById(R.id.programTypeDelete);
             imgEdit = itemView.findViewById(R.id.programTypeDelete);
             layout = itemView.findViewById(R.id.program_type_layout);
-
+            imgIcon = itemView.findViewById(R.id.programTypeIcon);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -102,6 +105,24 @@ public class ProgramTypeAdapter extends RecyclerView.Adapter<ProgramTypeAdapter.
     public void onBindViewHolder(MyViewHolder holder, int position) {
         ProgramType currentProgramType = programTypes.get(position);
         holder.tvDescription.setText(currentProgramType.getDescription());
+
+        String url = "https://tusk.systems/trainingapp/icons/";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(url);
+        sb.append(currentProgramType.getIcon());
+
+        String imageUrl = sb.toString();
+
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.mipmap.ic_launcher_round)
+                .error(R.mipmap.ic_launcher_round);
+
+        Glide.with(holder.itemView.getContext()).load
+                (imageUrl).apply(options).into(holder.imgIcon);
+
+
 //todo icon
         //todo holder.layout.setBackgroundColor(Color.parseColor(currentProgramType.getBackColor()));
     }
