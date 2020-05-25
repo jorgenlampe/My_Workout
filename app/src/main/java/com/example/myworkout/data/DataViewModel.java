@@ -149,4 +149,11 @@ public class DataViewModel extends AndroidViewModel {
         mRepository.deleteProgramType(context, rid);
     }
 
+    public void putProgramType(Context context, String rid, String description, String icon, String backColor) {
+        mRepository.putProgramType(context,rid,  description, icon, backColor);
+    }
+
+    public void getProgramType(Context context, String rid) {
+        mRepository.getProgramType(context, rid);
+    }
 }

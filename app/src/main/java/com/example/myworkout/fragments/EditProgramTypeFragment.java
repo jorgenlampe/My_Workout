@@ -7,53 +7,59 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.myworkout.R;
-import com.example.myworkout.adapters.ProgramTypeAdapter;
-import com.example.myworkout.adapters.UserProgramAdapter;
 import com.example.myworkout.data.DataViewModel;
+import com.example.myworkout.entities.Exercise;
 import com.example.myworkout.entities.ProgramType;
-import com.example.myworkout.entities.UserProgram;
 import com.example.myworkout.helpers.ApiError;
 import com.example.myworkout.helpers.ApiResponse;
-
-import java.util.ArrayList;
 
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ProgramTypesFragment#newInstance} factory method to
+ * Use the {@link EditProgramTypeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProgramTypesFragment extends Fragment {
+public class EditProgramTypeFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private Observer<ApiResponse> apiResponseObserver = null;
-    private Observer<ApiError> apiErrorObserver = null;
-
-    private DataViewModel dataViewModel;
-
-    private RecyclerView recyclerView;
-    private ProgramTypeAdapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public ProgramTypesFragment() {
+    private DataViewModel dataViewModel;
+
+    private Observer<ApiResponse> apiResponseObserver = null;
+    private Observer<ApiError> apiErrorObserver = null;
+
+    private EditText etDescription;
+    private EditText etIcon;
+    private EditText etBackColor;
+
+    private Button btnEditProgramType;
+
+    private String description;
+    private String icon;
+    private String backColor;
+
+    private String rid;
+
+    private boolean redirect = true;
+
+    public EditProgramTypeFragment() {
         // Required empty public constructor
     }
 
@@ -63,11 +69,11 @@ public class ProgramTypesFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ProgramTypesFragment.
+     * @return A new instance of fragment EditProgramTypeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProgramTypesFragment newInstance(String param1, String param2) {
-        ProgramTypesFragment fragment = new ProgramTypesFragment();
+    public static EditProgramTypeFragment newInstance(String param1, String param2) {
+        EditProgramTypeFragment fragment = new EditProgramTypeFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -88,40 +94,55 @@ public class ProgramTypesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_program_types, container, false);
-
+        View view = inflater.inflate(R.layout.fragment_edit_program_type, container, false);
 
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 
-        recyclerView = view.findViewById(R.id.my_recycler_view);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getActivity());//bedre ytelse med fast størrelse på layout
-        recyclerView.setLayoutManager(layoutManager);
+        etDescription = view.findViewById(R.id.etDescription);
+        etIcon = view.findViewById(R.id.etIcon);
+        etBackColor = view.findViewById(R.id.etBackColor);
+
+        btnEditProgramType = view.findViewById(R.id.btnEditProgramType);
 
         subscribeToApiResponse();
         subscribeToErrors();
 
-        //Oppdaterer observer ved backpress
-        if (apiResponseObserver != null) {
-            dataViewModel.getApiResponse().observe(getViewLifecycleOwner(), apiResponseObserver);
-        }
 
         return view;
     }
 
-
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
 
-        dataViewModel.getProgramTypes(getContext(), false);
 
+        rid = EditProgramTypeFragmentArgs.fromBundle(getArguments()).getProgramTypeRid();
+        dataViewModel.getProgramType(getContext(), rid);
 
-        layoutManager = new LinearLayoutManager(getContext());
+        btnEditProgramType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                description = etDescription.getText().toString();
+                icon = etIcon.getText().toString();
+                backColor = etBackColor.getText().toString();
 
+                //Sjekker at bruker har fyllt ut feltene
+                if (description.isEmpty()) {
+                    Toast.makeText(getContext(), "Fill out form before sending!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                //Sjekker at farge er i riktig format
+                if (!backColor.matches("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")) {
+                    Toast.makeText(getContext(), "Wrong color. Must be in HEX", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                dataViewModel.putProgramType(getContext(), rid, description, icon, backColor);
+            }
+        });
     }
 
-    public void subscribeToApiResponse() {
+    private void subscribeToApiResponse() {
         if (apiResponseObserver == null) {
             // Observerer endringer:
             apiResponseObserver = new Observer<ApiResponse>() {
@@ -129,55 +150,37 @@ public class ProgramTypesFragment extends Fragment {
                 public void onChanged(ApiResponse apiResponse) {
                     if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
-                        final ArrayList<ProgramType> programTypes = (ArrayList) apiResponse.getResponseObject();
-                        if(programTypes == null) return;
-                        if (programTypes.size() > 0) {
-                            // Dersom response på GET, PUT, POST:
-                            mAdapter = new ProgramTypeAdapter(programTypes);
-                            recyclerView.setAdapter(mAdapter);
 
-                            mAdapter.setOnItemClickListener(new ProgramTypeAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(int position) {
-
-                                }
-
-                                @Override
-                                public void onDeleteClick(int position) {
-                                    dataViewModel.deleteProgramType(getContext(), programTypes.get(position).getRid());
-                                    programTypes.remove(position);
-                                    mAdapter.notifyItemRemoved(position);
-                                }
-
-                                @Override
-                                public void onEditClick(int position) {
-
-                                    ProgramTypesFragmentDirections.ActionProgramTypesToEditProgramTypes actionProgramTypesToEditProgramTypes = ProgramTypesFragmentDirections.actionProgramTypesToEditProgramTypes(programTypes.get(position).getRid());
-                                    NavHostFragment.findNavController(ProgramTypesFragment.this).navigate(actionProgramTypesToEditProgramTypes);
-                                }
-                            });
+                        if (apiResponse.getResponseObject() instanceof ProgramType) {
+                            if (redirect) {
+                                ProgramType programType = (ProgramType) apiResponse.getResponseObject();
+                                etDescription.setText(programType.getDescription());
+                                etIcon.setText(programType.getIcon());
+                                etBackColor.setText(programType.getBack_color());
+                                redirect = false;
+                            } else {
+                                NavHostFragment.findNavController(EditProgramTypeFragment.this).navigateUp();
+                            }
 
                         }
+
                     }
 
                 }
+
+                    };
+                    dataViewModel.getApiResponse().observe(getViewLifecycleOwner(), apiResponseObserver);
+                }
             };
-
-            dataViewModel.getApiResponse().observe(getViewLifecycleOwner(), apiResponseObserver);
-
-        }
-
-    }
 
 
     private void subscribeToErrors() {
-
         if (apiErrorObserver == null) {
             // Observerer endringer i errorMessage:
             apiErrorObserver = new Observer<ApiError>() {
                 @Override
                 public void onChanged(ApiError apiError) {
-                    if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
+                    if(getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         if (apiError != null)
                             Toast.makeText(getActivity(), apiError.getMessage() + ": " + String.valueOf(apiError.getCode()), Toast.LENGTH_SHORT).show();
                     }

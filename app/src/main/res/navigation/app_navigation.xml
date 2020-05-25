@@ -191,10 +191,23 @@
         android:id="@+id/programTypesFragment2"
         android:name="com.example.myworkout.fragments.ProgramTypesFragment"
         android:label="fragment_program_types"
-        tools:layout="@layout/fragment_program_types" />
+        tools:layout="@layout/fragment_program_types" >
+        <action
+            android:id="@+id/actionProgramTypesToEditProgramTypes"
+            app:destination="@id/editProgramTypeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addProgramTypeFragment"
         android:name="com.example.myworkout.fragments.AddProgramTypeFragment"
         android:label="fragment_add_program_type"
         tools:layout="@layout/fragment_add_program_type" />
+    <fragment
+        android:id="@+id/editProgramTypeFragment"
+        android:name="com.example.myworkout.fragments.EditProgramTypeFragment"
+        android:label="fragment_edit_program_type"
+        tools:layout="@layout/fragment_edit_program_type" >
+        <argument
+            android:name="programTypeRid"
+            app:argType="string" />
+    </fragment>
 </navigation>

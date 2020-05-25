@@ -77,9 +77,49 @@ public class DataRepository {
     public DataRepository(Application application) {
     }
 
-    /*
-     * Henter ALLE ProgramTypes
-     * */
+    public void getProgramType(Context context, String rid){
+
+        String url = PROGRAMTYPE_PREFIX + rid + "?_api_key=" + API_KEY;
+        if (!this.downloading) {
+            queue = MySingletonQueue.getInstance(context).getRequestQueue();
+            downloading = true;
+            myJsonGetRequest = new MyJsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject jsonObject) {
+                            try {
+                                Gson gson = new Gson();
+                                ProgramType programType = gson.fromJson(jsonObject.toString(), ProgramType.class);
+                                ApiResponse resp = new ApiResponse(true, "OK", programType, myJsonGetRequest.getHttpStatusCode());
+                                apiResponse.postValue(resp);
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            ApiError apiError = VolleyErrorParser.parse(error);
+                            errorMessage.setValue(apiError);
+                        }
+                    });
+            queue.add(myJsonGetRequest);
+
+        }
+
+        downloading = false;
+
+
+
+
+
+    }
+
     public void getProgramTypes(Context context, boolean forceDownload) {
         // Dersom nedlasting pågår og skjermen roteres vil downloading være true, ingen grunn til å starte nedlasting på nytt:
         if (!this.downloading) {
@@ -177,20 +217,20 @@ public class DataRepository {
 
     }
 
-    public void putProgramType(Context context, String description, String icon, String back_color) {
+    public void putProgramType(Context context, String rid, String description, String icon, String back_color) {
 
         final HashMap<String, String> params = new HashMap<String, String>();
+        params.put("rid", rid);
         params.put("_api_key", API_KEY);
         params.put("description", description);
         params.put("back_color", back_color);
         params.put("icon", icon);
 
-        String url = PROGRAMTYPE_PREFIX + "?_api_key=" + API_KEY;
         queue = MySingletonQueue.getInstance(context).getRequestQueue();
 
         myJsonPutRequest = new MyJsonObjectRequest(
                 Request.Method.PUT,
-                url,
+                PROGRAMTYPE_PREFIX,
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
