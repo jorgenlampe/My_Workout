@@ -34,6 +34,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.internal.$Gson$Preconditions;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 
 /**
@@ -63,6 +64,9 @@ public class MainFragment extends Fragment {
     private TextView tvCurrentYear;
 
     private DataViewModel dataViewModel;
+
+    private String currentWeekSessionCount;
+    private float currentWeekTimeSpent;
 
 
     // TODO: Rename and change types of parameters
@@ -199,7 +203,6 @@ public class MainFragment extends Fragment {
                     if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
                         UserStats stats = (UserStats) apiResponse.getResponseObject();
-
 
                         tvCurrentWeek.setText("This week: " + stats.getCurrentWeek());
                         tvLastWeek.setText("Last week: " + stats.getLast7days());

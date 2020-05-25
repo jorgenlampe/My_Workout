@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">My Workout</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="userAccount">Account name:</string>
+    <string name="deleteAccount">Delete account</string>
+    <string name="userName">username:</string>
+    <string name="editUserName">Edit username</string>
+    <string name="logout">Logout</string>
+    <string name="changePhoneNumber">Edit phonenumber</string>
+    <string name="editPhoneNumber">Edit phonenumber</string>
+    <string name="editEmail">Edit e-mail address</string>
+    <string name="editBirthYear">Edit birth year</string>
+    <string name="editUser">Edit user info</string>
+    <string name="hintProgramType">Program type...</string>
+    <string name="hintUserId">User id...</string>
+    <string name="hintName">Program name...</string>
+    <string name="hintDescription">Description...</string>
+    <string name="hintTiming">User timer?</string>
+    <string name="btnAddUserProgram">Add program</string>
+    <string name="btnAddNewExercise">Add exercise</string>
+    <string name="btnAddExerciseFromList">Add existing exercise</string>
+    <string name="hintExerciseName">Exercise name...</string>
+    <string name="hintExerciseDescription">Description...</string>
+    <string name="hintIcon">Icon (text, name on .png-file) ...</string>
+    <string name="hintInfoboxColor">Color (e.g. #FE0980)...</string>
+    <string name="btnAddToUserProgram">Add exercise to program</string>
+    <string name="toUserPrograms">Show work out programs</string>
+    <string name="toSessions">Show sessions</string>
+    <string name="btnAddNewSession">Registrer new session</string>
+    <string name="addSessionDate">Date: (yyyy-mm-dd)</string>
+    <string name="addSessionTimeSpent">Time spent (seconds)</string>
+    <string name="addSessionDescription">Description...</string>
+    <string name="addSessionExtra">Extra info...</string>
+    <string name="btnAddSession">Add session</string>
+    <string name="btnEditUserProgram">Edit program</string>
+    <string name="btnAddExercise">Add exercise</string>
+    <string name="btnEditExercise">Edit exercise</string>
+    <string name="stats">User stats:</string>
+    <string name="toProgramTypes">Show program types</string>
+    <string name="btnAddProgramType">Add program type</string>
+    <string name="programTypeAddDescription">Description...</string>
+    <string name="programTypeAddIcon">Image (text, name on .png-file)</string>
+    <string name="programTypeAddBackColor">Background color (text, e.g. #FE0980)</string>
+    <string name="editProgramType">Edit program type</string>
+
+</resources>
