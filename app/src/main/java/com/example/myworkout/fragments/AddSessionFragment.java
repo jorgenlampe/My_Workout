@@ -165,7 +165,7 @@ public class AddSessionFragment extends Fragment implements AdapterView.OnItemSe
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " ("  + ")", Toast.LENGTH_SHORT).show();
                         if (apiResponse.getResponseObject() instanceof UserProgramSession) {
 
-
+                            NavHostFragment.findNavController(AddSessionFragment.this).navigateUp();
 
 
 
