@@ -205,7 +205,7 @@ public class MainFragment extends Fragment {
                         UserStats stats = (UserStats) apiResponse.getResponseObject();
 
                         tvCurrentWeek.setText("This week: " + stats.getCurrentWeek());
-                        tvLastWeek.setText("Last week: " + stats.getLast7days());
+                        tvLastWeek.setText("Last week: " + stats.getLast7Days());
                         tvCurrentMonth.setText("This month: " + stats.getCurrentMonth());
                         tvLastMonth.setText("Last month: " + stats.getLast30days());
                         tvCurrentYear.setText("This year: " + stats.getCurrentYear());

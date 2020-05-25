@@ -44,6 +44,5 @@
     <string name="programTypeAddIcon">Bilde (tekst, navn på .png-fil)</string>
     <string name="programTypeAddBackColor">Bakgrunnsfarge (tekst, f.eks. #FE0980)</string>
     <string name="editProgramType">Endre programtype</string>
-    <string name="current_week">"Denne uken: (antall økter / tid brukt)"</string>
 
 </resources>
