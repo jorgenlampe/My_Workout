@@ -103,11 +103,6 @@ public class ExerciseFragment extends Fragment {
                         Glide.with(getContext()).load
                                 (imageUrl).apply(options).into(image);
 
-                        //icons8-ninja_filled.png
-
-                            // Dersom response på GET, PUT, POST:
-
-                         //sette tekstfelt.....
 
                     }
 

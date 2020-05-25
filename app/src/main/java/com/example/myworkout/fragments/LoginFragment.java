@@ -40,7 +40,6 @@ public class LoginFragment extends Fragment {
     private Button btnLogout;
     private TextView tvStatus;
     private DataViewModel dataViewModel;
-    //private int count=0;
 
     private Observer<ApiResponse> apiResponseObserver = null;
     private Observer<ApiError> apiErrorObserver = null;
@@ -111,24 +110,11 @@ public class LoginFragment extends Fragment {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
                         User user = (User) apiResponse.getResponseObject();
                         if (user != null) {
-                            // Dersom response på GET, PUT, POST:
-                            //            tvUserInfo.setText(user.toString());
-                            //          etName.setText(user.getName());
-                            //        etEmail.setText(user.getEmail());
-                            //      etPhone.setText(user.getPhone());
-                            //    etName.setEnabled(true);
-                            //  etEmail.setEnabled(true);
-                            //etPhone.setEnabled(true);
+
                         } else {
-                            // Dersom response på DELETE
+
                             signOut();
-                            //   tvUserInfo.setText("");
-                            // etName.setText("");
-                            // etEmail.setText("");
-                            // etPhone.setText("");
-                            //etName.setEnabled(false);
-                            //etEmail.setEnabled(false);
-                            //  etPhone.setEnabled(false);
+
                         }
                     }
                 }

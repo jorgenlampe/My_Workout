@@ -65,9 +65,6 @@ public class MainFragment extends Fragment {
 
     private DataViewModel dataViewModel;
 
-    private String currentWeekSessionCount;
-    private float currentWeekTimeSpent;
-
 
     // TODO: Rename and change types of parameters
     private String mParam1;

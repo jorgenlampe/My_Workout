@@ -109,7 +109,6 @@ public class UserProgramsFragment extends Fragment {
                     if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
                         final ArrayList<UserProgram> programs = (ArrayList) apiResponse.getResponseObject();
-                        System.out.println("observer");
                         if(programs == null) return;
                         if (programs.size() > 0) {
                             // Dersom response på GET, PUT, POST:

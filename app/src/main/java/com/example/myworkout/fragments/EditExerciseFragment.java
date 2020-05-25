@@ -111,7 +111,6 @@ public class EditExerciseFragment extends Fragment {
                                 editDescription.setText(exercise.getDescription());
                                 editColor.setText(exercise.getInfobox_color());
                                 editIcon.setText(exercise.getIcon());
-                                System.out.println("infobox color" + exercise.getInfobox_color());
                                 redirect = false;
                             } else {
                                 NavHostFragment.findNavController(EditExerciseFragment.this).navigateUp();

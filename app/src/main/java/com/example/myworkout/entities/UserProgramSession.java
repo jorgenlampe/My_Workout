@@ -33,16 +33,8 @@ public class UserProgramSession {
         return userProgramId;
     }
 
-    public void setUserProgramId(String userProgramId) {
-        this.userProgramId = userProgramId;
-    }
-
     public String getDate() {
         return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public Float getTime_spent() {
@@ -61,7 +53,4 @@ public class UserProgramSession {
         return extra_json_data;
     }
 
-    public void setExtra_json_data(String extra_json_data) {
-        this.extra_json_data = extra_json_data;
-    }
 }

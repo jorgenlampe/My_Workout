@@ -8,13 +8,7 @@ public class Exercise {
     private String description;
     private String icon;
     private String infobox_color;
-    private String user_program_id;
-   // private String programName;
 
-
-    public String getUser_program_id() {
-        return user_program_id;
-    }
 
     public Exercise(String id, String rid, String name, String description, String icon, String infobox_color) {
         this.id = id;

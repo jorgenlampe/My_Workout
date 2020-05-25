@@ -131,7 +131,6 @@ public class UserProgramFragment extends Fragment {
                         final ArrayList<Exercise> exercises = (ArrayList) apiResponse.getResponseObject();
                         if(exercises == null) return;
                         if (exercises.size() > 0) {
-                            System.out.println(exercises.size() + " SDFASDF");
                             // Dersom response på GET, PUT, POST:
                             mAdapter = new ExerciseAdapter(exercises);
                             recyclerView.setAdapter(mAdapter);

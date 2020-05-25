@@ -135,7 +135,7 @@ public class AddSessionFragment extends Fragment implements AdapterView.OnItemSe
         }
 
         dataViewModel.getUserPrograms(getContext(), firebaseId);
-        //user_program_id = ....
+
 
         btnAddSession.setOnClickListener(new View.OnClickListener() {
             @Override

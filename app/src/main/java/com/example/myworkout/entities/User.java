@@ -30,9 +30,6 @@ public class User implements Serializable {
         return user_programs;
     }
 
-    public void setUser_programs(List<UserProgram> user_programs) {
-        this.user_programs = user_programs;
-    }
 
     public User(int id, String firebaseId, String email, String phone, String name, int birth_year, List<UserProgram> user_programs) {
         this.firebaseId = firebaseId;
@@ -49,29 +46,15 @@ public class User implements Serializable {
     }
 
 
-    public String getFirebase_id() {
-        return firebaseId;
-    }
-
-    public void setFirebase_id(String firebaseId) {
-        this.firebaseId = firebaseId;
-    }
-
     public String getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getName() {
         return name;
@@ -81,15 +64,9 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    /*
-    * Konverterer fra minutt til fodselsaar
-     */
     public int getBirth_year() {
         return 2020 - (birth_year/365/24/60);
     }
 
 
-    public void setBirth_year(int birthYear) {
-        this.birth_year = birthYear;
-    }
 }

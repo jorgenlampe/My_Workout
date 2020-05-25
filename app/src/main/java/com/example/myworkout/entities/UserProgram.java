@@ -35,48 +35,17 @@ public class UserProgram {
         this.app_program_type_id = app_program_type_id;
     }
 
-    public void setUse_timing(int use_timing) {
-        this.use_timing = use_timing;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
-
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getApi_key() {
-        return api_key;
-    }
-
-    public void setApi_key(String api_key) {
-        this.api_key = api_key;
     }
 
     public List<UserProgramExercise> getUser_program_exercises() {
         return user_program_exercises;
     }
 
-    public void setUser_program_exercises(List<UserProgramExercise> user_program_exercises) {
-        this.user_program_exercises = user_program_exercises;
-    }
 
     public List<UserProgramSession> getUser_program_sessions() {
         return user_program_sessions;
-    }
-
-    public void setUser_program_sessions(List<UserProgramSession> user_program_sessions) {
-        this.user_program_sessions = user_program_sessions;
-    }
-
-    public ProgramType getApp_program_type() {
-        return app_program_type;
-    }
-
-    public void setApp_program_type(ProgramType app_program_type) {
-        this.app_program_type = app_program_type;
     }
 
     public String getApp_program_type_id() {
@@ -87,10 +56,6 @@ public class UserProgram {
         return use_timing;
     }
 
-    public String getUser_id() {
-        return user_id;
-    }
-
     public String getId() {
         return id;
     }
@@ -98,7 +63,7 @@ public class UserProgram {
     @Override
     public String toString(){
 
-        return getDescription();
+        return getName();
     }
 
     public String getName() {

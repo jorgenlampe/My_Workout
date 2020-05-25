@@ -10,6 +10,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -72,9 +73,6 @@ public class UserFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user, container, false);
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-
 
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 
@@ -143,8 +141,6 @@ public class UserFragment extends Fragment {
             firebaseId = firebaseUser.getUid();
         }
 
-        Log.d("firaga", firebaseId);
-
         dataViewModel.getUser(getActivity(), firebaseId, false);
 
 
@@ -183,7 +179,7 @@ public class UserFragment extends Fragment {
         if (firebaseUser != null) {
             String firebaseId = firebaseUser.getUid();
             dataViewModel.deleteUser(getActivity(), firebaseId, firebaseUser);
-
+            NavHostFragment.findNavController(UserFragment.this).navigate(R.id.navigation);
         }
 
     }

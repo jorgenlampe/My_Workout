@@ -24,19 +24,4 @@ public class UserProgramExercise {
         this.rid = rid;
     }
 
-    public String getUser_program_id() {
-        return user_program_id;
-    }
-
-    public void setUser_program_id(String user_program_id) {
-        this.user_program_id = user_program_id;
-    }
-
-    public String getApp_exercise_id() {
-        return app_exercise_id;
-    }
-
-    public void setApp_exercise_id(String app_exercise_id) {
-        this.app_exercise_id = app_exercise_id;
-    }
 }

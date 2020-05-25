@@ -19,13 +19,6 @@ public class UserStats implements Serializable {
         return id;
     }
 
-    public String getFirebase_id() {
-        return firebase_id;
-    }
-
-    public String getApi_key() {
-        return api_key;
-    }
 
     public Map<String, Float> getLast7Days() {
         return last7Days;

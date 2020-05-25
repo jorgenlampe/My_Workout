@@ -30,7 +30,6 @@ import java.util.ArrayList;
 public class AddExerciseFromListFragment extends Fragment {
 
     private String user_program_id;
-    private String exerciseRid;
 
     private Observer<ApiResponse> apiResponseObserver = null;
     private Observer<ApiError> apiErrorObserver = null;
