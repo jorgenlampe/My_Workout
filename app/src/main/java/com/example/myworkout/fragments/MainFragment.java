@@ -110,6 +110,8 @@ public class MainFragment extends Fragment {
 
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 
+        getActivity().setTitle(R.string.titleMain);
+
         btnAddNewSession = view.findViewById(R.id.btnAddSession);
         btnToSessions = view.findViewById(R.id.btnToSessions);
         btnToUserPrograms = view.findViewById(R.id.btnToUserPrograms);

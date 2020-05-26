@@ -114,6 +114,7 @@ public class EditProgramTypeFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
 
+        getActivity().setTitle(R.string.editProgramType);
 
         rid = EditProgramTypeFragmentArgs.fromBundle(getArguments()).getProgramTypeRid();
         dataViewModel.getProgramType(getContext(), rid);

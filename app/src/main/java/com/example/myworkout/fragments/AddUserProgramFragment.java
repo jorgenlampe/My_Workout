@@ -93,6 +93,8 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
     public void onViewCreated(final View view, Bundle savedInstanceState){
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
+        getActivity().setTitle(R.string.btnAddUserProgram);
+
         dataViewModel.getUser(getContext(), firebaseUser.getUid(), true);
         dataViewModel.getProgramTypes(getContext(), true);
 

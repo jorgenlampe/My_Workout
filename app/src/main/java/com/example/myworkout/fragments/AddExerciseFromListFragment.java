@@ -54,6 +54,8 @@ public class AddExerciseFromListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_add_exercise_from_list, container, false);
 
+        getActivity().setTitle(R.string.btnAddExercise);
+
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 
         recyclerView = view.findViewById(R.id.my_recycler_view);

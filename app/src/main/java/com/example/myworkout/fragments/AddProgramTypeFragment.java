@@ -91,6 +91,8 @@ public class AddProgramTypeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_program_type, container, false);
 
+        getActivity().setTitle(R.string.btnAddProgramType);
+
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 
         etAddDescription = view.findViewById(R.id.etAddDescription);

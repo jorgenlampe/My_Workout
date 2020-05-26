@@ -75,6 +75,9 @@ public class UserProgramsFragment extends Fragment {
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
+
+        getActivity().setTitle(R.string.titleUserPrograms);
+
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         String firebaseId = null;

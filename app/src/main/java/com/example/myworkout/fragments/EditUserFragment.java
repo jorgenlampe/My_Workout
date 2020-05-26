@@ -58,6 +58,8 @@ public class EditUserFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
 
+        getActivity().setTitle(R.string.editUser);
+
         btnUpdateUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

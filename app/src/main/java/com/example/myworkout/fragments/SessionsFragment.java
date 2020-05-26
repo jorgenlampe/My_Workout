@@ -113,6 +113,9 @@ public class SessionsFragment extends Fragment {
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
+
+        getActivity().setTitle(R.string.titleSessions);
+
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         String firebaseId = null;

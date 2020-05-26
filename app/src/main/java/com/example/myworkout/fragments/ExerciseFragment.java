@@ -49,6 +49,8 @@ public class ExerciseFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_exercise, container, false);
 
+        getActivity().setTitle(R.string.titleExercise);
+
         tvName = view.findViewById(R.id.tvExerciseName);
         tvDescription = view.findViewById(R.id.tvExerciseDescription);
 

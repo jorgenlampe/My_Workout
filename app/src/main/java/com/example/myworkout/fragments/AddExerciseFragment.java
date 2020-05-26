@@ -58,6 +58,8 @@ public class AddExerciseFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_exercise, container, false);
 
+        getActivity().setTitle(R.string.btnAddExercise);
+
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 
         etAddName = view.findViewById(R.id.etAddName);

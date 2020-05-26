@@ -134,6 +134,8 @@ public class AddSessionFragment extends Fragment implements AdapterView.OnItemSe
             firebaseId = firebaseUser.getUid();
         }
 
+        getActivity().setTitle(R.string.btnAddSession);
+
         dataViewModel.getUserPrograms(getContext(), firebaseId);
 
 

@@ -68,6 +68,8 @@ public class AddExerciseFromListDetailFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_add_exercise_from_list_detail, container, false);
 
+        getActivity().setTitle(R.string.btnAddExercise);
+
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 
         tvExerciseName = view.findViewById(R.id.tvExerciseName);

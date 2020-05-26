@@ -61,6 +61,8 @@ public class UserProgramFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_user_program, container, false);
 
+        getActivity().setTitle(R.string.titleUserProgram);
+
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 
         tvExerciseName = view.findViewById(R.id.tvExerciseName);

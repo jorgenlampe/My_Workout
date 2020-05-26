@@ -44,5 +44,13 @@
     <string name="programTypeAddIcon">Bilde (tekst, navn på .png-fil)</string>
     <string name="programTypeAddBackColor">Bakgrunnsfarge (tekst, f.eks. #FE0980)</string>
     <string name="editProgramType">Endre programtype</string>
+    <string name="titleExercise">Øvelse</string>
+    <string name="titleLogin">Innlogging</string>
+    <string name="titleMain">Hovedside</string>
+    <string name="titleProgramTypes">Programtyper</string>
+    <string name="titleSessions">Økter</string>
+    <string name="titleUser">Din bruker</string>
+    <string name="titleUserProgram">Treningsprogram</string>
+    <string name="titleUserPrograms">Treningsprogrammer</string>
 
 </resources>

@@ -67,6 +67,8 @@ public class EditUserProgramFragment extends Fragment implements AdapterView.OnI
 
         View view = inflater.inflate(R.layout.fragment_edit_user_program, container, false);
 
+        getActivity().setTitle(R.string.btnEditUserProgram);
+
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 
         spinner = view.findViewById(R.id.spinner_edit_program_type);

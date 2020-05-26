@@ -113,8 +113,9 @@ public class ProgramTypesFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
 
-        dataViewModel.getProgramTypes(getContext(), false);
+        getActivity().setTitle(R.string.titleProgramTypes);
 
+        dataViewModel.getProgramTypes(getContext(), false);
 
         layoutManager = new LinearLayoutManager(getContext());
 

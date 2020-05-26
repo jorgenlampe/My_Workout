@@ -55,6 +55,7 @@ public class EditExerciseFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_exercise, container, false);
 
+        getActivity().setTitle(R.string.btnEditExercise);
 
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
 

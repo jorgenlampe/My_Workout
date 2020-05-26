@@ -44,5 +44,13 @@
     <string name="programTypeAddIcon">Image (text, name on .png-file)</string>
     <string name="programTypeAddBackColor">Background color (text, e.g. #FE0980)</string>
     <string name="editProgramType">Edit program type</string>
+    <string name="titleExercise">Exercise</string>
+    <string name="titleLogin">Login</string>
+    <string name="titleMain">Main page</string>
+    <string name="titleProgramTypes">Program types</string>
+    <string name="titleSessions">Sessions</string>
+    <string name="titleUser">User</string>
+    <string name="titleUserProgram">Program</string>
+    <string name="titleUserPrograms">Programs</string>
 
 </resources>
