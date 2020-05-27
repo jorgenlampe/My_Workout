@@ -21,7 +21,7 @@
         android:id="@+id/tvAccountName"
         android:layout_column="1"
         android:layout_row="0"
-        android:text="Kontonavn..."
+        android:text="@string/accountName"
 
     />
 
@@ -54,7 +54,7 @@
         android:id="@+id/tvUserNameText"
         android:layout_column="1"
         android:layout_row="1"
-        android:text="Brukernavn..."
+        android:text="@string/userName"
         ></TextView>
 
 
@@ -64,7 +64,7 @@
         android:id="@+id/tvPhoneNumber"
         android:layout_column="0"
         android:layout_row="3"
-        android:text="Telefonnummer:"></TextView>
+        android:text="@string/phoneNumber"></TextView>
 
 
     <TextView
@@ -72,7 +72,7 @@
         android:id="@+id/tvPhoneNumberText"
         android:layout_column="1"
         android:layout_row="3"
-        android:text="Telefonnr..."
+        android:text="@string/phoneNumber"
         ></TextView>
 
 
@@ -82,7 +82,7 @@
         android:id="@+id/tvEmail"
         android:layout_column="0"
         android:layout_row="2"
-        android:text="E-post:"></TextView>
+        android:text="@string/email"></TextView>
 
 
     <TextView
@@ -90,7 +90,7 @@
         android:id="@+id/tvEmailText"
         android:layout_column="1"
         android:layout_row="2"
-        android:text="Email..."
+        android:text="@string/email"
         ></TextView>
 
 
@@ -100,7 +100,7 @@
         android:id="@+id/tvBirthyear"
         android:layout_column="0"
         android:layout_row="4"
-        android:text="Fødselsår:"></TextView>
+        android:text="@string/birthYear"></TextView>
 
 
     <TextView
@@ -108,7 +108,7 @@
         android:id="@+id/tvBirthYearText"
         android:layout_column="1"
         android:layout_row="4"
-        android:text="Fodselsår..."
+        android:text="@string/birthYear"
         ></TextView>
 
 

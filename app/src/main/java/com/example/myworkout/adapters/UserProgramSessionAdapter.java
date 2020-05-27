@@ -1,5 +1,6 @@
 package com.example.myworkout.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import com.example.myworkout.entities.UserProgramSession;
 import java.util.ArrayList;
 
 public class UserProgramSessionAdapter extends RecyclerView.Adapter<UserProgramSessionAdapter.MyViewHolder> {
+
+    //Adapter-klasse for å vise alle øktene i en RecyclerView
 
     private OnItemClickListener mListener;
     private ArrayList<UserProgramSession> userProgramSessions;
@@ -85,9 +88,13 @@ public class UserProgramSessionAdapter extends RecyclerView.Adapter<UserProgramS
         UserProgramSession currentSession = userProgramSessions.get(position);
         holder.tvDate.setText(String.valueOf(currentSession.getDate()));
         holder.tvTimeSpent.setText(String.valueOf(currentSession.getTime_spent()));
-        holder.tvTimeSpent.setText(String.valueOf(currentSession.getTime_spent()) + " sekunder");
+
+        Float minutes = currentSession.getTime_spent()/60;
+
+        holder.tvTimeSpent.setText(String.format("%.1f min.", minutes));
         holder.tvDescription.setText(currentSession.getDescription());
         holder.tvExtra.setText(currentSession.getExtra_json_data());
+
     }
 
     @Override

@@ -22,6 +22,8 @@ import java.util.ArrayList;
 
 public class ProgramTypeAdapter extends RecyclerView.Adapter<ProgramTypeAdapter.MyViewHolder> {
 
+    //Adapter-klasse for å vise alle programtypene i en RecylerView
+
     private OnItemClickListener mListener;
     private ArrayList<ProgramType> programTypes;
 

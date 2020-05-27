@@ -28,6 +28,8 @@ import com.example.myworkout.helpers.GlideApp;
 
 public class AddExerciseFragment extends Fragment {
 
+    //Fragment for å legge til ny øvelse
+
     private Observer<ApiResponse> apiResponseObserver = null;
     private Observer<ApiError> apiErrorObserver = null;
     private Observer<String> selectedImageObserver = null;
@@ -56,14 +58,14 @@ public class AddExerciseFragment extends Fragment {
     final private String IMAGE_PREFIX = "https://tusk.systems/trainingapp/icons/";
 
     public AddExerciseFragment() {
-        // Required empty public constructor
+
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_add_exercise, container, false);
 
         getActivity().setTitle(R.string.btnAddExercise);

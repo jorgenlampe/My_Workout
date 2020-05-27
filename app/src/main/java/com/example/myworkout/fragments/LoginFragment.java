@@ -36,6 +36,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LoginFragment extends Fragment {
+
+    //Frament for innlogging. Bruker opprettes når man er logget inn.
+
     private static final int RC_SIGN_IN = 123;
     private Button btnLogin;
     private Button btnLogout;
@@ -46,7 +49,7 @@ public class LoginFragment extends Fragment {
     private Observer<ApiError> apiErrorObserver = null;
 
     public LoginFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -57,7 +60,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+        //sjekker om bruker er logget inn
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             updateUI(currentUser.getEmail());
@@ -80,7 +83,7 @@ public class LoginFragment extends Fragment {
             };
 
 
-            dataViewModel.getApiError().observe(getViewLifecycleOwner(), apiErrorObserver);  //feil her....?
+            dataViewModel.getApiError().observe(getViewLifecycleOwner(), apiErrorObserver);
         }
     }
 
@@ -135,7 +138,7 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
         getActivity().setTitle(R.string.titleLogin);
@@ -175,13 +178,13 @@ public class LoginFragment extends Fragment {
         return view;
     }
 
-    // FIREBASE SIGN IN & OUT:
+    // FIREBASE log inn og ut:
     public void createSignInIntent() {
-        // Choose authentication providers
+
         List<AuthUI.IdpConfig> providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build());
-        // Create and launch sign-in intent
+
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
@@ -196,7 +199,7 @@ public class LoginFragment extends Fragment {
         if (requestCode == RC_SIGN_IN) {
             IdpResponse response = IdpResponse.fromResultIntent(data);
             if (resultCode == Activity.RESULT_OK) {
-                // Successfully signed in
+                // innlogget ok
                 updateUIOnSignIn();
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 updateUI(user.getEmail());
@@ -207,9 +210,7 @@ public class LoginFragment extends Fragment {
                 dataViewModel.postUser(getContext(), firebaseId, username, phone, email, 0);
 
             } else {
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
+
                 updateUI("Innlogging feilet... Prøv på nytt.");
             }
         }

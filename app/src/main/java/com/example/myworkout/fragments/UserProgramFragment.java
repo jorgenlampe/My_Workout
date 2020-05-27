@@ -31,6 +31,8 @@ import java.util.ArrayList;
 
 public class UserProgramFragment extends Fragment {
 
+    //Fragment som viser valgt brukerprogram med tilhørende øvelser
+
     private Observer<ApiResponse> apiResponseObserver = null;
     private Observer<ApiError> apiErrorObserver = null;
 
@@ -50,14 +52,14 @@ public class UserProgramFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
 
     public UserProgramFragment() {
-        // Required empty public constructor
+
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
 
         View view = inflater.inflate(R.layout.fragment_user_program, container, false);
 

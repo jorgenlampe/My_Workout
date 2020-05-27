@@ -2,7 +2,7 @@ package com.example.myworkout.entities;
 
 public class UserProgramSession {
 
-    private String userProgramId;
+    private String user_program_id;
     private String date;
     private Float time_spent;
     private String description;
@@ -18,10 +18,10 @@ public class UserProgramSession {
         return rid;
     }
 
-    public UserProgramSession(String id, String rid, String userProgramId, String date, Float timeSpent, String description, String extraJsonData) {
+    public UserProgramSession(String id, String rid, String user_program_id, String date, Float timeSpent, String description, String extraJsonData) {
         this.id = id;
         this.rid = rid;
-        this.userProgramId = userProgramId;
+        this.user_program_id = user_program_id;
         this.date = date;
         this.time_spent = timeSpent;
         this.description = description;
@@ -30,7 +30,7 @@ public class UserProgramSession {
 
 
     public String getUserProgramId() {
-        return userProgramId;
+        return user_program_id;
     }
 
     public String getDate() {

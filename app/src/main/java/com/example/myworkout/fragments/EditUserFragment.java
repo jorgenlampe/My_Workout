@@ -7,6 +7,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,8 +29,9 @@ import java.util.Calendar;
 
 
 public class EditUserFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
+    //Fragment for å endre brukerinfo
+
     private DataViewModel dataViewModel;
 
     private Observer<ApiResponse> apiResponseObserver = null;
@@ -52,7 +54,7 @@ public class EditUserFragment extends Fragment {
 
 
     public EditUserFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -72,7 +74,7 @@ public class EditUserFragment extends Fragment {
                 int ageInMinutes = (Calendar.getInstance().get(Calendar.YEAR) - birthYear) * 365 * 24 * 60;
 
                 dataViewModel.putUser(getContext(), firebaseId, username, phoneNumber, email, ageInMinutes);
-                toUserFragment();
+
             }
         });
 
@@ -80,9 +82,6 @@ public class EditUserFragment extends Fragment {
 
     }
 
-    public void toUserFragment(){
-        Navigation.findNavController(getView()).navigate(R.id.action_editUserFragment_to_userFragment);
-    }
 
     private void subscribeToApiResponse() {
 
@@ -93,6 +92,7 @@ public class EditUserFragment extends Fragment {
                 public void onChanged(ApiResponse apiResponse) {
                     if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         Toast.makeText(getActivity(), apiResponse.getMessage() + ": " + String.valueOf(apiResponse.getHttpStatusCode()) + " (" + ")", Toast.LENGTH_SHORT).show();
+
                         User user = (User) apiResponse.getResponseObject();
                         if (user != null) {
                             if(user.getBirth_year() == 2020) {
@@ -107,7 +107,8 @@ public class EditUserFragment extends Fragment {
                                 etPhoneNumber.setText(user.getPhone());
                             }
                             etUsername.setText(user.getName());
-                        } 
+
+                        }
                     }
                 }
             };
@@ -143,7 +144,6 @@ public class EditUserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_edit_user, container, false);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();

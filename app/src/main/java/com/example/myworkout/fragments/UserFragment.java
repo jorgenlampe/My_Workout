@@ -34,10 +34,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-
 public class UserFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
+    //Fragment for å vise brukerinfo. Herfra kan man logge ut, slette konto og endre brukerinfo
 
     private TextView tvUserName;
     private TextView tvPhoneNumber;
@@ -60,7 +59,7 @@ public class UserFragment extends Fragment {
 
 
     public UserFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -70,7 +69,7 @@ public class UserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_user, container, false);
 
         getActivity().setTitle(R.string.titleUser);
@@ -195,8 +194,6 @@ public class UserFragment extends Fragment {
                         User user = (User) apiResponse.getResponseObject();
                         if (user != null) {
                             // Dersom response på GET, PUT, POST:
-
-
 
                             TextView tvUserName = getView().findViewById(R.id.tvUserNameText);
                             TextView tvPhoneNumber = getView().findViewById(R.id.tvPhoneNumberText);

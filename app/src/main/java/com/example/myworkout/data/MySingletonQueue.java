@@ -9,7 +9,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
-// FRA: https://developer.android.com/training/volley/requestqueue
 public class MySingletonQueue {
     private static MySingletonQueue instance;
     private RequestQueue requestQueue;

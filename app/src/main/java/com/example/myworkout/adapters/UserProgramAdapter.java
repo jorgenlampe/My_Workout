@@ -1,6 +1,7 @@
 package com.example.myworkout.adapters;
 
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import com.example.myworkout.fragments.UserProgramsFragment;
 import java.util.ArrayList;
 
 public class UserProgramAdapter extends RecyclerView.Adapter<UserProgramAdapter.MyViewHolder> {
+
+    //Adapter-klasse for å vise alle treningsprogrammene i en RecyclerView
 
     private OnItemClickListener mListener;
     private ArrayList<UserProgram> userPrograms;

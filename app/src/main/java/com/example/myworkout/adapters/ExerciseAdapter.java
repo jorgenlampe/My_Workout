@@ -18,6 +18,8 @@ import java.util.ArrayList;
 
 public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.MyViewHolder> {
 
+    //Adapter-klasse for å vise alle øvelsene i en RecyclerView
+
     private OnItemClickListener mListener;
     private ArrayList<Exercise> exercises;
 

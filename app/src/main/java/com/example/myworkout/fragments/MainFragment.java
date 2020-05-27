@@ -37,7 +37,13 @@ import java.util.ArrayList;
 import java.util.Map;
 
 
+
 public class MainFragment extends Fragment {
+
+    //Hovedsiden som viser statistikk og knapper for å vise treningsprogrammer, økter og programtyper
+    // og for å registrere ny økt og ny programtype
+
+
     private Observer<ApiResponse> apiResponseObserver = null;
     private Observer<ApiError> apiErrorObserver = null;
 
@@ -69,8 +75,7 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
