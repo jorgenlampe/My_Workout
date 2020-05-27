@@ -16,6 +16,8 @@ import java.util.ArrayList;
 
 public class UserProgramSessionAdapter extends RecyclerView.Adapter<UserProgramSessionAdapter.MyViewHolder> {
 
+    //Adapter-klasse for å vise alle øktene i en RecyclerView
+
     private OnItemClickListener mListener;
     private ArrayList<UserProgramSession> userProgramSessions;
 

@@ -26,6 +26,8 @@ import com.example.myworkout.helpers.ApiResponse;
 
 public class ExerciseFragment extends Fragment {
 
+    //Fragment for å vise valgt øvelse. Viser bilde ved hjelp av Glide
+
     private String rid;
 
     private ImageView image;
@@ -39,14 +41,14 @@ public class ExerciseFragment extends Fragment {
     private DataViewModel dataViewModel;
 
     public ExerciseFragment() {
-        // Required empty public constructor
+
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_exercise, container, false);
 
         getActivity().setTitle(R.string.titleExercise);
@@ -88,7 +90,7 @@ public class ExerciseFragment extends Fragment {
                          tvName.setTextSize(20);
                          tvDescription.setText(exercise.getDescription());
 
-                         //todo finne url til bilde
+
                          String url = "https://tusk.systems/trainingapp/icons/";
 
                          StringBuilder sb = new StringBuilder();

@@ -46,8 +46,9 @@ import java.util.Calendar;
  * create an instance of this fragment.
  */
 public class AddSessionFragment extends Fragment implements AdapterView.OnItemSelectedListener {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
+    //Fragment for å legge til ny økt
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -69,23 +70,14 @@ public class AddSessionFragment extends Fragment implements AdapterView.OnItemSe
 
     private DataViewModel dataViewModel;
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     public AddSessionFragment() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AddSessionFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static AddSessionFragment newInstance(String param1, String param2) {
         AddSessionFragment fragment = new AddSessionFragment();
         Bundle args = new Bundle();

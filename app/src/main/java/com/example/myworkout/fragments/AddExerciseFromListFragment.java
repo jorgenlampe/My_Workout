@@ -29,6 +29,8 @@ import java.util.ArrayList;
 
 public class AddExerciseFromListFragment extends Fragment {
 
+    //Fragment som viser eksisterende øvelser som kan knyttes til treningsprogram
+
     private String user_program_id;
 
     private Observer<ApiResponse> apiResponseObserver = null;
@@ -42,15 +44,13 @@ public class AddExerciseFromListFragment extends Fragment {
 
 
     public AddExerciseFromListFragment() {
-        // Required empty public constructor
+
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
 
         View view = inflater.inflate(R.layout.fragment_add_exercise_from_list, container, false);
 

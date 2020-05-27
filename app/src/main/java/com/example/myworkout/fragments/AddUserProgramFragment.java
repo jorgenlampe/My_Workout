@@ -41,6 +41,7 @@ import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class AddUserProgramFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
+    //Fragment for å registrere nytt treningsprogram. Kobles til programtype som velges fra en spinner
 
     private ArrayList<ProgramType> programTypes;
 
@@ -62,14 +63,14 @@ public class AddUserProgramFragment extends Fragment implements AdapterView.OnIt
     private DataViewModel dataViewModel;
 
     public AddUserProgramFragment() {
-        // Required empty public constructor
+
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment'
+
         View view = inflater.inflate(R.layout.fragment_add_user_program, container, false);
 
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);

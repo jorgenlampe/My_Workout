@@ -24,6 +24,8 @@ import com.example.myworkout.helpers.ApiResponse;
 
 public class EditExerciseFragment extends Fragment {
 
+    //Fragment for å endre øvelse
+
     private Observer<ApiResponse> apiResponseObserver = null;
     private Observer<ApiError> apiErrorObserver = null;
 
@@ -45,14 +47,14 @@ public class EditExerciseFragment extends Fragment {
     private DataViewModel dataViewModel;
 
     public EditExerciseFragment() {
-        // Required empty public constructor
+
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_edit_exercise, container, false);
 
         getActivity().setTitle(R.string.btnEditExercise);

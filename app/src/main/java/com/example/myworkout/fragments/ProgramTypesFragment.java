@@ -29,14 +29,10 @@ import com.example.myworkout.helpers.ApiResponse;
 import java.util.ArrayList;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProgramTypesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ProgramTypesFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
+    //Fragment for å vise programtyper med bilder og bakgrunnsfarge i RecyclerViewen
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -49,23 +45,15 @@ public class ProgramTypesFragment extends Fragment {
     private ProgramTypeAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    // TODO: Rename and change types of parameters
+
     private String mParam1;
     private String mParam2;
 
     public ProgramTypesFragment() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProgramTypesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static ProgramTypesFragment newInstance(String param1, String param2) {
         ProgramTypesFragment fragment = new ProgramTypesFragment();
         Bundle args = new Bundle();
@@ -87,7 +75,7 @@ public class ProgramTypesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_program_types, container, false);
 
 

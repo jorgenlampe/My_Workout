@@ -33,6 +33,8 @@ import java.util.ArrayList;
 
 public class EditUserProgramFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
+    //Fragment for å endre treningsprogrammer
+
     private ArrayList<ProgramType> programTypes;
 
     private Spinner spinner;
@@ -57,7 +59,7 @@ public class EditUserProgramFragment extends Fragment implements AdapterView.OnI
 
 
     public EditUserProgramFragment() {
-        // Required empty public constructor
+
     }
 
 
@@ -83,7 +85,7 @@ public class EditUserProgramFragment extends Fragment implements AdapterView.OnI
 
         subscribeToApiResponse();
         subscribeToErrors();
-        // Inflate the layout for this fragment
+
         return view;
     }
 

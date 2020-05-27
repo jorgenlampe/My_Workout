@@ -34,6 +34,8 @@ import java.util.ArrayList;
 
 public class AddExerciseFromListDetailFragment extends Fragment {
 
+    //Fragment for å vise detaljer av øvelsene og legge øvelse til brukerprogram
+
     private Observer<ApiResponse> apiResponseObserver = null;
     private Observer<ApiError> apiErrorObserver = null;
 
@@ -52,7 +54,7 @@ public class AddExerciseFromListDetailFragment extends Fragment {
 
 
     public AddExerciseFromListDetailFragment() {
-        // Required empty public constructor
+
     }
 
 
@@ -64,7 +66,6 @@ public class AddExerciseFromListDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_add_exercise_from_list_detail, container, false);
 
@@ -77,12 +78,8 @@ public class AddExerciseFromListDetailFragment extends Fragment {
         image = view.findViewById(R.id.image);
         btnAddToUserProgram = view.findViewById(R.id.btnAddToUserProgram);
 
-        //todo image
-        //todo textboxColor
-
         subscribeToApiResponse();
         subscribeToErrors();
-
 
         return view;
     }
@@ -126,7 +123,7 @@ public class AddExerciseFromListDetailFragment extends Fragment {
                             tvExerciseDescription.setText(exercise.getDescription());
                             tvExerciseDescription.setTextSize(20);
 
-                            //todo finne url til bilde
+
                             String url = "https://tusk.systems/trainingapp/v2/api.php/app_exercises/icons8-ninja_filled.png";
 
                             RequestOptions options = new RequestOptions()

@@ -32,6 +32,8 @@ import java.util.ArrayList;
 
 public class UserProgramsFragment extends Fragment {
 
+    //Fragment som viser alle treningsprogrammene i en RecyclerView
+
     private Observer<ApiResponse> apiResponseObserver = null;
     private Observer<ApiError> apiErrorObserver = null;
 
@@ -45,7 +47,7 @@ public class UserProgramsFragment extends Fragment {
 
 
     public UserProgramsFragment() {
-        // Required empty public constructor
+
     }
 
 
@@ -53,7 +55,7 @@ public class UserProgramsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_user_programs, container, false);
 
         dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);

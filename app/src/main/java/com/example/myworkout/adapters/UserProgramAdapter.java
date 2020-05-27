@@ -18,6 +18,8 @@ import java.util.ArrayList;
 
 public class UserProgramAdapter extends RecyclerView.Adapter<UserProgramAdapter.MyViewHolder> {
 
+    //Adapter-klasse for å vise alle treningsprogrammene i en RecyclerView
+
     private OnItemClickListener mListener;
     private ArrayList<UserProgram> userPrograms;
 
