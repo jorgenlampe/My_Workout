@@ -49,6 +49,7 @@ public class DataRepository {
 
     private MutableLiveData<ApiError> errorMessage = new MutableLiveData<>();
     private MutableLiveData<ApiResponse> apiResponse = new MutableLiveData<>();
+    private MutableLiveData<String> selectedImage = new MutableLiveData<>();
 
     // MyJsonObjectRequest arver fra JsonObjectRequest slik at vi kan overstyre parseNetworkResponse() for å kunne hente ut HTTP responsekode:
     private MyJsonObjectRequest myJsonGetRequest;
@@ -71,11 +72,15 @@ public class DataRepository {
     public MutableLiveData<ApiResponse> getApiResponse() {
         return apiResponse;
     }
+    public MutableLiveData<String> getSelectedImage() { return selectedImage; }
 
 
     public DataRepository(Application application) {
     }
 
+    public void setSelectedImage(String selectedImage) {
+        this.selectedImage.setValue(selectedImage);
+    }
     public void getProgramType(Context context, String rid){
 
         String url = PROGRAMTYPE_PREFIX + rid + "?_api_key=" + API_KEY;
@@ -1068,7 +1073,6 @@ public class DataRepository {
 
         if (!this.downloading) {
             String url = USERS_PREFIX + firebaseId + "?_api_key=" + API_KEY + "&_expand_children=true";
-
             queue = MySingletonQueue.getInstance(context).getRequestQueue();
             downloading = true;
             myJsonGetRequest = new MyJsonObjectRequest(
@@ -1078,28 +1082,21 @@ public class DataRepository {
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject jsonObject) {
-
                             try {
                                 Gson gson = new Gson();
                                 ArrayList<UserProgramSession> tmpList = new ArrayList<>();
                                 JSONArray jsonUserPrograms = jsonObject.getJSONArray("user_programs");
-
                                     for (int a = 0; a < jsonUserPrograms.length(); a++) {
                                         JSONObject userProgramAsJson = jsonUserPrograms.getJSONObject(a);
                                         UserProgram program = gson.fromJson(userProgramAsJson.toString(), UserProgram.class);
                                         ArrayList<UserProgramSession> sessionsTemp =
                                                 (ArrayList<UserProgramSession>) program.getUser_program_sessions();
-
                                         for (int i = 0; i < sessionsTemp.size(); i++) {
                                             tmpList.add(sessionsTemp.get(i));
                                         }
-
-
                                     }
-
                                 ApiResponse resp = new ApiResponse(true, "OK", tmpList, myJsonGetRequest.getHttpStatusCode());
                                 apiResponse.postValue(resp);
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -1115,14 +1112,9 @@ public class DataRepository {
             queue.add(myJsonGetRequest);
         }
         downloading = false;
-
-
-
-
     }
 
     public void postUserProgramSession(Context context, String user_program_id, String date, float time_spent, String description, String extra_json_data) {
-
 
         final HashMap<String, String> params = new HashMap<String, String>();
         params.put("_api_key", API_KEY);
@@ -1173,10 +1165,6 @@ public class DataRepository {
             }
         };
         queue.add(myJsonPostRequest);
-
-
-
-
     }
 
 
@@ -1216,9 +1204,45 @@ public class DataRepository {
 
         }
         downloading = false;
+    }
 
-
-
+    public void getImageUrls(Context context) {
+        if (!this.downloading) {
+            String url = "https://tusk.systems/trainingapp/v2/iconfilenames.php";
+            queue = MySingletonQueue.getInstance(context).getRequestQueue();
+            downloading = true;
+            myJsonGetRequest = new MyJsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject jsonObject) {
+                            try {
+                                Gson gson = new Gson();
+                                ArrayList<String> tmpList = new ArrayList<>();
+                                JSONArray jsonUrls = jsonObject.getJSONArray("icons8_filenames");
+                                for (int a = 0; a < jsonUrls.length(); a++) {
+                                    String url = jsonUrls.get(a).toString();
+                                    tmpList.add(url);
+                                }
+                                ApiResponse resp = new ApiResponse(true, "OK", tmpList, myJsonGetRequest.getHttpStatusCode());
+                                apiResponse.postValue(resp);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            ApiError apiError = VolleyErrorParser.parse(error);
+                            errorMessage.postValue(apiError);
+                        }
+                    });
+            queue.add(myJsonGetRequest);
+        }
+        downloading = false;
     }
 }
 

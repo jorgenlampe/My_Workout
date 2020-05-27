@@ -111,7 +111,7 @@ public class UserProgramFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                UserProgramFragmentDirections.ActionToAddExerciseFragment actionToAddExerciseFragment = UserProgramFragmentDirections.actionToAddExerciseFragment(user_program_id);
+                UserProgramFragmentDirections.ActionToAddExerciseFragment actionToAddExerciseFragment = UserProgramFragmentDirections.actionToAddExerciseFragment(user_program_id, null);
                 NavHostFragment.findNavController(UserProgramFragment.this).navigate(actionToAddExerciseFragment);
             }
         });

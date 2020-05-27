@@ -52,5 +52,11 @@
     <string name="titleUser">Din bruker</string>
     <string name="titleUserProgram">Treningsprogram</string>
     <string name="titleUserPrograms">Treningsprogrammer</string>
+    <string name="titleGallery">Velg ikon</string>
+    <string name="btnAddIcon">Velg ikon</string>
+    <string name="btnSelectDifferentIcon">Velg annet ikon</string>
+
+
+
 
 </resources>

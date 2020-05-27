@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.myworkout.R;
@@ -22,30 +23,37 @@ import com.example.myworkout.entities.Exercise;
 import com.example.myworkout.entities.UserProgramExercise;
 import com.example.myworkout.helpers.ApiError;
 import com.example.myworkout.helpers.ApiResponse;
-
+import com.example.myworkout.helpers.GlideApp;
 
 
 public class AddExerciseFragment extends Fragment {
 
     private Observer<ApiResponse> apiResponseObserver = null;
     private Observer<ApiError> apiErrorObserver = null;
+    private Observer<String> selectedImageObserver = null;
+
+
 
     private EditText etAddName;
     private EditText etAddDescription;
     private EditText etAddIcon;
     private EditText etAddInfoboxColor;
+    private ImageView imgSelected;
 
     private Button btnAddNewExercise;
+    private Button btnAddIcon;
 
     private String description;
     private String name;
-    private String icon;
     private String infoboxColor;
 
     private String user_program_id;
     private String app_exercise_id;
+    private String iconUrl;
 
     private DataViewModel dataViewModel;
+
+    final private String IMAGE_PREFIX = "https://tusk.systems/trainingapp/icons/";
 
     public AddExerciseFragment() {
         // Required empty public constructor
@@ -60,17 +68,19 @@ public class AddExerciseFragment extends Fragment {
 
         getActivity().setTitle(R.string.btnAddExercise);
 
-        dataViewModel = new ViewModelProvider(this).get(DataViewModel.class);
+        dataViewModel = new ViewModelProvider(getActivity()).get(DataViewModel.class);
 
         etAddName = view.findViewById(R.id.etAddName);
         etAddDescription = view.findViewById(R.id.etAddDescription);
-        etAddIcon = view.findViewById(R.id.etAddIcon);
         etAddInfoboxColor = view.findViewById(R.id.etAddInfoboxColor);
+        imgSelected = view.findViewById(R.id.selectedImage);
 
         btnAddNewExercise = view.findViewById(R.id.btnAddNewExercise);
+        btnAddIcon = view.findViewById(R.id.btnAddIcon);
 
         subscribeToApiResponse();
         subscribeToErrors();
+        subscribeToIconSelector();
 
         return view;
     }
@@ -78,14 +88,30 @@ public class AddExerciseFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         user_program_id = AddExerciseFragmentArgs.fromBundle(getArguments()).getUserProgramId();
+        iconUrl = AddExerciseFragmentArgs.fromBundle(getArguments()).getIconUrl();
+        if(iconUrl != null) {
+            GlideApp.with(getContext()).load(IMAGE_PREFIX + iconUrl).into(imgSelected);
+            btnAddIcon.setText(R.string.btnSelectDifferentIcon);
+        }
+        btnAddIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddExerciseFragmentDirections.ActionAddExerciseFragmentToImagesFragment toImagesFragment = AddExerciseFragmentDirections.actionAddExerciseFragmentToImagesFragment(user_program_id);
+                NavHostFragment.findNavController(AddExerciseFragment.this).navigate(toImagesFragment);
+            }
+        });
 
         btnAddNewExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 name = etAddName.getText().toString();
                 description = etAddDescription.getText().toString();
-                icon = etAddIcon.getText().toString();
                 infoboxColor = etAddInfoboxColor.getText().toString();
+
+                if(iconUrl == null) {
+                    Toast.makeText(getContext(), "choose icon!", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 //Sjekker at bruker har fyllt ut feltene
                 if (name.isEmpty() || description.isEmpty()) {
@@ -98,7 +124,7 @@ public class AddExerciseFragment extends Fragment {
                     Toast.makeText(getContext(), "Wrong color. Must be in HEX", Toast.LENGTH_LONG).show();
                     return;
                 }
-                dataViewModel.postExercise(getContext(), name, description, icon, infoboxColor);
+                dataViewModel.postExercise(getContext(), name, description, iconUrl, infoboxColor);
             }
         });
 
@@ -123,13 +149,10 @@ public class AddExerciseFragment extends Fragment {
                             NavHostFragment.findNavController(AddExerciseFragment.this).navigateUp();
 
                         }
-
                         if (apiResponse.getResponseObject() instanceof UserProgramExercise){
                             UserProgramExercise userProgramExercise = (UserProgramExercise)apiResponse.getResponseObject();
 
                         }
-
-
                     }
                 }
             };
@@ -154,5 +177,23 @@ public class AddExerciseFragment extends Fragment {
         }
     }
 
+    private void subscribeToIconSelector() {
+        if (selectedImageObserver == null) {
+            // Observerer endringer:
+            selectedImageObserver = new Observer<String>() {
+                @Override
+                public void onChanged(String selectedImage) {
+                    if(getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
+                        Toast.makeText(getActivity(), "image selected successfully", Toast.LENGTH_SHORT).show();
+                        System.out.println("selected image " + selectedImage);
+                        GlideApp.with(getContext()).load(IMAGE_PREFIX + selectedImage).into(imgSelected);
+                        btnAddIcon.setText(R.string.btnSelectDifferentIcon);
+
+                    }
+                }
+            };
+            dataViewModel.getSelectedImage().observe(getViewLifecycleOwner(), selectedImageObserver);
+        }
+    }
 
 }

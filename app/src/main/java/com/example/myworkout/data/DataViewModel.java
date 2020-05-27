@@ -19,16 +19,20 @@ public class DataViewModel extends AndroidViewModel {
     private DataRepository mRepository;
     private MutableLiveData<ApiError> mApiError;
     private MutableLiveData<ApiResponse> mApiResponse;
-
+    private MutableLiveData<String> mSelectedImage;
 
     public DataViewModel(Application application) {
         super(application); // <====
         mRepository = new DataRepository(application);
         mApiError = mRepository.getErrorMessage();
         mApiResponse = mRepository.getApiResponse();
+        mSelectedImage = mRepository.getSelectedImage();
     }
 
-
+    public void setSelectedImage(String selectedImage) {
+        mRepository.setSelectedImage(selectedImage);
+    }
+    public MutableLiveData<String> getSelectedImage() { return mSelectedImage; }
     public MutableLiveData<ApiError> getApiError() {
         return mApiError;
     }
@@ -155,5 +159,9 @@ public class DataViewModel extends AndroidViewModel {
 
     public void getProgramType(Context context, String rid) {
         mRepository.getProgramType(context, rid);
+    }
+
+    public void getImageUrls(Context context) {
+        mRepository.getImageUrls(context);
     }
 }

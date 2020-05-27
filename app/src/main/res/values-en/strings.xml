@@ -52,5 +52,10 @@
     <string name="titleUser">User</string>
     <string name="titleUserProgram">Program</string>
     <string name="titleUserPrograms">Programs</string>
+    <string name="titleGallery">Choose icon</string>
+    <string name="btnAddIcon">Choose icon</string>
+    <string name="btnSelectDifferentIcon">Choose different icon</string>
+
+
 
 </resources>

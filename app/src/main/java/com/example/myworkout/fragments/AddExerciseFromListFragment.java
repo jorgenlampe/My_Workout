@@ -79,7 +79,7 @@ public class AddExerciseFromListFragment extends Fragment {
 
         dataViewModel.getExercises(getContext());
 
-        user_program_id = AddExerciseFragmentArgs.fromBundle(getArguments()).getUserProgramId();
+        user_program_id = AddExerciseFromListFragmentArgs.fromBundle(getArguments()).getUserProgramId();
 
 
     }

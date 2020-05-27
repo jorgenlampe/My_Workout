@@ -127,7 +127,6 @@ public class UserFragment extends Fragment {
 
         subscribeToApiResponse();
         subscribeToErrors();
-
         return view;
     }
 

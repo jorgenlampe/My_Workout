@@ -18,6 +18,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.myworkout.data.DataViewModel;
 import com.example.myworkout.R;
@@ -58,8 +59,10 @@ public class LoginFragment extends Fragment {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null)
+        if (currentUser != null) {
             updateUI(currentUser.getEmail());
+            NavHostFragment.findNavController(this).navigate(R.id.action_global_mainFragment);
+        }
     }
 
 
