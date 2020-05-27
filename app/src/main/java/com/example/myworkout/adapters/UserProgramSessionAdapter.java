@@ -1,5 +1,6 @@
 package com.example.myworkout.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,9 +86,10 @@ public class UserProgramSessionAdapter extends RecyclerView.Adapter<UserProgramS
         UserProgramSession currentSession = userProgramSessions.get(position);
         holder.tvDate.setText(String.valueOf(currentSession.getDate()));
         holder.tvTimeSpent.setText(String.valueOf(currentSession.getTime_spent()));
-        holder.tvTimeSpent.setText(String.valueOf(currentSession.getTime_spent()) + " sekunder");
+        holder.tvTimeSpent.setText(String.valueOf(currentSession.getTime_spent()) + " sek.");
         holder.tvDescription.setText(currentSession.getDescription());
         holder.tvExtra.setText(currentSession.getExtra_json_data());
+
     }
 
     @Override

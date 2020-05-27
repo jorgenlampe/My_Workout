@@ -52,5 +52,8 @@
     <string name="titleUser">Din bruker</string>
     <string name="titleUserProgram">Treningsprogram</string>
     <string name="titleUserPrograms">Treningsprogrammer</string>
+    <string name="seconds">sekunder</string>
+    <string name="home">Hjem</string>
+    <string name="home_user">Bruker</string>
 
 </resources>

@@ -11,10 +11,12 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.myworkout.R;
@@ -54,8 +56,6 @@ public class SessionsFragment extends Fragment {
     private RecyclerView recyclerView;
     private UserProgramSessionAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-
-
 
     public SessionsFragment() {
         // Required empty public constructor
@@ -142,7 +142,9 @@ public class SessionsFragment extends Fragment {
                         if(sessions == null) return;
                         if (sessions.size() > 0) {
                             // Dersom response på GET, PUT, POST:
-                            mAdapter = new UserProgramSessionAdapter(sessions);
+
+
+                            mAdapter = new UserProgramSessionAdapter(sessions);  //todo sende med programNavn
                             recyclerView.setAdapter(mAdapter);
                             //bruker onitemclicklistener interface laget i adapter..
                             mAdapter.setOnItemClickListener(new UserProgramSessionAdapter.OnItemClickListener() {

@@ -1,7 +1,9 @@
 package com.example.myworkout.fragments;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
@@ -13,9 +15,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -31,7 +35,9 @@ import com.example.myworkout.helpers.ApiResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 /**
@@ -39,7 +45,7 @@ import java.util.ArrayList;
  * Use the {@link AddSessionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddSessionFragment extends Fragment implements AdapterView.OnItemSelectedListener{
+public class AddSessionFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -50,6 +56,12 @@ public class AddSessionFragment extends Fragment implements AdapterView.OnItemSe
 
     private ArrayList<UserProgram> userPrograms;
 
+    private EditText btnDatePicker;
+
+    private String day;
+    private String month;
+    private String year;
+
     private EditText etDate;
     private EditText etTimeSpent;
     private EditText etDescription;
@@ -59,6 +71,8 @@ public class AddSessionFragment extends Fragment implements AdapterView.OnItemSe
     private String user_program_id;
 
     private String userProgram;
+
+    private EditText etDatePicker;
 
     private DataViewModel dataViewModel;
 
@@ -108,6 +122,8 @@ public class AddSessionFragment extends Fragment implements AdapterView.OnItemSe
         spinner.setOnItemSelectedListener(this);
         userPrograms = new ArrayList<>();
 
+        etDatePicker = view.findViewById(R.id.etDatePicker);
+
         etDate = view.findViewById(R.id.etAddSessionDate);
         etTimeSpent = view.findViewById(R.id.etAddSessionTimeSpent);
         etDescription = view.findViewById(R.id.etAddSessionDescription);
@@ -138,6 +154,13 @@ public class AddSessionFragment extends Fragment implements AdapterView.OnItemSe
 
         dataViewModel.getUserPrograms(getContext(), firebaseId);
 
+        etDatePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePicker();
+    }
+});
+
 
         btnAddSession.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,8 +170,10 @@ public class AddSessionFragment extends Fragment implements AdapterView.OnItemSe
                 String description = etDescription.getText().toString();
                 String extra = etExtra.getText().toString();
 
+                String dateFromDatePicker = etDatePicker.getText().toString();
 
-               dataViewModel.postUserProgramSession(getContext(), user_program_id, date, timeSpent, description, extra);
+
+               dataViewModel.postUserProgramSession(getContext(), user_program_id, dateFromDatePicker, timeSpent, description, extra);
             }
 
         });
@@ -219,5 +244,36 @@ public class AddSessionFragment extends Fragment implements AdapterView.OnItemSe
     public void onNothingSelected(AdapterView<?> parent) {
         userProgram = "0";
     }
+
+    private void showDatePicker() {
+        DatePickerFragment date = new DatePickerFragment();
+        /**
+         * Set Up Current Date Into dialog
+         */
+        Calendar calender = Calendar.getInstance();
+        Bundle args = new Bundle();
+        args.putInt("year", calender.get(Calendar.YEAR));
+        args.putInt("month", calender.get(Calendar.MONTH));
+        args.putInt("day", calender.get(Calendar.DAY_OF_MONTH));
+        date.setArguments(args);
+        /**
+         * Set Call back to capture selected date
+         */
+        date.setCallBack(ondate);
+        date.show(getFragmentManager(), "Date Picker");
+    }
+
+    DatePickerDialog.OnDateSetListener ondate = new DatePickerDialog.OnDateSetListener() {
+
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+
+            etDatePicker.setText((year) + "-" + (monthOfYear+1)
+                    + "-" + (dayOfMonth));
+        }
+    };
+
+
+
 }
 
