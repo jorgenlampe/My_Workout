@@ -49,7 +49,6 @@ public class DataRepository {
 
     private MutableLiveData<ApiError> errorMessage = new MutableLiveData<>();
     private MutableLiveData<ApiResponse> apiResponse = new MutableLiveData<>();
-    private MutableLiveData<String> selectedImage = new MutableLiveData<>();
 
     // MyJsonObjectRequest arver fra JsonObjectRequest slik at vi kan overstyre parseNetworkResponse() for å kunne hente ut HTTP responsekode:
     private MyJsonObjectRequest myJsonGetRequest;
@@ -72,15 +71,12 @@ public class DataRepository {
     public MutableLiveData<ApiResponse> getApiResponse() {
         return apiResponse;
     }
-    public MutableLiveData<String> getSelectedImage() { return selectedImage; }
 
 
     public DataRepository(Application application) {
     }
 
-    public void setSelectedImage(String selectedImage) {
-        this.selectedImage.setValue(selectedImage);
-    }
+
     public void getProgramType(Context context, String rid){
 
         String url = PROGRAMTYPE_PREFIX + rid + "?_api_key=" + API_KEY;

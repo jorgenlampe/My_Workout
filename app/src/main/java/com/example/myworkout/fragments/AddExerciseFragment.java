@@ -32,7 +32,6 @@ public class AddExerciseFragment extends Fragment {
 
     private Observer<ApiResponse> apiResponseObserver = null;
     private Observer<ApiError> apiErrorObserver = null;
-    private Observer<String> selectedImageObserver = null;
 
 
 
@@ -82,7 +81,6 @@ public class AddExerciseFragment extends Fragment {
 
         subscribeToApiResponse();
         subscribeToErrors();
-        subscribeToIconSelector();
 
         return view;
     }
@@ -179,23 +177,5 @@ public class AddExerciseFragment extends Fragment {
         }
     }
 
-    private void subscribeToIconSelector() {
-        if (selectedImageObserver == null) {
-            // Observerer endringer:
-            selectedImageObserver = new Observer<String>() {
-                @Override
-                public void onChanged(String selectedImage) {
-                    if(getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
-                        Toast.makeText(getActivity(), "image selected successfully", Toast.LENGTH_SHORT).show();
-                        System.out.println("selected image " + selectedImage);
-                        GlideApp.with(getContext()).load(IMAGE_PREFIX + selectedImage).into(imgSelected);
-                        btnAddIcon.setText(R.string.btnSelectDifferentIcon);
-
-                    }
-                }
-            };
-            dataViewModel.getSelectedImage().observe(getViewLifecycleOwner(), selectedImageObserver);
-        }
-    }
 
 }

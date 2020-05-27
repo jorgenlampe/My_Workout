@@ -20,11 +20,6 @@
         android:id="@+id/editExerciseDescription"
         android:hint="@string/hintExerciseDescription"/>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editExerciseIcon"
-        android:hint="@string/hintIcon"/>
 
     <EditText
         android:layout_width="match_parent"

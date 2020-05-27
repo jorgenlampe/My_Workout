@@ -31,7 +31,6 @@ public class EditExerciseFragment extends Fragment {
 
     private EditText editName;
     private EditText editDescription;
-    private EditText editIcon;
     private EditText editColor;
 
     private Button btnEditExercise;
@@ -64,7 +63,6 @@ public class EditExerciseFragment extends Fragment {
         editName = view.findViewById(R.id.editExerciseName);
         editDescription = view.findViewById(R.id.editExerciseDescription);
         editColor = view.findViewById(R.id.editExerciseColor);
-        editIcon = view.findViewById(R.id.editExerciseIcon);
 
         btnEditExercise = view.findViewById(R.id.btnEditExercise);
 
@@ -84,7 +82,6 @@ public class EditExerciseFragment extends Fragment {
             public void onClick(View v) {
                 name = editName.getText().toString();
                 description = editDescription.getText().toString();
-                icon = editIcon.getText().toString();
                 infoboxColor = editColor.getText().toString();
 
                 //Sjekker at bruker har fyllt ut feltene
@@ -113,7 +110,7 @@ public class EditExerciseFragment extends Fragment {
                                 editName.setText(exercise.getName());
                                 editDescription.setText(exercise.getDescription());
                                 editColor.setText(exercise.getInfobox_color());
-                                editIcon.setText(exercise.getIcon());
+                                icon = exercise.getIcon();
                                 redirect = false;
                             } else {
                                 NavHostFragment.findNavController(EditExerciseFragment.this).navigateUp();
