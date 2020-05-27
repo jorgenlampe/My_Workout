@@ -86,7 +86,10 @@ public class UserProgramSessionAdapter extends RecyclerView.Adapter<UserProgramS
         UserProgramSession currentSession = userProgramSessions.get(position);
         holder.tvDate.setText(String.valueOf(currentSession.getDate()));
         holder.tvTimeSpent.setText(String.valueOf(currentSession.getTime_spent()));
-        holder.tvTimeSpent.setText(String.valueOf(currentSession.getTime_spent()) + " sek.");
+
+        Float minutes = currentSession.getTime_spent()/60;
+
+        holder.tvTimeSpent.setText(String.format("%.1f min.", minutes));
         holder.tvDescription.setText(currentSession.getDescription());
         holder.tvExtra.setText(currentSession.getExtra_json_data());
 

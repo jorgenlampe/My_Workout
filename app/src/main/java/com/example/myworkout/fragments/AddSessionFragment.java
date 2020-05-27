@@ -56,13 +56,6 @@ public class AddSessionFragment extends Fragment implements AdapterView.OnItemSe
 
     private ArrayList<UserProgram> userPrograms;
 
-    private EditText btnDatePicker;
-
-    private String day;
-    private String month;
-    private String year;
-
-    private EditText etDate;
     private EditText etTimeSpent;
     private EditText etDescription;
     private EditText etExtra;
@@ -124,7 +117,6 @@ public class AddSessionFragment extends Fragment implements AdapterView.OnItemSe
 
         etDatePicker = view.findViewById(R.id.etDatePicker);
 
-        etDate = view.findViewById(R.id.etAddSessionDate);
         etTimeSpent = view.findViewById(R.id.etAddSessionTimeSpent);
         etDescription = view.findViewById(R.id.etAddSessionDescription);
         etExtra = view.findViewById(R.id.etAddSessionExtra);
@@ -154,6 +146,9 @@ public class AddSessionFragment extends Fragment implements AdapterView.OnItemSe
 
         dataViewModel.getUserPrograms(getContext(), firebaseId);
 
+        etDatePicker.setFocusable(false);
+        etDatePicker.setClickable(true);
+
         etDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,15 +160,15 @@ public class AddSessionFragment extends Fragment implements AdapterView.OnItemSe
         btnAddSession.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String date = etDate.getText().toString();
-                float timeSpent = Float.parseFloat(etTimeSpent.getText().toString());
+
+                float minutes = Float.parseFloat(etTimeSpent.getText().toString());
+                float seconds = minutes*60;
                 String description = etDescription.getText().toString();
                 String extra = etExtra.getText().toString();
+                String date = etDatePicker.getText().toString();
 
-                String dateFromDatePicker = etDatePicker.getText().toString();
 
-
-               dataViewModel.postUserProgramSession(getContext(), user_program_id, dateFromDatePicker, timeSpent, description, extra);
+               dataViewModel.postUserProgramSession(getContext(), user_program_id, date, seconds, description, extra);
             }
 
         });
@@ -247,18 +242,14 @@ public class AddSessionFragment extends Fragment implements AdapterView.OnItemSe
 
     private void showDatePicker() {
         DatePickerFragment date = new DatePickerFragment();
-        /**
-         * Set Up Current Date Into dialog
-         */
+
         Calendar calender = Calendar.getInstance();
         Bundle args = new Bundle();
         args.putInt("year", calender.get(Calendar.YEAR));
         args.putInt("month", calender.get(Calendar.MONTH));
         args.putInt("day", calender.get(Calendar.DAY_OF_MONTH));
         date.setArguments(args);
-        /**
-         * Set Call back to capture selected date
-         */
+
         date.setCallBack(ondate);
         date.show(getFragmentManager(), "Date Picker");
     }

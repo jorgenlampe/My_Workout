@@ -17,11 +17,6 @@
         android:id="@+id/etDatePicker"
         android:text="Velg dato"></EditText>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/etAddSessionDate"
-        android:hint="@string/addSessionDate"></EditText>
 
     <EditText
         android:layout_width="match_parent"

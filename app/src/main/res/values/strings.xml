@@ -28,10 +28,9 @@
     <string name="toUserPrograms">Vis treningsprogrammer</string>
     <string name="toSessions">Vis økter</string>
     <string name="btnAddNewSession">Registrer ny treningsøkt</string>
-    <string name="addSessionDate">Dato: (yyyy-mm-dd)</string>
-    <string name="addSessionTimeSpent">Tid brukt (sekunder)</string>
-    <string name="addSessionDescription">Beskrivelse...</string>
-    <string name="addSessionExtra">Ekstra info...</string>
+    <string name="addSessionTimeSpent">Tid brukt (minutter)</string>
+    <string name="addSessionDescription">Beskrivelse</string>
+    <string name="addSessionExtra">Ekstra info</string>
     <string name="btnAddSession">Legg til økt</string>
     <string name="btnEditUserProgram">Endre program</string>
     <string name="btnAddExercise">Legg til øvelse</string>
@@ -39,7 +38,7 @@
     <string name="stats">STATISTIKK:</string>
     <string name="toProgramTypes">Vis programtyper</string>
     <string name="btnAddProgramType">Legg til programtype</string>
-    <string name="programTypeAddDescription">Beskrivelse...</string>
+    <string name="programTypeAddDescription">Beskrivelse</string>
     <string name="programTypeAddIcon">Bilde (tekst, navn på .png-fil)</string>
     <string name="programTypeAddBackColor">Bakgrunnsfarge (tekst, f.eks. #FE0980)</string>
     <string name="editProgramType">Endre programtype</string>
@@ -51,7 +50,7 @@
     <string name="titleUser">Din bruker</string>
     <string name="titleUserProgram">Treningsprogram</string>
     <string name="titleUserPrograms">Treningsprogrammer</string>
-    <string name="seconds">sekunder</string>
+    <string name="minutes">minutter</string>
     <string name="home">Hjem</string>
     <string name="home_user">Bruker</string>
     <string name="accountName">Kontonavn</string>
