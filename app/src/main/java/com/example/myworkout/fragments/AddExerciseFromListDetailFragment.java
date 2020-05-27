@@ -124,7 +124,7 @@ public class AddExerciseFromListDetailFragment extends Fragment {
                             tvExerciseDescription.setTextSize(20);
 
 
-                            String url = "https://tusk.systems/trainingapp/v2/api.php/app_exercises/icons8-ninja_filled.png";
+                            String url = "https://tusk.systems/trainingapp/icons/" + exercise.getIcon();
 
                             RequestOptions options = new RequestOptions()
                                     .centerCrop()

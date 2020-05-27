@@ -7,7 +7,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import org.json.JSONArray;
 
 /**
- * MyJsonObjectRequest arver fra JsonObjectRequest slik at vi kan overstyre parseNetworkResponse() for å kunne hente ut HTTP responsekode.
+ * MyJsonArrayRequest arver fra JsonArrayRequest slik at vi kan overstyre parseNetworkResponse() for å kunne hente ut HTTP responsekode.
  * Se bruk i DataRepository
  */
 public class MyJsonArrayRequest extends JsonArrayRequest {

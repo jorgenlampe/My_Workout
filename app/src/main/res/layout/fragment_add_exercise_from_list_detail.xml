@@ -17,8 +17,8 @@
         android:id="@+id/tvExerciseDescription"></TextView>
 
     <ImageView
-        android:layout_width="50px"
-        android:layout_height="50px"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:id="@+id/image"></ImageView>
 
     <Button
